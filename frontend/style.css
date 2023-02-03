@@ -5,6 +5,13 @@
     font-size: larger;
 
 }
+.inputlogin{
+    border-radius: 10px;
+    height: 40px;
+    width: 100%;
+    background:linear-gradient(#ffe4e9 5%, #ffe4e9 50%, #ffe4e9 50%);
+    border: none;
+}
 
 .nabarleft2 {
     margin-top: 10%;
@@ -12,9 +19,13 @@
 
 .boxtextnav {
     width: 100%;
-    margin-left: 20px;
+    margin-left: 10px;
     margin-top: 20%;
     border-top-left-radius: 2rem;
+}
+
+.boxname{
+    width: 100%
 }
 
 .textcenter {
@@ -24,14 +35,16 @@
 
 .center {
     margin: auto;
-    width: 80%;
+    width: 50%;
     padding: 10px;
 }
+
 
 .boxtext:hover {
     font-size: x-large;
     transform: translatex(5px);
     transition: 500ms;
+    
 }
 
 .footer {
@@ -57,6 +70,27 @@
     border: none;
     color: white;
 }
+.buttonprocess:hover{
+    background: linear-gradient(45deg, #e1a340 5%, #f08c1a 50%, #f08c1a 50%);
+
+    
+}
+
+
+
+
+
+
+
+.buttonprocesssuccess {
+    background: linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%);
+    width: 75px;
+    height: 70px;
+    border-radius: 80%;
+    border: none;
+    color: white;
+}
+
 .flexbox{
   display: flex;
   flex-direction: row;
@@ -76,12 +110,13 @@
     margin: 1px 1px 1px 1px;
     text-align: center;
     width: 120px;
+   
 }
 
 .paper{
     font-size: 10px;
     line-height: 11px;
-    width: 1500px;
+    width: 1150px;
     padding: 500px 20px 5px 5px;
     margin: 6px 70px 6px 70px;
     background-color: white;
@@ -103,8 +138,38 @@
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 20px;
     line-height: 11px;
-    width: 1500px;
+    width: 1150px;
     height: 500px;
+    margin: 6px 70px 6px 70px;
+    background-color: white;
+    overflow: visible;
+}
+.paperprojectmanagement{
+    box-shadow: 0 0 2px 1px #cccccc;
+    font-size: 15px;
+    line-height: 11px;
+    width: 1100px;
+    height: 800px;
+    margin: 6px 70px 6px 70px;
+    background-color: white;
+    overflow: visible;
+}
+.paperprojectplan{
+    box-shadow: 0 0 2px 1px #cccccc;
+    font-size: 15px;
+    line-height: 11px;
+    width: 1100px;
+    height: 800px;
+    margin: 6px 70px 6px 70px;
+    background-color: white;
+    overflow: visible;
+}
+.paperapprovals{
+    box-shadow: 0 0 2px 1px #cccccc;
+    font-size: 15px;
+    line-height: 11px;
+    width: 1100px;
+    height: 800px;
     margin: 6px 70px 6px 70px;
     background-color: white;
     overflow: visible;
@@ -162,3 +227,249 @@
     transform: translateY(5px);
     transition: 200ms;
 }
+
+.buttonapprove {
+    font-weight: bold;
+    padding: 15px 15px;
+    border-radius: 10px;
+    border: 0;
+    background-color: rgb(19, 188, 0);
+    letter-spacing: 1.5px;
+    font-size: 15px;
+    transition: all .3s ease;
+    box-shadow: rgb(50, 138, 37) 0px 5px 0px 0px;
+    color: hsl(0, 0%, 100%);
+    width: 120px;
+}
+
+.buttonapprove:hover {
+    box-shadow: rgb(50, 138, 37) 0px 7px 0px 0px;
+}
+
+.buttonapprove:active {
+    background-color: rgb(19, 188, 0);
+    /*50, 168, 80*/
+    box-shadow: rgb(50, 138, 37)0px 0px 0px 0px;
+    transform: translateY(5px);
+    transition: 200ms;
+}
+
+
+.buttonreject{
+    font-weight: bold;
+    padding: 15px 15px;
+    border-radius: 10px;
+    border: 0;
+    background-color: rgb(255, 46, 46);
+    letter-spacing: 1.5px;
+    font-size: 15px;
+    transition: all .3s ease;
+    box-shadow: rgb(218, 51, 51) 0px 5px 0px 0px;
+    color: hsl(0, 0%, 100%);
+    width: 120px;
+}
+
+.buttonreject:hover {
+    box-shadow: rgb(218, 51, 51) 0px 5px 0px 0px;
+}
+
+.buttonreject:active {
+    background-color: rgb(255, 46, 46);
+    /*50, 168, 80*/
+    box-shadow: rgb(218, 51, 51) 0px 5px 0px 0px;
+    transform: translateY(5px);
+    transition: 200ms;
+}
+
+
+
+.buttonlogin{
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 0;
+    background-color: rgb(255, 46, 46);
+    letter-spacing: 1.5px;
+    font-size: 20px;
+    transition: all .3s ease;
+    box-shadow: rgb(218, 51, 51) 0px 5px 0px 0px;
+    color: hsl(0, 0%, 100%);
+    width: 120px;
+}
+
+.buttonlogin:hover {
+    box-shadow: rgb(218, 51, 51) 0px 5px 0px 0px;
+}
+
+.buttonlogin:active {
+    background-color: rgb(255, 46, 46);
+    /*50, 168, 80*/
+    box-shadow: rgb(218, 51, 51) 0px 5px 0px 0px;
+    transform: translateY(5px);
+    transition: 200ms;
+}
+
+.buttonedit{
+    font-weight: bold;
+    padding: 15px 15px;
+    border-radius: 10px;
+    border: 0;
+    background-color: rgb(255, 46, 46);
+    letter-spacing: 1.5px;
+    font-size: 15px;
+    transition: all .3s ease;
+    box-shadow: rgb(218, 51, 51) 0px 5px 0px 0px;
+    color: hsl(0, 0%, 100%);
+}
+
+.buttonedit:hover {
+    box-shadow: rgb(218, 51, 51) 0px 5px 0px 0px;
+}
+
+.buttonedit:active {
+    background-color: rgb(255, 46, 46);
+    /*50, 168, 80*/
+    box-shadow: rgb(218, 51, 51) 0px 5px 0px 0px;
+    transform: translateY(5px);
+    transition: 200ms;
+}
+
+.aprrovaltable{
+    font-size: smaller
+    
+}
+.inputapprovals{
+    width: 100px;
+}
+
+.pjdetailinput{
+    width: 130px;
+}
+.projectdetailone{
+    font-size: 15px;
+}
+.codingplan{
+    border: 1px solid black;
+    margin-top: 5%;
+    padding: 2rem 2rem 2rem 2rem;
+}
+.paperprototype{
+    box-shadow: 0 0 2px 1px #cccccc;
+    font-size: 15px;
+    line-height: 11px;
+    width: 700px;
+    height: 350px;
+    margin: 6px 70px 27px 152px;
+    background-color: white;
+    overflow: visible;
+}
+.confirmprototype{
+    box-shadow: 0 0 2px 1px #cccccc;
+    font-size: 15px;
+    line-height: 11px;
+    width: 700px;
+    height: 380px;
+    margin: 6px 70px 27px 152px;
+    background-color: white;
+    overflow: visible;
+}
+
+.paperpreparedata{
+    box-shadow: 0 0 2px 1px #cccccc;
+    font-size: 15px;
+    line-height: 11px;
+    width: 1000px;
+    height: 650px;
+    margin: 6px 70px 27px 152px;
+    background-color: white;
+    overflow: visible;
+}
+.papercoding{
+    box-shadow: 0 0 2px 1px #cccccc;
+    font-size: 15px;
+    line-height: 11px;
+    width: 700px;
+    height: 350px;
+    margin: 6px 70px 27px 152px;
+    background-color: white;
+    overflow: visible;
+}
+.paperdiliver{
+    box-shadow: 0 0 2px 1px #cccccc;
+    font-size: 15px;
+    line-height: 11px;
+    width: 1300px;
+    height: 850px;
+    margin: 6px 70px 27px 152px;
+    background-color: white;
+    overflow: visible;
+}
+.papervalue{
+    box-shadow: 0 0 2px 1px #cccccc;
+    font-size: 15px;
+    line-height: 11px;
+    width: 900px;
+    height: 550px;
+    margin: 6px 70px 27px 152px;
+    background-color: white;
+    overflow: visible;
+}
+
+/* .rectangle {
+    width: 500px;
+    height: 200px;
+    background: rgb(239, 110, 110);
+    transform: rotate(-20deg);
+    border-top-right-radius: 20%;
+    border-bottom-right-radius: 20%;
+    backdrop-filter: blur(30px);
+    position: fixed;
+  } */
+/* 
+  @media only screen and (min-width: 600px) {
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+  }
+  @media only screen and (min-width: 768px) {
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+  }
+   */
+
+   [class*="col-"] {
+    width: 100%;
+  }
+  @media only screen and (min-width: 768px) {
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+  }

@@ -1,39 +1,70 @@
-
-class Navbarleftsidev2 extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = `
-    <div class="container-fluid">
-        <div class="row flex-nowrap">
-            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                        <li>
-                            <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
-                                <li class="w-100">
-                                    <a href="../home/home.html" class="nav-link px-0"> <span class="d-none d-sm-inline">HOME</span> 1 </a>
-                                </li>
-                                <li>
-                                    <a href="../approvals/approvals.html" class="nav-link px-0"> <span class="d-none d-sm-inline">APPROVALS</span> 2 </a>
-                                </li>
-                                <li>
-                                    <a href="../architect/architect.html" class="nav-link px-0"> <span class="d-none d-sm-inline">ARCHITECT</span> 2 </a>
-                                </li>
-                            </ul>
-                        </li>                 
-                    </ul>
-                    <hr>
-                    
-                </div>
-            </div>
-           
-        </div>
-    </div>
-
-        `
-  }
-}
-customElements.define('navbar-leftsidev2', Navbarleftsidev2);
+// //<-------------- Name Navbar ------------------->
+// boxname = document.getElementById('boxname');
 
 
+// // boxs.innerHTML = 'Loding..'
+// var requestOptions = {
+//     method: 'GET',
+//     redirect: 'follow'
+//   };
+  
+//   fetch("http://localhost/projectbacklog/backend/login/login_db.php", requestOptions)
+//     .then(response => response.text())
+//     .then(result =>{
+//         var jsonObj = JSON.parse(result);
+//         for(let attraction of jsonObj){
+//             const box = `
+//             <div  id="boxname" class="center">
+//             <span style= "margin-left:-10px">
+//               <i class="fa-regular fa-user fa-4x" style="color: white;"></i><br><br>
+//               `+attraction.firstname+" "+attraction.lastname+`
+//             </span>
+//           </div>
+//             `
+//             boxname.insertAdjacentHTML('afterend',box)
+//         }
+//     }
+//     )
+//     .catch(error => console.log('error', error));
 
-
+// //<-------------- requriment Navbar ------------------->
+// tablereq = document.getElementById('requrimenttable');
+// tablereq.innerHTML = 'Loding....'
+// var requestOptions = {
+//     method: 'GET',
+//     redirect: 'follow'
+//   };
+  
+//   fetch("http://localhost/projectbacklog/backend/req/req.php", requestOptions)
+//     .then(response => response.text())
+//     .then(result =>{
+//         tablereq.innerHTML = ""
+//         var jsonObj = JSON.parse(result);
+//         for(let attraction of jsonObj){
+//             const datatable = `      
+//             <tbody>
+//               <tr>
+//                 <th scope="col">`+attraction.id+`</th>
+//                 <th scope="col"> </th>
+//                 <th scope="col"></th>
+//                 <th scope="col">`+attraction.processname+`</th>
+//                 <th scope="col"></th>
+//                 <th scope="col">
+//                     <!-- Button trigger modal -->
+//                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+//                         update
+//                     </button>
+//                 </div>
+//             </div>
+//             </div>
+//         </div>
+//         </th>
+//         </tr>
+//         </tbody>
+//             `
+//             tablereq.insertAdjacentHTML('beforeend',datatable)
+//         }
+//     }
+   
+//     )
+//     .catch(error => console.log('error', error));
