@@ -1,4 +1,4 @@
-<?php if(isset($_SESSION['error'])) :?>
+<?php if(isset($_SESSION['error'])) :?> //fdgfxdfsadses
 <div class="error">
   <h3>
     <?php
