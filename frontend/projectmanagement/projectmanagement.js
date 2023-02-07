@@ -58,7 +58,7 @@ var getpjmanagment = function () {
                           <div class="modal fade" id="datadetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                           <div class="modal-dialog modal-lg" style="font-weight: normal;">
                             <div class="modal-content">
-                              <div class="modal-header"></div>
+                              <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Project detail</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
