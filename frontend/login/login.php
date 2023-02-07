@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include '../../backend/login/connection.php';
+include '../../backend/connection.php';
 unset($_SESSION['user_login']);
 unset($_SESSION['admin_login']);
 unset($_SESSION['approver_login']);
@@ -83,7 +83,7 @@ unset($_SESSION['approver_login']);
                         <label class="form-label" for="form3Example1"><i class="fa-solid fa-user fa-2xl"></i></label>
                       </div>
                       <div class="col-9">
-                        <input type="text" name="username" class="inputlogin" required />
+                        <input type="text" name="username" class="inputlogin" placeholder="   SCG ID"required />
                       </div>
                     </div>
                     <br />
@@ -96,7 +96,7 @@ unset($_SESSION['approver_login']);
 
                       </div>
                       <div class="col-9">
-                        <input type="password" name="password" class="inputlogin" required />
+                        <input type="password" name="password" class="inputlogin" placeholder="   PASSWORD" required />
 
                       </div>
                     </div>

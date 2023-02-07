@@ -1,3 +1,8 @@
+.table
+{ 
+margin-left: auto;
+margin-right: auto;
+}
 .navbarleft {
     background: linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);
     border-top-right-radius: 1.5rem;
@@ -12,7 +17,6 @@
     background:linear-gradient(#ffe4e9 5%, #ffe4e9 50%, #ffe4e9 50%);
     border: none;
 }
-
 .nabarleft2 {
     margin-top: 10%;
 }
@@ -22,20 +26,28 @@
     margin-left: 10px;
     margin-top: 20%;
     border-top-left-radius: 2rem;
+
 }
 
 .boxname{
-    width: 100%
+    width: 70%;
 }
 
 .textcenter {
     text-align: center;
     font-weight: bold;
+   
 }
 
 .center {
     margin: auto;
     width: 50%;
+    padding: 10px;
+}
+
+.centeralert{
+    margin: auto;
+    width: 100%;
     padding: 10px;
 }
 
@@ -75,13 +87,6 @@
 
     
 }
-
-
-
-
-
-
-
 .buttonprocesssuccess {
     background: linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%);
     width: 75px;
@@ -136,24 +141,28 @@
 }
 .papertablereq{
     box-shadow: 0 0 2px 1px #cccccc;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 11px;
     width: 1150px;
-    height: 500px;
-    margin: 6px 70px 6px 70px;
+    height: 600px;
+    margin: 20px 70px 6px 70px;
     background-color: white;
-    overflow: visible;
+    overflow-y: auto;
 }
+
+
+
 .paperprojectmanagement{
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 15px;
     line-height: 11px;
     width: 1100px;
-    height: 800px;
+    height: 500px;
     margin: 6px 70px 6px 70px;
     background-color: white;
     overflow: visible;
 }
+
 .paperprojectplan{
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 15px;
@@ -473,3 +482,19 @@
     .col-11 {width: 91.66%;}
     .col-12 {width: 100%;}
   }
+
+  .input-group-text{
+    background: linear-gradient(45deg, #ffedf1 5%, #ffedf1 50%, #ffedf1 50%);
+    font-weight: bold;
+  }
+
+  /* .form-control:hover  {
+    border: 6px solid rgb(255, 141, 141);
+    transform: translate(5px);
+    transition: 200ms;
+  }
+  .form-select:hover{
+    border: 6px solid rgb(255, 141, 141);
+    transform: translate(5px);
+    transition: 200ms;
+  } */

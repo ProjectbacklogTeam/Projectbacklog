@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 03, 2023 at 07:22 AM
+-- Generation Time: Feb 07, 2023 at 07:55 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.27
 
@@ -204,7 +204,12 @@ CREATE TABLE `doingby` (
 --
 
 INSERT INTO `doingby` (`id`, `name`) VALUES
-(1, 'test2');
+(1, 'Self Development'),
+(2, 'ID4 Develop'),
+(3, 'IT Develop'),
+(4, ' Outsource'),
+(5, 'Student Internship'),
+(6, 'other');
 
 -- --------------------------------------------------------
 
@@ -227,10 +232,34 @@ CREATE TABLE `emailreqtoapprover` (
 
 CREATE TABLE `history` (
   `id` int(11) NOT NULL,
-  `deletetime` varchar(45) DEFAULT NULL,
-  `detail` varchar(45) NOT NULL,
-  `Requirements_id` int(11) NOT NULL
+  `reason` varchar(200) DEFAULT NULL,
+  `deletetime` datetime DEFAULT NULL,
+  `processname` varchar(45) DEFAULT NULL,
+  `startdate` date DEFAULT NULL,
+  `enddate` date DEFAULT NULL,
+  `painpoint` varchar(200) DEFAULT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `results_benefit` varchar(200) DEFAULT NULL,
+  `exclusion_constraints` varchar(200) DEFAULT NULL,
+  `work_flow` varchar(45) DEFAULT NULL,
+  `extract_file` varchar(45) DEFAULT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `approver_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `tobe_id` int(11) DEFAULT NULL,
+  `asis_id` int(11) DEFAULT NULL,
+  `doingby_id` int(11) DEFAULT NULL,
+  `budget_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `history`
+--
+
+INSERT INTO `history` (`id`, `reason`, `deletetime`, `processname`, `startdate`, `enddate`, `painpoint`, `description`, `results_benefit`, `exclusion_constraints`, `work_flow`, `extract_file`, `admin_id`, `approver_id`, `user_id`, `tobe_id`, `asis_id`, `doingby_id`, `budget_id`) VALUES
+(36, 'sssssssssssssssssssssssssssssssssss', '2023-02-06 15:30:32', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(37, NULL, NULL, 'testtime 4', '2023-02-06', '2023-02-08', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1, 1, 1, 1),
+(38, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaa', '2023-02-07 10:40:02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -302,8 +331,8 @@ CREATE TABLE `prototype` (
 CREATE TABLE `requirements` (
   `id` int(11) NOT NULL,
   `processname` varchar(45) DEFAULT NULL,
-  `startdate` datetime(1) DEFAULT NULL,
-  `enddate` datetime(1) DEFAULT NULL,
+  `startdate` date DEFAULT NULL,
+  `enddate` date DEFAULT NULL,
   `painpoint` varchar(45) DEFAULT NULL,
   `description` varchar(45) DEFAULT NULL,
   `results_benefit` varchar(45) DEFAULT NULL,
@@ -316,16 +345,9 @@ CREATE TABLE `requirements` (
   `tobe_id` int(11) DEFAULT NULL,
   `asis_id` int(11) DEFAULT NULL,
   `doingby_id` int(11) DEFAULT NULL,
-  `budget_id` int(11) DEFAULT NULL
+  `budget_id` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `requirements`
---
-
-INSERT INTO `requirements` (`id`, `processname`, `startdate`, `enddate`, `painpoint`, `description`, `results_benefit`, `exclusion_constraints`, `work_flow`, `extract_file`, `admin_id`, `user_id`, `approver_id`, `tobe_id`, `asis_id`, `doingby_id`, `budget_id`) VALUES
-(1, 'test', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 3, 2, 1, 2, 1, 2),
-(14, 'test2222', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -385,7 +407,9 @@ CREATE TABLE `tobe` (
 --
 
 INSERT INTO `tobe` (`id`, `name`) VALUES
-(1, 'test');
+(1, 'Digitization : ยกระดับระบบ'),
+(2, 'Digitalization : เปลี่ยนกระบวนการทำงาน'),
+(3, 'Digital Transformation : ส่งมอบลูกค้า');
 
 -- --------------------------------------------------------
 
@@ -526,7 +550,13 @@ ALTER TABLE `emailreqtoapprover`
 --
 ALTER TABLE `history`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_history_Requirements1_idx` (`Requirements_id`);
+  ADD KEY `fk_admin_idx` (`admin_id`),
+  ADD KEY `fk_approver_idx` (`approver_id`),
+  ADD KEY `fk_user_idx` (`user_id`),
+  ADD KEY `fk_doingby_idx` (`doingby_id`),
+  ADD KEY `fk_asis_idx` (`asis_id`),
+  ADD KEY `fk_budget_idx` (`budget_id`),
+  ADD KEY `fk_tobe_idx` (`tobe_id`);
 
 --
 -- Indexes for table `login`
@@ -654,7 +684,7 @@ ALTER TABLE `emailreqtoapprover`
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `login`
@@ -672,7 +702,7 @@ ALTER TABLE `preparedata`
 -- AUTO_INCREMENT for table `projectmanagement`
 --
 ALTER TABLE `projectmanagement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `prototype`
@@ -684,7 +714,7 @@ ALTER TABLE `prototype`
 -- AUTO_INCREMENT for table `requirements`
 --
 ALTER TABLE `requirements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT for table `status`
@@ -757,7 +787,13 @@ ALTER TABLE `emailreqtoapprover`
 -- Constraints for table `history`
 --
 ALTER TABLE `history`
-  ADD CONSTRAINT `fk_history_Requirements1` FOREIGN KEY (`Requirements_id`) REFERENCES `requirements` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_admin` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_approver` FOREIGN KEY (`approver_id`) REFERENCES `approver` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_asis` FOREIGN KEY (`asis_id`) REFERENCES `asis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_budget` FOREIGN KEY (`budget_id`) REFERENCES `budget` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_doingby` FOREIGN KEY (`doingby_id`) REFERENCES `doingby` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_tobe` FOREIGN KEY (`tobe_id`) REFERENCES `tobe` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `login`
@@ -771,7 +807,7 @@ ALTER TABLE `login`
 ALTER TABLE `projectmanagement`
   ADD CONSTRAINT `fk_projectmanagement_approvals1` FOREIGN KEY (`approvals_id`) REFERENCES `approvals` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_projectmanagement_emailreqtoapprover1` FOREIGN KEY (`emailreqtoapprover_id`) REFERENCES `emailreqtoapprover` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_projectmanagement_requirements1` FOREIGN KEY (`requirements_id`) REFERENCES `requirements` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_projectmanagement_requirements1` FOREIGN KEY (`requirements_id`) REFERENCES `requirements` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `prototype`
@@ -783,13 +819,13 @@ ALTER TABLE `prototype`
 -- Constraints for table `requirements`
 --
 ALTER TABLE `requirements`
-  ADD CONSTRAINT `fk_requirements_admin1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_requirements_approver1` FOREIGN KEY (`approver_id`) REFERENCES `approver` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_requirements_admin1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_requirements_approver1` FOREIGN KEY (`approver_id`) REFERENCES `approver` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_requirements_asis1` FOREIGN KEY (`asis_id`) REFERENCES `asis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_requirements_budget1` FOREIGN KEY (`budget_id`) REFERENCES `budget` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_requirements_doingby1` FOREIGN KEY (`doingby_id`) REFERENCES `doingby` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_requirements_tobe1` FOREIGN KEY (`tobe_id`) REFERENCES `tobe` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_requirements_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_requirements_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user`
