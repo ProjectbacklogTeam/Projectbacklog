@@ -6,6 +6,17 @@ function loadpjmanagement(){
 }
 
 
+
+var toggleeditplan = function(id){
+  console.log(id)
+  const datestart = document.getElementById("datestart"+id);
+  const dateend = document.getElementById("dateend"+id);
+
+  datestart.disabled = !datestart.disabled ;
+  dateend.disabled = !dateend.disabled ;
+}
+
+
 var getpjmanagment = function(){
         var requestOptions = {
           method: 'GET',
@@ -21,15 +32,19 @@ var getpjmanagment = function(){
             console.log(jsonObj)
             for (let req of jsonObj) {
               var row = `
-                      <tr style="text-align:center">
+                      <tr id="plan`+req.id+`" style="text-align:center" >
                           <th scope="row">`+ req.id + `</th>
                           <td>`+ req.processname + `</td>
-                          <td></td>
-                          <td>`+ req.startdate + `</td>
-                          <td>`+ req.enddate + `</td>
+                          <td>`+req.startdate.substring(0,4)+`</td>
+                          <td>
+                          <input type="date" value="`+req.startdate+`" class="form-control"  aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="datestart`+req.id+`" disabled>
+                          </td>
+                          <td>
+                          <input type="date" value="`+req.enddate+`" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="dateend`+req.id+`" disabled>
+                          </td>          
                           <td>`+"waiting for approve"+`</td>
                           <td>
-                          <button type="button" name="btn_update" onclick="requriment_one(`+ req.id + `)" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updatereqone` + req.id + `">
+                          <button type="button" onclick="toggleeditplan(`+req.id +`)" class="btn btn-warning">
                               edit
                           </button>
                           </td>
@@ -39,55 +54,6 @@ var getpjmanagment = function(){
                           </button>
                           </td>
                     </tr>
-                    <div class="modal fade" id="datadetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" style="font-weight: normal;">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Project detail</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="row">
-                            <div class="col-12 center" style="border: 1px solid black;height: 850px; width: 460px;">
-                              <div class="row mt-3">
-                                <span>ส่ง Email เพื่อยืนยันการอนุมัติ</span>
-                                <div class="col-12 mb-1 mt-4">
-                                  <div class="input-group mb-3">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">Topic</span>
-                                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                  </div>
-                                </div>
-                                <div class="col-12 mb-1 mt-2">
-                                  <div class="input-group mb-3">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
-                                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                  </div>
-                                </div>
-                                <div class="col-12 mb-1 mt-2">
-                                  <textarea type="text" style="height: 400px;width: 100%;"></textarea>
-                                </div>
-                                <div class="col-5 mb-1 mt-2">
-                                  <span>Work Flow </span>
-                                  <input class="mt-3 w-100" type="text" disabled>
-                                </div>
-                                <div class="col-5 mb-1 mt-2 ">
-                                  <span>Extract File
-                                  </span>
-                                  <input class="mt-3 w-100" type="text" disabled>
-                                </div>
-                              </div>
-                              <div class="col-12 mt-3 mb-3" style="text-align: end;">
-                                <button type="button" class="buttonsend">SAVE AND SEND</button>
-    
-                              </div>
-    
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                       `
               reqall_tabel.insertAdjacentHTML('beforeend', row);
               
@@ -377,45 +343,73 @@ var getreqall = function () {
   }
 
 
-// function addtabletopjmanager() {
-//   var result = JSON.parse(localStorage.getItem("result"));
-//   console.log(result)
-//   for (var i = 0; i < result.length; i++) {
-//     var tableatpjmanager = document.getElementById("tabel_pjmanager")   
-//     if (tableatpjmanager == null) {
-//       console.error("One or both tables could not be found in the HTML document.");
-//       return;
-//     }else{
-//       var row = tableatpjmanager.insertRow();
-//       var cel1 = row.insertCell(0);
-//       var cel2 = row.insertCell(1);
-//       var cel3 = row.insertCell(2);
-//       var cel4 = row.insertCell(3);
-//       var cel5 = row.insertCell(4);
-//       var cel6 = row.insertCell(5);
-//       cel1.innerHTML = result[i].id;
-//       cel2.innerHTML = result[i].processname;
-//       cel3.innerHTML = `
-//             <button type="button" name="btn_update" onclick="requriment_one(`+ result[i].id + `)" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updatereqone` +result[i].id+ `">
-//             Detail
-//           </button>
-//       `
-//       cel4.innerHTML = `<input type="date" class="form-control"  aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="datestart"> `
-//       cel5.innerHTML = `<input type="date" class="form-control"  aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="dateend"> `
-//       cel6.innerHTML = `<button type="button" name="btn_save" class="buttonsave" onclick="savepjmanagement(`+result[i].id+`)">SAVE</button>`
-//     }
+  var requriment_one = function (id) {
+    console.log(id)
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
   
-   
-//     console.log()
-
-//   }
-
-
-
-
-     
-
-//     };
-//     addtabletopjmanager();
-
+    fetch("http://localhost/projectbacklog/backend/home/home_readonereq_db.php?id=" + id, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        console.log(result)
+        var jsonObj1 = JSON.parse(result);
+        console.log(jsonObj1);
+        var asisoption = document.getElementById('asis' + id);
+        var tobeoption = document.getElementById('tobe' + id);
+        var doingbyoption = document.getElementById('doingby' + id);
+        var budgetoption = document.getElementById('budget' + id);
+        fetch("http://localhost/projectbacklog/backend/requriment_db.php", requestOptions)
+          .then(response => response.text())
+          .then(result => {
+            var jsonObj = JSON.parse(result);
+            console.log(jsonObj);
+            for (let asis of jsonObj[0]) {
+              var row =
+                `
+                  <option value=`+ asis.id + `>` + asis.name + `</option>
+                `
+              asisoption.insertAdjacentHTML('beforeend', row);
+            }
+            for (let tobe of jsonObj[1]) {
+              var row =
+                `
+                <option value=`+ tobe.id + `>` + tobe.name + `</option>
+                `
+              tobeoption.insertAdjacentHTML('beforeend', row);
+            }
+            for (let doingby of jsonObj[2]) {
+              var row =
+                `
+                <option value=`+ doingby.id + `>` + doingby.name + `</option>
+                `
+              doingbyoption.insertAdjacentHTML('beforeend', row);
+            }
+            for (let budget of jsonObj[3]) {
+              var row =
+                `
+                <option value=`+ budget.id + `>` + budget.name + `</option>
+                `
+              budgetoption.insertAdjacentHTML('beforeend', row);
+            }
+          }
+          )
+  
+        document.getElementById('requestid' + id).value = jsonObj1.id
+        // document.getElementById('startdate'+id).value = jsonObj.startdate
+        // document.getElementById('enddate'+id).value = jsonObj.enddate
+        document.getElementById('processname' + id).value = jsonObj1.processname
+        // document.getElementById('doingby'+id).value = jsonObj.doingby
+        // document.getElementById('asis'+id).value = jsonObj.asis
+        // document.getElementById('tobe'+id).value = jsonObj.tobe
+        // document.getElementById('budget'+id).value = jsonObj.budget
+  
+        console.log(jsonObj1.processname)
+      }
+      )
+  
+  
+  }
+  
 

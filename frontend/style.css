@@ -151,7 +151,6 @@ margin-right: auto;
 }
 
 
-
 .paperprojectmanagement{
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 15px;
@@ -162,7 +161,15 @@ margin-right: auto;
     background-color: white;
     overflow: visible;
 }
+td {
+    text-align: center;
+    vertical-align:middle;
+  }
+th{
+    text-align: center;
+    vertical-align:middle;
 
+}
 .paperprojectplan{
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 15px;

@@ -7,14 +7,11 @@ var getreqall = function () {
   fetch("http://localhost/projectbacklog/backend/home/home_db.php", requestOptions)
     .then(response => response.text())
     .then(result => {
-      console.log(result)
+
       reqall_tabel.innerHTML = '';
       var jsonObj = JSON.parse(result);
-      console.log(jsonObj)
       
-
       for (let req of jsonObj) {
-        console.log(req);
         if (req.startdate == null) {
           var startdate = "ยังไม่ระบุ"
         } else {
@@ -38,7 +35,7 @@ var getreqall = function () {
         // localStorage.setItem("idreq",req.id)
         // localStorage.setItem("processname",processname)
         var row = `
-                <tr style="text-align:center">
+                <tr">
                     <th scope="row" id="req">`+ req.id + `</th>
                     <td>`+ startdate + `</td>
                     <td>`+ enddate + `</td>
@@ -55,12 +52,12 @@ var getreqall = function () {
                     </button>
                     </td>
               </tr>
-              <div class="modal fade" id="updatereqone`+ req.id + `" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal fade" id="updatereqone`+ req.id + `" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" aria-hidden="true">
               <div class="modal-dialog modal-sm" style="margin-left: 60px;">
                 <div class="modal-content" style="width: 1100px; margin-left: 130px;">
                   <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Requirements Update</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="window.location.reload()"></button>
                   </div>
                   <div class="modal-body" style="height: 1000px;width: 1000px;">
                     <div class="row">
@@ -104,9 +101,8 @@ var getreqall = function () {
                           <div class="col-6 mb-1">
                             <div class="input-group mb-3">
                               <span class="input-group-text" id="inputGroup-sizing-default">วันที่ขอ</span>
-                              <input type="date" value="`+ startdate + `"  id="startdate` + req.id + `" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled>
-                              
-                              </div>
+                              <input type="date" value="`+startdate+ `"  id="startdate` + req.id + `" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled>
+                            </div>
                           </div>
                           <div class="col-6 mb-1">
                             <div class="input-group mb-3">
@@ -132,7 +128,7 @@ var getreqall = function () {
                           <div class="col-6 mb-1">
                             <div class="input-group">
                               <label class="input-group-text" for="inputGroupSelect01">Doing By</label>
-                              <select class="form-select" id="doingby`+ req.id + `" disabled>
+                              <select class="form-select"  id="doingby`+ req.id + `" disabled>
 
                               </select>
                             </div>
@@ -242,10 +238,10 @@ var getoptionreq = function () {
     method: 'GET',
     redirect: 'follow'
   };
-  var asisoption = document.getElementById('asis_id');
-  var tobeoption = document.getElementById('tobe_id');
-  var doingbyoption = document.getElementById('doingby_id');
-  var budgetoption = document.getElementById('budget_id');
+  var asis_option = document.getElementById('asis_id');
+  var tobe_option = document.getElementById('tobe_id');
+  var doingby_option = document.getElementById('doingby_id');
+  var budget_option = document.getElementById('budget_id');
   fetch("http://localhost/projectbacklog/backend/requriment_db.php", requestOptions)
     .then(response => response.text())
     .then(result => {
@@ -257,28 +253,28 @@ var getoptionreq = function () {
           `
           <option value=`+ asis.id + `>` + asis.name + `</option>
           `
-        asisoption.insertAdjacentHTML('beforeend', rowasis);
+          asis_option.insertAdjacentHTML('beforeend', rowasis);
       }
       for (let tobe of jsonObj[1]) {
         var row =
           `
           <option value=`+ tobe.id + `>` + tobe.name + `</option>
           `
-        tobeoption.insertAdjacentHTML('beforeend', row);
+          tobe_option.insertAdjacentHTML('beforeend', row);
       }
       for (let doingby of jsonObj[2]) {
         var row =
           `
           <option value=`+ doingby.id + `>` + doingby.name + `</option>
           `
-        doingbyoption.insertAdjacentHTML('beforeend', row);
+          doingby_option.insertAdjacentHTML('beforeend', row);
       }
       for (let budget of jsonObj[3]) {
         var row =
           `
           <option value=`+ budget.id + `>` + budget.name + `</option>
           `
-        budgetoption.insertAdjacentHTML('beforeend', row);
+          budget_option.insertAdjacentHTML('beforeend', row);
       }
     }
     )
@@ -370,7 +366,7 @@ function savereqtohistory(id) {
 }
 
 var requriment_one = function (id) {
-  console.log(id)
+
   var requestOptions = {
     method: 'GET',
     redirect: 'follow',

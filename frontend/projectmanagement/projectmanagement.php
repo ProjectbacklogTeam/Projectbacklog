@@ -36,8 +36,8 @@ session_start();
                 <th scope="col">Request id</th>
                 <th scope="col">Process Name</th>
                 <th scope="col">Detail</th>
-                <th scope="col">start date</th>
-                <th scope="col">end date</th>
+                <th scope="col">Plan StartDate</th>
+                <th scope="col">Plan EndDate</th>
                 <th scope="col"></th>
               </thead>
 

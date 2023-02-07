@@ -32,7 +32,7 @@ if (isset($_SESSION['admin_login'])) {
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sriracha">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body onload="onloadfunction()">
@@ -168,6 +168,7 @@ if (isset($_SESSION['admin_login'])) {
           <div class="paperreq center">
             <div class="row" style="margin-top: 5%;margin-left: 2%;">
               <h1>Requirements</h1>
+           
               <div class="col-12 mt-3 mb-5">
                 <div class="input-group mb-3">
                   <span class="input-group-text" id="inputGroup-sizing-default">ชื่อเรื่อง</span>
@@ -177,13 +178,13 @@ if (isset($_SESSION['admin_login'])) {
               <div class="col-6 mb-5">
                 <div class="input-group mb-3">
                   <span class="input-group-text" id="inputGroup-sizing-default">วันที่ขอ</span>
-                  <input type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="startdate">
+                  <input type="date"  class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="startdate">
                 </div>
               </div>
               <div class="col-6 mb-5">
                 <div class="input-group mb-3">
                   <span class="input-group-text" id="inputGroup-sizing-default">วันที่ต้องการใช้ระบบ</span>
-                  <input type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="enddate">
+                  <input type="date"  class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="enddate">
                 </div>
               </div>
               <div class="col-6 mb-5">
@@ -269,42 +270,42 @@ if (isset($_SESSION['admin_login'])) {
             </script>
 
           </div>
-         
-            <div class="row" style="margin-top:150px">
-              <div class="col-6">
-              </div>
-              <div class="col-6">
-                <div class="input-group">
-                  <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                  <button type="button" class="btn btn-primary">search</button>
-                </div>
+
+          <div class="row" style="margin-top:150px">
+            <div class="col-6">
+            </div>
+            <div class="col-6">
+              <div class="input-group">
+                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <button type="button" class="btn btn-primary">search</button>
               </div>
             </div>
+          </div>
 
 
-            <div class="papertablereq">
-              <table class="table mt-1">
-                <thead style="text-align:center">
-                  <th scope="col">Request id</th>
-                  <th scope="col">Request Date</th>
-                  <th scope="col">Request Enddate</th>
-                  <th scope="col">Process Name</th>
-                  <th scope="col">Doing By</th>
-                  <th scope="col">Process Status</th>
-                  <th scope="col"></th>
-                </thead>
+          <div class="papertablereq">
+            <table class="table mt-1">
+              <thead style="text-align:center">
+                <th scope="col">Request id</th>
+                <th scope="col">Request Date</th>
+                <th scope="col">Request Enddate</th>
+                <th scope="col">Process Name</th>
+                <th scope="col">Doing By</th>
+                <th scope="col">Process Status</th>
+                <th scope="col"></th>
+              </thead>
 
-                <tbody id="reqall_tabel">
+              <tbody id="reqall_tabel">
 
-                </tbody>
+              </tbody>
 
-              </table>
-              </div>
-            </div>
+            </table>
+          </div>
         </div>
-
     </div>
-    <!-- <div class="paperprojectmanagement">
+
+  </div>
+  <!-- <div class="paperprojectmanagement">
 
 <table class="table">
   <thead style="text-align:center">
