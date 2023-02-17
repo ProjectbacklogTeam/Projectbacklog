@@ -14,10 +14,14 @@ try {
             'processname' => $row['processname'],
             'startdate' => $row['startdate'],
             'enddate' => $row['enddate'],
-            'doingby' => $row[18],
-            'asis' => $row[20],
-            'tobe' => $row[22],
-            'budget' => $row[24],
+            'doingbyid' => $row[23],
+            'doingby' => $row[24],
+            'asisid' => $row[25],
+            'asis' => $row[26],
+            'tobeid' => $row[27],
+            'tobe' => $row[28],
+            'budgetid' => $row[29],
+            'budget' => $row[30],
         );
         echo json_encode($req);
         break;

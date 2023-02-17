@@ -1,3 +1,8 @@
+
+var countdataintablereq = 0
+const countem=0
+
+
 var getreqall = function () {
   var requestOptions = {
     method: 'GET',
@@ -7,18 +12,58 @@ var getreqall = function () {
   fetch("http://localhost/projectbacklog/backend/home/home_db.php", requestOptions)
     .then(response => response.text())
     .then(result => {
-
       reqall_tabel.innerHTML = '';
       var jsonObj = JSON.parse(result);
+      //console.log(jsonObj)
+
+
+      var adminloginID = localStorage.getItem("idadmin");
+      var approverloginID = localStorage.getItem("idapprover");
+      var userloginID = localStorage.getItem("iduser");
+      // console.log(approverloginID)
+
+
+
+      if (adminloginID == "null" || adminloginID == null) {
+        var adminlogin = 0
+      } else {
+        adminlogin = Number(adminloginID)
+      }
+
+      if (approverloginID == "null" || approverloginID == null) {
+        var approverlogin = 0
+      } else {
+        approverlogin = Number(approverloginID)
+      }
+
+      if (userloginID == "null" || userloginID == null) {
+        var userlogin = 0
+      } else {
+        userlogin = Number(userloginID)
+      }
+
+      var admin_id = 0
+      var approver_id = 0
+      var user_id = 0
+      countdataintablereq = jsonObj.length
+      var reqalldashboard = document.getElementById("reqalldashboard");
+      reqalldashboard.innerHTML = countdataintablereq
       
       for (let req of jsonObj) {
+
+        if(req.statusforprocess == "2"){
+          countem+=1
+        }
+        
+
+
         if (req.startdate == null) {
-          var startdate = "ยังไม่ระบุ"
+          var startdate = "0000-00-00"
         } else {
           var startdate = req.startdate
         }
         if (req.enddate == null) {
-          var enddate = "ยังไม่ระบุ"
+          var enddate = "0000-00-00"
         } else {
           var enddate = req.enddate
         }
@@ -27,36 +72,204 @@ var getreqall = function () {
         } else {
           var processname = req.processname
         }
-        if (req.doingby_id == null) {
-          var doingby_id = "ยังไม่ระบุ"
+        if (req.doingby == "null") {
+          var doingby = "ยังไม่ระบุ"
         } else {
-          var doingby_id = req.doingby_id
+          var doingby = req.doingby
         }
-        // localStorage.setItem("idreq",req.id)
-        // localStorage.setItem("processname",processname)
+        if (req.asis == null) {
+          var asis = "ยังไม่ระบุ"
+        } else {
+          var asis = req.asis
+        }
+        if (req.tobe == null) {
+          var tobe = "ยังไม่ระบุ"
+        } else {
+          var tobe = req.tobe
+        }
+        if (req.budget == null) {
+          var budget = "ยังไม่ระบุ"
+        } else {
+          var budget = req.budget
+        }
+
+
+        if (req.admin_id == null) {
+          admin_id = 0
+        } else {
+          admin_id = Number(req.admin_id)
+        }
+        if (req.approver_id == null) {
+          approver_id = 0
+        } else {
+          approver_id = Number(req.approver_id)
+        }
+        if (req.user_id == null) {
+          user_id = 0
+        } else {
+          user_id = Number(req.user_id)
+        }
+
+        $(document).ready(function() {
+          $("#startdate"+req.id).datepicker({
+            format: "dd/mm/yy",
+            autoclose: true,
+            todayHighlight: true,
+          });
+          $("#enddate"+req.id).datepicker({
+            format: "dd/mm/yy",
+            autoclose: true,
+            todayHighlight: true,
+          });
+        });
+ 
+        var startdateparts = startdate.split('-');
+        var startdateyear = parseInt(startdateparts[0]);
+        var startdatemonth = parseInt(startdateparts[1]);
+        var startdateday = parseInt(startdateparts[2]);
+        var startdateObject = new Date(startdateyear, startdatemonth - 1, startdateday);
+        var options = {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric'
+        };
+        var formattedstartDate = startdateObject.toLocaleDateString('en-GB', options);
+        formattedstartDate = formattedstartDate.replace('.', '');
+        //var formattedstartDate = startdateObject.toLocaleDateString('th-TH', options);
+
+
+
+        var enddateparts = enddate.split('-');
+        var enddateyear = parseInt(enddateparts[0]);
+        var enddatemonth = parseInt(enddateparts[1]);
+        var enddateday = parseInt(enddateparts[2]);
+        var enddateObject = new Date(enddateyear, enddatemonth - 1, enddateday);
+        var options = {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric'
+        };
+        var formattedendDate = enddateObject.toLocaleDateString('en-GB', options);
+        formattedendDate = formattedendDate.replace('.', '');
+
+
+
+        
+
         var row = `
                 <tr">
                     <th scope="row" id="req">`+ req.id + `</th>
-                    <td>`+ startdate + `</td>
-                    <td>`+ enddate + `</td>
+                    <td>`+ formattedstartDate + `</td>
+                    <td>`+ formattedendDate + `</td>
                     <td>`+ processname + `</td>
-                    <td>`+ doingby_id + `</td>
+                    <td>`+ doingby + `</td>
                     <td>
-                    <button type="button" name="btn_update" onclick="requriment_one(`+ req.id + `)" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updatereqone` + req.id + `">
-                        update
+                    <div class="item2">
+                      <div class="content2">
+                        <button class="buttonprocess2" style="background:`+ (((req.statusforprocess >= 1) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;" disabled>
+                          <i class="fa-solid fa-book fa-1x"></i>
+                        </button>
+                      </div>
+                    </div>
+                    </td>
+                    <td>
+                    <div class="item2">
+                    <div class="content2">
+                      <button class="buttonprocess2" style="background:`+ (((req.statusforprocess >= 2) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;" disabled>
+                        <i class="fa-solid fa-user-pen fa-1x"></i>
+                      </button>        
+                      </div>
+                    </div>
+                    </td>
+                    <td>
+                    <div class="item2">
+                      <div class="content2">  
+                        <button class="buttonprocess2" style="background:`+ (((req.statusforprocess >= 3) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;" disabled>
+                          <i class="fa-solid fa-person-circle-check fa-1x"></i>
+                        </button>                   
+                      </div>
+                    </div>
+                    </td>
+                    <td>
+                    <div class="item2">
+                        <div class="content2">
+                          <button class="buttonprocess2" style="background:`+ (((req.statusforprocess >= 4) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;" disabled>
+                            <i class="fa-solid fa-swatchbook fa-1x"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                    </td>
+                    <td>
+                    <div class="item2">
+                    <div class="content2">     
+                      <button class="buttonprocess2" style="background:`+ (((req.statusforprocess >= 5) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;" disabled>
+                        <i class="fa-solid fa-circle-check fa-1x"></i>
+                      </button>             
+                    </div>
+                  </div>
+                    </td>
+                    <td>
+                    <div class="item2">
+                    <div class="content2">
+                      <button class="buttonprocess2" style="background:`+ (((req.statusforprocess >= 6) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;" disabled>
+                        <i class="fa-solid fa-diagram-project fa-1x"></i> </button>              
+                    </div>
+                  </div>
+                    </td>
+                    <td>
+                    <div class="item2">
+                      <div class="content2">
+
+                        <button class="buttonprocess2" style="background:`+ (((req.statusforprocess >= 7) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;" disabled>
+                          <i class="fa-solid fa-computer fa-1x"></i>
+                        </button>         
+                      </div>
+                   </div>
+                    </td>
+                    <td>
+                    <div class="item2">
+                      <div class="content2">
+                        <button class="buttonprocess2" style="background:`+ (((req.statusforprocess >= 8) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;" disabled>
+                          <i class="fa-solid fa-clipboard-check fa-1x"></i>
+                        </button>       
+                      </div>
+                    </div>
+                    </td>
+                    <td>                  
+                    <div class="item2">
+                      <div class="content2">
+                        <button class="buttonprocess2" style="background:`+ (((req.statusforprocess >= 9) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;" disabled>
+                          <i class="fa-solid fa-box-open fa-1x"></i>
+                        </button>            
+                      </div>
+                    </div>
+                    </td>
+                    <td>                
+                    <div class="item2">
+                      <div class="content2">
+                        <button class="buttonprocess2" style="background:`+ (((req.statusforprocess >= 10) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;" disabled>
+                          <i class="fa-solid fa-heart fa-1x"></i>
+                        </button>            
+                      </div>
+                    </div>
+                    </td>
+                    <td>
+                    <button type="button" onclick="requriment_one(`+req.id+`)"  class="btn btn-warning" id="buttonupdate`+ req.id + `" name="btn_update" style="color:white;display:` + ((adminlogin == admin_id && adminlogin != 0) ? 'inline' : (approverlogin == approver_id && approverlogin != 0) ? 'inline' : (userlogin == user_id && userlogin != 0) ? 'inline' : 'none') + `"  data-bs-toggle="modal" data-bs-target="#updatereqone` + req.id + `">
+                        UPDATE
                     </button>
                     </td>
                     <td>
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletealert">
+                    <button type="button"  class="btn btn-danger" style="color:white;display:` + ((adminlogin == admin_id && adminlogin != 0) ? 'inline' : (approverlogin == approver_id && approverlogin != 0) ? 'inline' : (userlogin == user_id && userlogin != 0) ? 'inline' : 'none') + `" data-bs-toggle="modal" data-bs-target="#deletealert`+ req.id + `">
                       DELETE
                     </button>
                     </td>
               </tr>
               <div class="modal fade" id="updatereqone`+ req.id + `" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" aria-hidden="true">
-              <div class="modal-dialog modal-sm" style="margin-left: 60px;">
+              <div class="modal-dialog modal-lg" style="margin-left: 60px;">
                 <div class="modal-content" style="width: 1100px; margin-left: 130px;">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Requirements Update</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Emphathize</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="window.location.reload()"></button>
                   </div>
                   <div class="modal-body" style="height: 1000px;width: 1000px;">
@@ -99,29 +312,32 @@ var getreqall = function () {
                             </div>
                           </div>
                           <div class="col-6 mb-1">
-                            <div class="input-group mb-3">
+                            <div class="input-group date mb-3" style="width:100%">
                               <span class="input-group-text" id="inputGroup-sizing-default">วันที่ขอ</span>
-                              <input type="date" value="`+startdate+ `"  id="startdate` + req.id + `" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled>
+                              <input  type="text" value="`+ formattedstartDate + `" id="startdate` + req.id + `" class="form-control" placeholder="dd/mm/yyyy" disabled>
                             </div>
                           </div>
                           <div class="col-6 mb-1">
-                            <div class="input-group mb-3">
-                              <span class="input-group-text" id="inputGroup-sizing-default">วันที่ต้องการใช้ระบบ</span>
-                              <input type="date" value="`+ enddate + `" id="enddate` + req.id + `" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled>
+                            <div class="input-group date mb-3" style="width:100%">
+                              <span class="input-group-text" id="inputGroup-sizing-default">วันที่ขอ</span>
+                              <input type="text" value="`+ formattedendDate + `" id="enddate` + req.id + `" class="form-control" placeholder="dd/mm/yyyy" disabled>
                             </div>
+                           
+                          
                           </div>
                           <div class="col-6 mb-1">
                             <div class="input-group">
                               <label class="input-group-text" for="inputGroupSelect01">ASIS</label>
                               <select class="form-select" id="asis`+ req.id + `" disabled>
+
                               </select>
                             </div>
                           </div>
                           <div class="col-6 mb-1">
                             <div class="input-group">
                               <label class="input-group-text" for="inputGroupSelect01">TOBE</label>
-                              <select class="form-select" id="tobe`+ req.id + `" disabled>
-                             
+                              <select class="form-select"  id="tobe`+ req.id + `" disabled>
+
                               </select>
                             </div>
                           </div>
@@ -137,7 +353,7 @@ var getreqall = function () {
                             <div class="input-group">
                               <label class="input-group-text" for="inputGroupSelect01">BUDJET</label>
                               <select class="form-select" id="budget`+ req.id + `" disabled>
-                             
+
                               </select>
                             </div>
                           </div>
@@ -154,8 +370,16 @@ var getreqall = function () {
                             <textarea id="description`+ req.id + `" class="mt-3" type="text" style="height:90px;width:100%" disabled></textarea>
                           </div>
                           <div class="col-6 mb-1 mt-2">
+                          <span>Approvals</span><br>
+                          <input id="approvals`+ req.id + `" class="mt-3" type="text" disabled>
+                        </div>
+                          <div class="col-6 mb-1 mt-2">
                             <span>Scope of Work </span><br>
                             <input id="scopeofwork`+ req.id + `" class="mt-3" type="file" disabled>
+                          </div>
+                          <div class="col-6 mb-1 mt-2">
+                            <span>Risk Management </span><br>
+                            <input id="riskmanagement`+ req.id + `" class="mt-3" type="file" disabled>
                           </div>
                           <div class="col-6 mb-1 mt-2">
                           <span>Bussiness Flow </span><br>
@@ -169,27 +393,17 @@ var getreqall = function () {
                             <span>Extract File (แนบไฟล์เดิมของระบบ)</span><br>
                             <input id="extractfile`+ req.id + `" class="mt-3" type="file" disabled>
                           </div>
-                          <div class="col-6 mb-1 mt-2">
-                            <span>Approvals</span><br>
-                            <input id="approvals`+ req.id + `" class="mt-3" type="text" disabled>
-                          </div>
-        
+                       
                           
                           <div class="col-11 mt-2" style="text-align:end ;">
-                          <button class="buttonedit" onclick="togglebtnedit(`+ req.id + `)">เเก้ไข</button>
+                          <button class="buttonedit" onclick="togglebtnedit(`+ req.id + `)" >เเก้ไข</button>
                           </div>
                           <div class="col-1 mt-2" style="text-align:end ;">
-                            <button class="buttonsave">บันทึก</button>
-                          </div>
-        
-        
-                        </div>
-        
-        
-                      </div>
-        
-                    </div>
-        
+                            <button class="buttonsave" id="save-button`+ req.id + `"  data-bs-toggle="modal" data-bs-target="#successalert" onclick="updatereq(` + req.id + `)" disabled>บันทึก</button>
+                          </div>    
+                        </div>      
+                      </div>     
+                    </div>       
                   </div>
                 </div>
         
@@ -198,7 +412,8 @@ var getreqall = function () {
               </div>
         
             </div>
-              <div class="modal fade" id="deletealert" tabindex="-1" aria-labelledby="deletealert" aria-hidden="true">
+          
+              <div class="modal fade" id="deletealert`+ req.id + `" tabindex="-1" aria-labelledby="deletealert" aria-hidden="true" data-bs-backdrop="static">
                 <div class="modal-dialog  modal-dialog-centered">
                   <div class="modal-content" style=" border-radius: 5%;">
                     <div class="modal-header">
@@ -208,19 +423,38 @@ var getreqall = function () {
                       <form>
                         <div class="mb-3">
                           <div class="centeralert" style="text-align:center;">
-                            <i class="fa-solid fa-triangle-exclamation fa-5x" style="color:red"></i>
+                            <i class="fa-solid fa-triangle-exclamation fa-5x" style="color:red"></i><br>
                             <label for="message-text" class="col-form-label">Sure you want to reject?</label>
                           </div>
-                          <textarea id="message_reason_delete" oninput="checkinput()"  class="form-control"  placeholder="กรุณาเขียนเหตุผลในการลบอย่างน้อย 20 ตัวอักษร" style="height:150px"></textarea>
+                          <textarea id="message_reason_delete`+ req.id + `" oninput="checkinput(` + req.id + `)"  class="form-control"  placeholder="กรุณาเขียนเหตุผลในการลบอย่างน้อย 20 ตัวอักษร" style="height:150px"></textarea>
                         </div>
                       </form>
                     </div>
                     <div class="modal-footer">
-                      <button type="button"  id="submitdelete" class="btn btn-danger" data-bs-dismiss="modal" disabled><a onclick="savereqtohistory(`+ req.id + `)">DELETE</a></button>
+                      <button type="button"  id="submitdelete`+ req.id + `" class="btn btn-danger" data-bs-dismiss="modal" disabled><a onclick="savereqtohistory(` + req.id + `)">DELETE</a></button>
                     </div>
                   </div>
                 </div>
-              </div>          
+              </div>
+              <div class="modal fade" id="successalert" tabindex="-1"  data-bs-backdrop="static" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document" id="successalert" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-content" style="border-radius: 5%;">
+                    
+                    <div class="modal-body" style="text-align: center;font-size:20px;font-weight: bold;">
+                      <i class="fa-regular fa-circle-check fa-6x mb-5 mt-3" style="color:#29C821;"></i><br>
+                      <p>Success</p><br>
+                      <p>Your data was saved !</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-success" data-bs-dismiss="modal"><a onclick="window.location.reload()">OK</a></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+           
+                          
+             
                 `
         reqall_tabel.insertAdjacentHTML('beforeend', row);
 
@@ -232,6 +466,81 @@ var getreqall = function () {
     )
     .catch(error => console.log('error', error));
 }
+
+
+var hidebutton = function (reqid, localadmin, localapprover, localuser, adminid, approverid, userid) {
+
+  var btnupdate = document.getElementById("buttonupdate" + reqid)
+  if (adminid == localadmin) {
+    btnupdate.style.display = "inline"
+  } else {
+    btnupdate.style.display = "none"
+  }
+
+  if (approverid == localapprover) {
+    btnupdate.style.display = "inline"
+  } else {
+    btnupdate.style.display = "none"
+  }
+
+  if (userid == localuser) {
+    btnupdate.style.display = "inline"
+  } else {
+    btnupdate.style.display = "none"
+  }
+
+}
+
+
+
+
+var updatereq = function (reqid) {
+  var myheaders = new Headers()
+  myheaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    "processname": document.getElementById("processname" + reqid).value,
+    "startdate": document.getElementById("startdate" + reqid).value,
+    "enddate": document.getElementById("enddate" + reqid).value,
+    "painpoint": document.getElementById("painpoint" + reqid).value,
+    "description": document.getElementById("description" + reqid).value,
+    "results_benefit": document.getElementById("benefit" + reqid).value,
+    "work_flow": document.getElementById("workflow" + reqid).value,
+    "extract_file": document.getElementById("extractfile" + reqid).value,
+    "riskmanagement": document.getElementById("riskmanagement" + reqid).value,
+    "scopeofwork": document.getElementById("scopeofwork" + reqid).value,
+    "bussinessflow": document.getElementById("bussinessflow" + reqid).value,
+    "tobe_id": document.getElementById("tobe" + reqid).value,
+    "asis_id": document.getElementById("asis" + reqid).value,
+    "doingby_id": document.getElementById("doingby" + reqid).value,
+    "budget_id": document.getElementById("budget" + reqid).value,
+    "status": 1,
+    "statusforprocess": 2,
+    "id": reqid,
+  })
+  console.log(raw)
+  var requestOptions = {
+    method: 'PATCH',
+    headers: myheaders,
+    body: raw,
+    redirect: 'follow',
+  };
+  fetch("http://localhost/projectbacklog/backend/home/home_db.php", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      var jsonObj = JSON.parse(result);
+      if (jsonObj.status == 'OK') {
+        const savebutton = document.getElementById("save-button" + reqid);
+        savebutton.disabled = true;
+      } else {
+        alert('not ok');
+      }
+
+    })
+    .catch(error => console.log('error', error));
+}
+
+
 
 var getoptionreq = function () {
   var requestOptions = {
@@ -253,37 +562,33 @@ var getoptionreq = function () {
           `
           <option value=`+ asis.id + `>` + asis.name + `</option>
           `
-          asis_option.insertAdjacentHTML('beforeend', rowasis);
+        asis_option.insertAdjacentHTML('beforeend', rowasis);
       }
       for (let tobe of jsonObj[1]) {
         var row =
           `
           <option value=`+ tobe.id + `>` + tobe.name + `</option>
           `
-          tobe_option.insertAdjacentHTML('beforeend', row);
+        tobe_option.insertAdjacentHTML('beforeend', row);
       }
       for (let doingby of jsonObj[2]) {
         var row =
           `
           <option value=`+ doingby.id + `>` + doingby.name + `</option>
           `
-          doingby_option.insertAdjacentHTML('beforeend', row);
+        doingby_option.insertAdjacentHTML('beforeend', row);
       }
       for (let budget of jsonObj[3]) {
         var row =
           `
           <option value=`+ budget.id + `>` + budget.name + `</option>
           `
-          budget_option.insertAdjacentHTML('beforeend', row);
+        budget_option.insertAdjacentHTML('beforeend', row);
       }
     }
     )
 }
 
-function onloadfunction() {
-  getreqall()
-  getoptionreq();
-}
 
 
 var requriment_delete = function (id) {
@@ -322,7 +627,7 @@ var historyreq = function (id) {
   myheaders.append("Content-Type", "application/json");
   var raw = JSON.stringify({
     "id": id,
-    "reason": document.getElementById("message_reason_delete").value,
+    "reason": document.getElementById("message_reason_delete" + id).value,
   })
   console.log(raw)
   var requestOptions = {
@@ -346,10 +651,10 @@ var historyreq = function (id) {
     .catch(error => console.log('error', error));
 }
 
-function checkinput() {
-  console.log('checkinput Hiii')
-  var inputtext = document.getElementById("message_reason_delete").value;
-  var submitdelete = document.getElementById("submitdelete");
+function checkinput(id) {
+  var inputtext = document.getElementById("message_reason_delete" + id).value;
+  var submitdelete = document.getElementById("submitdelete" + id);
+
 
   if (inputtext.length < 20) {
     submitdelete.disabled = true;
@@ -366,7 +671,6 @@ function savereqtohistory(id) {
 }
 
 var requriment_one = function (id) {
-
   var requestOptions = {
     method: 'GET',
     redirect: 'follow',
@@ -378,61 +682,85 @@ var requriment_one = function (id) {
       console.log(result)
       var jsonObj1 = JSON.parse(result);
       console.log(jsonObj1);
-      var asisoption = document.getElementById('asis' + id);
-      var tobeoption = document.getElementById('tobe' + id);
-      var doingbyoption = document.getElementById('doingby' + id);
-      var budgetoption = document.getElementById('budget' + id);
+ 
+
+      document.getElementById('requestid' + id).value = jsonObj1.id
+      document.getElementById('processname' + id).value = jsonObj1.processname
+
+      var optionasis = document.getElementById('asis' + id)
+      var opriontobe = document.getElementById('tobe' + id)
+      var optiondoingby = document.getElementById('doingby' + id)
+      var optionbudget = document.getElementById('budget' + id)
+      
+      var optionasisvalue = ` <option>` + jsonObj1.asis + `</option>`
+      optionasis.insertAdjacentHTML('beforeend', optionasisvalue);
+
+      var optiontobevalue = ` <option>` + jsonObj1.tobe + `</option>`
+      opriontobe.insertAdjacentHTML('beforeend', optiontobevalue);
+
+      var optiondoingbyvalue = ` <option>` + jsonObj1.doingby + `</option>`
+      optiondoingby.insertAdjacentHTML('beforeend', optiondoingbyvalue);
+
+      var optionbudgetvalue = ` <option>` + jsonObj1.budget + `</option>`
+      optionbudget.insertAdjacentHTML('beforeend', optionbudgetvalue);
+
+
       fetch("http://localhost/projectbacklog/backend/requriment_db.php", requestOptions)
         .then(response => response.text())
         .then(result => {
           var jsonObj = JSON.parse(result);
           console.log(jsonObj);
           for (let asis of jsonObj[0]) {
-            var row =
+            
+              var row =
               `
-                <option value=`+ asis.id + `>` + asis.name + `</option>
+                <option style="display:`+((jsonObj1.asisid==asis.id) ? "none":"inline") +`" value=`+ asis.id + `>`+asis.name+`</option>
               `
-            asisoption.insertAdjacentHTML('beforeend', row);
+              optionasis.insertAdjacentHTML('beforeend', row);
+            
+          
           }
+
+
+
           for (let tobe of jsonObj[1]) {
             var row =
               `
-              <option value=`+ tobe.id + `>` + tobe.name + `</option>
+              <option style="display:`+(jsonObj1.tobeid==tobe.id ? "none":"inline") +`" value=`+ tobe.id + `>` + tobe.name + `</option>
               `
-            tobeoption.insertAdjacentHTML('beforeend', row);
+              opriontobe.insertAdjacentHTML('beforeend', row);
           }
+
+
+
           for (let doingby of jsonObj[2]) {
             var row =
               `
-              <option value=`+ doingby.id + `>` + doingby.name + `</option>
+              <option style="display:`+(jsonObj1.doingbyid==doingby.id ? "none":"inline") +`" value=`+ doingby.id + `>` + doingby.name + `</option>
               `
-            doingbyoption.insertAdjacentHTML('beforeend', row);
+              optiondoingby.insertAdjacentHTML('beforeend', row);
           }
+
+
+
+
           for (let budget of jsonObj[3]) {
             var row =
               `
-              <option value=`+ budget.id + `>` + budget.name + `</option>
+              <option style="display:`+(jsonObj1.budgetid==budget.id ? "none":"inline") +`" value=`+ budget.id + `>` + budget.name + `</option>
               `
-            budgetoption.insertAdjacentHTML('beforeend', row);
+              optionbudget.insertAdjacentHTML('beforeend', row);
           }
         }
         )
 
-      document.getElementById('requestid' + id).value = jsonObj1.id
-      // document.getElementById('startdate'+id).value = jsonObj.startdate
-      // document.getElementById('enddate'+id).value = jsonObj.enddate
-      document.getElementById('processname' + id).value = jsonObj1.processname
-      // document.getElementById('doingby'+id).value = jsonObj.doingby
-      // document.getElementById('asis'+id).value = jsonObj.asis
-      // document.getElementById('tobe'+id).value = jsonObj.tobe
-      // document.getElementById('budget'+id).value = jsonObj.budget
-
-      console.log(jsonObj1.processname)
+    
     }
     )
 
 
 }
+
 
 
 var togglebtnedit = function (id) {
@@ -459,6 +787,8 @@ var togglebtnedit = function (id) {
   const workflow = document.getElementById("workflow" + id);
   const extractfile = document.getElementById("extractfile" + id);
   const approvals = document.getElementById("approvals" + id);
+  const savebutton = document.getElementById("save-button" + id);
+
 
   requestid.disabled = !requestid.disabled;
   requestemp.disabled = !requestemp.disabled;
@@ -483,10 +813,16 @@ var togglebtnedit = function (id) {
   approvals.disabled = !approvals.disabled;
   requestid.disabled = !requestid.disabled;
   requestid.disabled = !requestid.disabled;
-
+  savebutton.disabled = !savebutton.disabled;
 
 
 
 }
 
+
+var totalprocesseempathize = function(){
+
+  var em = document.getElementById("emphatizedashboard")
+  em.innerHTML = countem;
+}
 

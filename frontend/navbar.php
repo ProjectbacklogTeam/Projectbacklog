@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="navbarleft  col-auto col-md-3 col-xl-2  px-0 min-vh-100" style="height: 2500px;width: 290px;">
+    <div class="navbarleft  col-auto col-md-3 col-xl-2  px-0 min-vh-100" style="height: 2500px">
         <div style="position: sticky;top: 40px">
             <ul class="nabarleft2 textcenter nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                 <?php if (isset($_SESSION['admin_login'])) { ?>
@@ -23,19 +23,23 @@
                         </span>
                     </div>
                     <li class="boxtextnav">
-                        <a style="padding-top: 1rem;color: black;background-color: white;height: 70px;" href="../home/home.php" class="nav-link px-0">
+                        <a style="padding-top: 1rem;color: black; width: 100%;background-color: white;margin-left: 10px;border-top-left-radius: 1rem;border-bottom-left-radius: 1rem;height: 60px;" href="../home/home.php" class="nav-link px-0">
                             <span class="d-none d-sm-inline center boxtext">HOME</span> <i class="fa-solid fa-house fa-2xl"></i> </a>
                     </li>
                     <li class="boxtextnav" style="width: 100%;">
-                        <a style="padding-top: -6rem;color: black; width: 100%;background-color: white;margin-left: 10px;border-top-left-radius: 1rem;border-bottom-left-radius: 1rem;height: 85px;" href="../projectmanagement/projectmanagement.php" class="nav-link px-0">
-                            <span class="d-none d-sm-inline boxtext">PROJECT<br>MANAGEMENT </span><i class="fa-solid fa-calendar-days fa-2xl"></i></a>
+                        <a style="padding-top: 1rem;color: black; width: 100%;background-color: white;margin-left: 10px;border-top-left-radius: 1rem;border-bottom-left-radius: 1rem;height: 60px;" href="../projectmanagement/projectmanagement.php" class="nav-link px-0">
+                            <span class="d-none d-sm-inline center boxtext">PLAN</span><i class="fa-solid fa-calendar-days fa-2xl"></i></a>
                     </li>
                     <li class="boxtextnav" style="width: 100%;">
-                        <a style="padding-top: 1rem;color: black; width: 100%;background-color: white;margin-left: 10px;border-top-left-radius: 1rem;border-bottom-left-radius: 1rem;height: 70px;" href="../approvals/approvals.php" class="nav-link px-0">
+                        <a style="padding-top: 1rem;color: black; width: 100%;background-color: white;margin-left: 10px;border-top-left-radius: 1rem;border-bottom-left-radius: 1rem;height: 60px;" href="../approvals/approvals.php" class="nav-link px-0">
                             <span class="d-none d-sm-inline center boxtext">APPROVALS</span><i class="fa-solid fa-file-circle-check fa-2xl"></i></a>
                     </li>
                     <li class="boxtextnav" style="width: 100%;">
-                        <a style="padding-top: 1rem;color: black; width: 100%;background-color: white;margin-left: 10px;border-top-left-radius: 1rem;border-bottom-left-radius: 1rem;height: 70px;" href="../architect/architect.php" class="nav-link px-0"> <span class="d-none d-sm-inline center boxtext">ARCHITECT</span><i class="fa-sharp fa-solid fa-database fa-2xl"></i></a>
+                        <a style="padding-top: 1rem;color: black; width: 100%;background-color: white;margin-left: 10px;border-top-left-radius: 1rem;border-bottom-left-radius: 1rem;height: 60px;" href="../excute/excute.php" class="nav-link px-0"> <span class="d-none d-sm-inline center boxtext">Excute</span><i class="fa-sharp fa-solid fa-database fa-2xl"></i></a>
+                    </li>
+                    <li class="boxtextnav" style="width: 100%;">
+                        <a style="padding-top: 1rem;color: black; width: 100%;background-color: white;margin-left: 10px;border-top-left-radius: 1rem;border-bottom-left-radius: 1rem;height: 60px;" href="../valuerelease/valuerelease.php" class="nav-link px-0"> <span class="d-none d-sm-inline center boxtext">
+                        Project Summary</span><i class="fa-solid fa-scale-unbalanced-flip fa-2xl"></i></a>
                     </li>
                 <?php } else if (isset($_SESSION['approver_login'])) { ?>
                     <div id="boxname" class="boxname center" style="padding-left:-2rem">
@@ -47,11 +51,11 @@
                         </span>
                     </div>
                     <li class="boxtextnav">
-                        <a style="padding-top: 1rem;color: black;background-color: white;height: 70px;" href="../home/home.php" class="nav-link px-0">
+                        <a style="padding-top: 1rem;color: black; width: 100%;background-color: white;margin-left: 10px;border-top-left-radius: 1rem;border-bottom-left-radius: 1rem;height: 60px;" href="../home/home.php" class="nav-link px-0">
                             <span class="d-none d-sm-inline center boxtext">HOME</span> <i class="fa-solid fa-house fa-2xl"></i> </a>
                     </li>
                     <li class="boxtextnav" style="width: 100%;">
-                        <a style="padding-top: 1rem;color: black; width: 100%;background-color: white;margin-left: 10px;border-top-left-radius: 1rem;border-bottom-left-radius: 1rem;height: 70px;" href="../approvals/approvals.php" class="nav-link px-0">
+                        <a style="padding-top: 1rem;color: black; width: 100%;background-color: white;margin-left: 10px;border-top-left-radius: 1rem;border-bottom-left-radius: 1rem;height: 60px;" href="../approvals/approvals.php" class="nav-link px-0">
                             <span class="d-none d-sm-inline center boxtext">APPROVALS</span><i class="fa-solid fa-file-circle-check fa-2xl"></i></a>
                     </li>
                 <?php } else if (isset($_SESSION['user_login'])) { ?>
@@ -63,7 +67,7 @@
                         </span>
                     </div>
                     <li class="boxtextnav">
-                        <a style="padding-top: 1rem;color: black;background-color: white;height: 70px;" href="../home/home.php" class="nav-link px-0">
+                        <a style="padding-top: 1rem;color: black; width: 100%;background-color: white;margin-left: 10px;border-top-left-radius: 1rem;border-bottom-left-radius: 1rem;height: 60px;" href="../home/home.php" class="nav-link px-0">
                             <span class="d-none d-sm-inline center boxtext">HOME</span> <i class="fa-solid fa-house fa-2xl"></i> </a>
                     </li>
                 <?php }  ?>
@@ -77,10 +81,11 @@
                 <span style="font-size: 10px;">Digital Transformation Architect</span><br>
                 <span style="font-size: 10px;">Digital Transformation </span><br>
                 <span style="font-size: 10px;">( Data Driven - TS )</span><br>
-                <button class="mt-5" style="background: none;border: none">
+                <button class="mt-5" style="background: none;border: none"  onclick="localStorage.clear()">
                     <a href="../login/login.php">
                         <i class="fa-solid fa-right-from-bracket fa-3x" style="margin-top: 15%;color: white;"></i></a>
                 </button>
+                <!--  -->
             </div>
         </div>
     </div>

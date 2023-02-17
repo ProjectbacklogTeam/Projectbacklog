@@ -1,8 +1,8 @@
 
 
+
 function loadpjmanagement() {
   getreqall();
-  getpjmanagment();
 }
 
 
@@ -17,95 +17,269 @@ var toggleeditplan = function (id) {
 }
 
 
-var getpjmanagment = function () {
+var colormonth = function (startdate, enddate, reqid) {
+  var startdate = new Date(startdate);
+  var enddate = new Date(enddate);
+  var startmonth = startdate.getMonth() + 1;
+  var endmonth = enddate.getMonth() + 1;
+  var text = startdate.toDateString() + " to " + enddate.toDateString();
+
+  for (var i = startmonth; i <= endmonth; i++) {
+    switch (i) {
+      case 1:
+        document.getElementById("january" + reqid).style.backgroundColor = "#FF5656";
+        break;
+      case 2:
+        document.getElementById("february" + reqid).style.backgroundColor = "#FF5656";
+        break;
+      case 3:
+        document.getElementById("march" + reqid).style.backgroundColor = "#FF5656";
+        break;
+      case 4:
+        document.getElementById("april" + reqid).style.backgroundColor = "#FF5656";
+        break;
+      case 5:
+        document.getElementById("may" + reqid).style.backgroundColor = "#FF5656";
+        break;
+      case 6:
+        document.getElementById("june" + reqid).style.backgroundColor = "#FF5656";
+        break;
+      case 7:
+        document.getElementById("july" + reqid).style.backgroundColor = "#FF5656";
+        break;
+      case 8:
+        document.getElementById("august" + reqid).style.backgroundColor = "#FF5656";
+        break;
+      case 9:
+        document.getElementById("september" + reqid).style.backgroundColor = "#FF5656";
+        break;
+      case 10:
+        document.getElementById("october" + reqid).style.backgroundColor = "#FF5656";
+        break;
+      case 11:
+        document.getElementById("november" + reqid).style.backgroundColor = "#FF5656";
+        break;
+      case 12:
+        document.getElementById("december" + reqid).style.backgroundColor = "#FF5656";
+        break;
+    }
+  }
+}
+
+var getpjmanagment = function (year) {
   var requestOptions = {
     method: 'GET',
     redirect: 'follow'
   };
   var reqall_tabel = document.getElementById('table_plan');
-  fetch("http://localhost/projectbacklog/backend/projectmanagement/projectmanagement_db.php", requestOptions)
+  fetch("http://localhost/projectbacklog/backend/projectmanagement/projectmanagement_db.php?year="+year, requestOptions)
     .then(response => response.text())
     .then(result => {
-      console.log(result)
       reqall_tabel.innerHTML = '';
       var jsonObj = JSON.parse(result);
       console.log(jsonObj)
       for (let req of jsonObj) {
+
+        if (req.startdate == null) {
+          var startdate = "0000-00-00"
+        } else {
+          var startdate = req.startdate
+        }
+        if (req.enddate == null) {
+          var enddate = "0000-00-00"
+        } else {
+          var enddate = req.enddate
+        }
+        $(document).ready(function() {
+          $("#startdate"+req.idplan).datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true
+          });
+          $("#enddate"+req.idplan).datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true
+          });
+        });
+
+        var startdateparts = startdate.split('-');
+        var startdateyear = parseInt(startdateparts[0]);
+        var startdatemonth = parseInt(startdateparts[1]);
+        var startdateday = parseInt(startdateparts[2]);
+        var startdateObject = new Date(startdateyear, startdatemonth - 1, startdateday);
+        var options = {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric'
+        };
+        var formattedstartDate = startdateObject.toLocaleDateString('en-GB', options);
+        formattedstartDate = formattedstartDate.replace('.', '');
+        //var formattedstartDate = startdateObject.toLocaleDateString('th-TH', options);
+
+
+
+        var enddateparts = enddate.split('-');
+        var enddateyear = parseInt(enddateparts[0]);
+        var enddatemonth = parseInt(enddateparts[1]);
+        var enddateday = parseInt(enddateparts[2]);
+        var enddateObject = new Date(enddateyear, enddatemonth - 1, enddateday);
+        var options = {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric'
+        };
+        var formattedendDate = enddateObject.toLocaleDateString('en-GB', options);
+        formattedendDate = formattedendDate.replace('.', '');
+
+        
+        
+
         var row = `
-                    <tr id="plan`+ req.id + `" style="text-align:center" >
+                  <tr>
                         <th scope="row">`+ req.id + `</th>
                         <td>`+ req.processname + `</td>
-                        <td>`+ req.startdate.substring(0, 4) + `</td>
-                        <td>
-                        <input type="date" value="`+ req.startdate + `" class="form-control"  aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="datestart` + req.id + `" disabled>
-                        </td>
-                        <td>
-                        <input type="date" value="`+ req.enddate + `" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="dateend` + req.id + `" disabled>
-                        </td>          
-                        <td>`+ "waiting for approve" + `</td>
-                        <td>
-                        <button type="button" onclick="toggleeditplan(`+ req.id + `)" class="btn btn-warning">
-                            edit
+                        <td style="color: ` + (req.statusname == 'Approve' ? 'green' : (req.statusname == 'Reject' ? 'red' : (req.statusname == 'Waiting Send Approve' ? 'blue' : 'orange'))) + `;">` + req.statusname + `</td>        
+                        <td>               
+                        <button type="button" class="btn btn-light" data-bs-toggle="collapse" data-bs-target="#detailplan`+ req.id + `">
+                          Detail
                         </button>
                         </td>
-                        <td>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#datadetail">
-                          send
+               
+                       
+                        <td>`+formattedstartDate + " to " + formattedendDate + `</td>
+                        
+                        <th id="january`+ req.id + `"></th>
+                        <th id="february`+ req.id + `"></th>
+                        <th id="march`+ req.id + `"></th>
+                        <th id="april`+ req.id + `"></th>
+                        <th id="may`+ req.id + `"></th>
+                        <th id="june`+ req.id + `"></th>
+                        <th id="july`+ req.id + `"></th>
+                        <th id="august`+ req.id + `"></th>
+                        <th id="september`+ req.id + `"></th>
+                        <th id="october`+ req.id + `"></th>
+                        <th id="november`+ req.id + `"></th>
+                        <th id="december`+ req.id + `"></th>
+                        <td>  
+                        <button type="button" class="btn" data-bs-toggle="modal" style="color:red" data-bs-target="#deletealert`+req.id+`">
+                          <i class="fa-sharp fa-solid fa-trash"></i>                     
                         </button>
-                        </td>
-                       </tr>
-                                            
-                          <div class="modal fade" id="datadetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-lg" style="font-weight: normal;">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Project detail</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
+                      </td>  
+                    </tr> 
+
+                    <tr  class="collapse" id="detailplan`+ req.id + `">
+                    <td colspan="18">
+                    <div class="card card-body" style="width:100%">    
                                 <div class="row">
-                                  <div class="col-12 center" style="border: 1px solid black;height: 850px; width: 460px;">
+                                <div class="col-6">
+                                <div style="text-align:start;font-size:15px;font-weight: bold;">
+                                <span  class="mt-5">Start Date</span>
+                                </div>
+                                <div class="input-group date mt-2">
+                                  <input type="text" class="form-control" id="startdate`+req.idplan+`" placeholder="dd/mm/yyyy" >
+                                </div>
+                                <div class="mt-5" style="text-align:start;font-size:15px;font-weight: bold;">
+                                <span >End Date</span>
+                                </div>
+                                <div class="input-group date mt-2">
+                                  <input type="text" class="form-control" id="enddate`+req.idplan+`" placeholder="dd/mm/yyyy" >
+                                </div>
+                                <div class="mt-3 mb-3" style="text-align: end;">
+                                <button type="button" class="buttonsave"  data-bs-toggle="modal" data-bs-target="#successalert" onclick="changetimeplan(`+req.idplan+`)">SAVE</button>                   
+                                </div>
+                                </div>
+                               
+    
+                                  <div class="col-6 paperemail" >
                                     <div class="row mt-3">
                                       <span>ส่ง Email เพื่อยืนยันการอนุมัติ</span>
-                                      <div class="col-12 mb-1 mt-4">
+                                      <div class="col-6 mb-1 mt-4">
                                         <div class="input-group mb-3">
                                           <span class="input-group-text" id="inputGroup-sizing-default">Topic</span>
                                           <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                         </div>
                                       </div>
-                                      <div class="col-12 mb-1 mt-2">
+                                      <div class="col-6 mb-1 mt-4">
                                         <div class="input-group mb-3">
                                           <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
                                           <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                         </div>
                                       </div>
                                       <div class="col-12 mb-1 mt-2">
-                                        <textarea type="text" style="height: 400px;width: 100%;"></textarea>
+                                        <textarea type="text" style="width:100%;height:100px"></textarea>
                                       </div>
-                                      <div class="col-5 mb-1 mt-2">
+                                      <div class="col-6 mb-1 mt-2">
                                         <span>Work Flow </span>
                                         <input class="mt-3 w-100" type="text" disabled>
                                       </div>
-                                      <div class="col-5 mb-1 mt-2 ">
+                                      <div class="col-6 mb-1 mt-2 ">
                                         <span>Extract File
                                         </span>
                                         <input class="mt-3 w-100" type="text" disabled>
                                       </div>
                                     </div>
                                     <div class="col-12 mt-3 mb-3" style="text-align: end;">
-                                      <button type="button" class="buttonsend">SAVE AND SEND</button>
+                                      <button type="button" class="buttonsend">SEND</button>
                           
                                     </div>
                           
                                   </div>
                                 </div>
+                        
+                    <div class="aprrovaltable">
+                
+                    </div>
+                    </div>
+                    </td>
+                    </tr>  
+
+
+
+                    <div class="modal fade" id="deletealert`+req.id+`" tabindex="-1" aria-labelledby="deletealert" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog  modal-dialog-centered">
+                      <div class="modal-content" style=" border-radius: 5%;">
+                        <div class="modal-header">
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form>
+                            <div class="mb-3">
+                              <div class="centeralert" style="text-align:center;">
+                                <i class="fa-solid fa-triangle-exclamation fa-5x" style="color:red"></i><br>
+                                <label for="message-text" class="col-form-label" style="font-size:25px">Sure you want to reject?</label>
                               </div>
                             </div>
-                          </div>
-                          </div>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button"  id="submitdelete`+req.id+`" class="btn btn-danger" data-bs-dismiss="modal"><a onclick="plan_delete(`+ req.id + `)">DELETE</a></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+              <div class="modal fade" id="successalert" tabindex="-1"  data-bs-backdrop="static" role="dialog" aria-hidden="true" style="  background: hsla(0, 0%, 100%, 0.55);
+              backdrop-filter: blur(5px);">
+              <div class="modal-dialog modal-dialog-centered" role="document" id="successalert" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-content" style="border-radius: 5%;background-color:white;">
+                  
+                  <div class="modal-body" style="text-align: center;font-size:20px;font-weight: bold;">
+                    <i class="fa-regular fa-circle-check fa-6x mb-5 mt-3" style="color:#29C821;"></i><br>
+                    <p>Success</p><br>
+                    <p>Your Change date success !</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal"><a onclick="window.location.reload()">OK</a></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+                             
+                          
                     `
         reqall_tabel.insertAdjacentHTML('beforeend', row);
-
+        colormonth(req.startdate, req.enddate, req.id);
       }
 
     }
@@ -116,16 +290,115 @@ var getpjmanagment = function () {
 }
 
 
-var savepjmanagement = function (id) {
+var changetimeplan = function(planid){
+  var myheaders = new Headers()
+  myheaders.append("Content-Type", "application/json");
 
-  tablepjmanager = document.getElementById("rowpjmanage" + id)
-  console.log(tablepjmanager)
+
+  var startdateString = document.getElementById("startdate"+planid).value
+  console.log(startdateString)
+  var startdateparts = startdateString.split('/');
+  var startdateObject = new Date(startdateparts[2], startdateparts[1] - 1, startdateparts[0], 0, 0, 0, 0);
+  var startdatetimezoneOffset = startdateObject.getTimezoneOffset() / 60;
+  startdateObject.setUTCHours(17 - startdatetimezoneOffset, 0, 0, 0); // set time to 17:00:00.000 in TST
+  var startdateformattedDate = startdateObject.toISOString().substr(0, 10);
+
+  var enddateString = document.getElementById("enddate"+planid).value
+  var enddateparts = enddateString.split('/');
+  var enddateObject = new Date(enddateparts[2], enddateparts[1] - 1, enddateparts[0], 0, 0, 0, 0);
+  var enddatetimezoneOffset = enddateObject.getTimezoneOffset() / 60;
+  enddateObject.setUTCHours(17 - enddatetimezoneOffset, 0, 0, 0); // set time to 17:00:00.000 in TST
+  var enddateformattedDate = enddateObject.toISOString().substr(0, 10);
+
+
+  var raw = JSON.stringify({
+    "planid": planid,
+    "startdate": startdateformattedDate,
+    "enddate": enddateformattedDate,
+  })
+
+  console.log(raw)
+  var requestOptions = {
+    method: 'PATCH',
+    headers: myheaders,
+    body: raw,
+    redirect: 'follow',
+  };
+
+
+
+  fetch("http://localhost/projectbacklog/backend/projectmanagement/projectmanagement_db.php/changedate", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      console.log(result)
+      var jsonObj = JSON.parse(result);
+      if (jsonObj.status == 'OK') {
+        window.location.reload()
+      } else {
+        alert('not ok');
+      }
+
+    })
+    .catch(error => console.log('error', error));
+}
+
+
+var plan_delete = function (id) {
   var myheaders = new Headers()
   myheaders.append("Content-Type", "application/json");
 
   var raw = JSON.stringify({
-    "datestart": document.getElementById("datestart").value,
-    "dateend": document.getElementById("dateend").value,
+    "id": id
+  });
+  console.log(raw)
+  var requestOptions = {
+    method: 'DELETE',
+    headers: myheaders,
+    body: raw,
+    redirect: 'follow',
+  };
+
+  fetch("http://localhost/projectbacklog/backend/projectmanagement/projectmanagement_db.php", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      console.log(result)
+      var jsonObj = JSON.parse(result);
+      if (jsonObj.status == 'OK') {
+        window.location.reload()
+      } else {
+        alert('not ok');
+      }
+
+    })
+    .catch(error => console.log('error', error));
+}
+
+
+var savepjmanagement = function (id) {
+
+  var myheaders = new Headers()
+  myheaders.append("Content-Type", "application/json");
+
+ 
+  var startdateString = document.getElementById("startdate"+id).value
+  var startdateparts = startdateString.split('/');
+  var startdateObject = new Date(startdateparts[2], startdateparts[1] - 1, startdateparts[0], 0, 0, 0, 0);
+  var startdatetimezoneOffset = startdateObject.getTimezoneOffset() / 60;
+  startdateObject.setUTCHours(17 - startdatetimezoneOffset, 0, 0, 0); // set time to 17:00:00.000 in TST
+  var startdateformattedDate = startdateObject.toISOString().substr(0, 10);
+
+
+  var enddateString = document.getElementById("enddate"+id).value
+  var enddateparts = enddateString.split('/');
+  var enddateObject = new Date(enddateparts[2], enddateparts[1] - 1, enddateparts[0], 0, 0, 0, 0);
+  var enddatetimezoneOffset = enddateObject.getTimezoneOffset() / 60;
+  enddateObject.setUTCHours(17 - enddatetimezoneOffset, 0, 0, 0); // set time to 17:00:00.000 in TST
+  var enddateformattedDate = enddateObject.toISOString().substr(0, 10);
+
+
+  var raw = JSON.stringify({
+    "datestart": startdateformattedDate,
+    "dateend": enddateformattedDate,
     "requirements_id": id,
   })
   console.log(raw)
@@ -157,7 +430,7 @@ var req_statusupdate = function (id) {
   myheaders.append("Content-Type", "application/json");
 
   var raw = JSON.stringify({
-    "status": 1,
+    "status": 2,
     "id": id,
   })
   console.log(raw)
@@ -167,7 +440,7 @@ var req_statusupdate = function (id) {
     body: raw,
     redirect: 'follow',
   };
-  fetch("http://localhost/projectbacklog/backend/projectmanagement/projectmanagement_db.php", requestOptions)
+  fetch("http://localhost/projectbacklog/backend/projectmanagement/projectmanagement_db.php/statusupdate", requestOptions)
     .then(response => response.text())
     .then(result => {
       var jsonObj = JSON.parse(result);
@@ -183,18 +456,12 @@ var req_statusupdate = function (id) {
 }
 
 
-
-
-
-
-
-
-
 var getreqall = function () {
   var requestOptions = {
     method: 'GET',
     redirect: 'follow'
   };
+ 
   var reqall_tabel = document.getElementById('tabel_pjmanager');
   fetch("http://localhost/projectbacklog/backend/projectmanagement/pjreqget.php", requestOptions)
     .then(response => response.text())
@@ -221,6 +488,20 @@ var getreqall = function () {
         } else {
           var processname = req.processname
         }
+        $(document).ready(function() {
+          $("#startdate"+req.id).datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true
+          });
+          $("#enddate"+req.id).datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true
+          });
+        });
+      
+       
         var row = `
               <tr id="rowpjmanage`+ req.id + `" style="text-align:center" >
                     <th scope="row">`+ req.id + `</th>
@@ -231,11 +512,19 @@ var getreqall = function () {
                     </button>
                     </td>
                     <td>
-                    <input type="date" class="form-control"  aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="datestart">
+                    <div class="input-group date" style="width: 90%;height:20px;margin-bottom: 1rem;">
+                    <span class="input-group-text" id="inputGroup-sizing-default">วันที่เริ่มแผน</span>
+                    <input type="text" class="form-control" id="startdate`+req.id+`" placeholder="dd/mm/yyyy" >
+                  </div>
 
                     </td>
                     <td>
-                    <input type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="dateend">
+                    <div class="input-group date" style="width: 90%;height:20px;margin-bottom: 1rem;">
+                      <span class="input-group-text" id="inputGroup-sizing-default">วันที่สิ้นสุดแผน</span>
+                      <input type="text" class="form-control" id="enddate`+req.id+`" placeholder="dd/mm/yyyy" >
+                        <i class="bi bi-calendar"></i>
+                      </button>
+                    </div>
                     </td>
                     <td>
                     <button type="button" name="btn_save" class="buttonsave" onclick="savepjmanagement(`+ req.id + `)">

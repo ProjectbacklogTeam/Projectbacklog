@@ -22,14 +22,14 @@
 
 </head>
 
-<body>
+<body onload="loadfunctionapproval()">
 <?php if ((isset($_SESSION['admin_login'])) || (isset($_SESSION['approver_login'])))  {?>
   <div class="container-fluid">
     <div class="row flex-nowrap">
     <?php include('../navbar.php'); ?>  
       <div class="row" style="height: 20%;">
         <span style="font-size: xx-large;font-weight: bold;padding-left: 2rem;margin-bottom: 3%;margin-top:  2%;">
-          Approvals
+          APPROVALS
         </span><br>
         <div class="paperapprovals">
           <table class="table">
@@ -40,132 +40,21 @@
               <th scope="col">Process Name</th>
               <th scope="col">Doing By</th>
               <th scope="col">Process Status</th>
-              <th scope="col">Status</th>
-              <th scope="col">Status</th>
+              <th scope="col">detail</th>
             </thead>
-            <tbody>
+            <tbody id="approvaltable">
 
             </tbody>
+         
           </table>
-
-          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-            aria-expanded="false" aria-controls="collapseExample">
-            ดูรายละเอียดเพิ่มเติม
-          </button>
-          <div class="collapse" id="collapseExample">
-            <div class="card card-body" style="margin-top: 1%;">
-              <div class="aprrovaltable">
-              <div class="row">
-                <div class="col-8" style="padding-left: 2rem;">
-                  <div class="row ">
-                    <div class="col-3 mt-3">
-                      <span>Request id</span><br>
-                      <input class="inputapprovals mt-3" type="text">
-                    </div>
-                    <div class="col-3 mt-3">
-                      <span>Request Emp id</span><br>
-                      <input class="inputapprovals mt-3" type="text">
-                    </div>
-                    <div class="col-3 mt-3">
-                      <span>Request Name</span><br>
-                      <input class="inputapprovals mt-3" type="text">
-                    </div>
-                    <div class="col-3 mt-3">
-                      <span>Request Division</span><br>
-                      <input class="inputapprovals mt-3" type="text">
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-3 mt-3">
-                      <span>Request Department</span><br>
-                      <input class="inputapprovals mt-3" type="text">
-                    </div>
-                    <div class="col-3  mt-3">
-                      <span>Request Section</span><br>
-                      <input class="inputapprovals mt-3" type="text">
-                    </div>
-                    <div class="col-3  mt-3">
-                      <span>TO BE</span><br>
-                      <input class="inputapprovals mt-3" type="text">
-                    </div>
-                    <div class="col-3  mt-3">
-                      <span>BUDGET</span><br>
-                      <input class="inputapprovals mt-3" type="text">
-                    </div>
-                  </div>
-                  <div class="col-12 mt-3">
-                    <span>Pain Point</span><br>
-                    <input class="inputapprovals mt-3" type="text" style="width: 100%;height: 50px;">
-                  </div>
-                  <div class="col-12 mt-3">
-                    <span>Description</span><br>
-                    <input class="inputapprovals mt-3" type="text" style="width: 100%;height: 50px;">
-                  </div>
-                  <div class="col-12 mt-3">
-                    <span>Results & Benefit</span><br>
-                    <input class="inputapprovals mt-3" type="text" style="width: 100%;height: 50px;">
-                  </div>
-
-                </div> 
-                <div class="col-4" style="padding-left: 1rem;">
-                  <div class="row">
-                    <div class="col-12 mt-3">
-                      
-                        <span>Exclusions & Constraints</span><br>
-                        <input class="inputapprovals mt-3" type="text">
-                      
-                    </div>
-                    
-                    <div class="col-12 mt-3">
-                      
-                        <span>Support Businassteam</span><br>
-                        <input class="inputapprovals mt-3" type="text">
-                    </div>
-                    <div class="col-6 mt-3">
-                
-                        <span>Work Flow</span><br>
-                        <input class="inputapprovals mt-3" type="file">
-                   
-                    </div>
-                    <div class="col-6 mt-3" >                     
-                        <span>Extract File</span><br>
-                        <input class="inputapprovals mt-3" type="file">               
-                    </div>
-                    <div class="col-12 mt-3">
-                        <span>Approvals</span><br>
-                        <input class="inputapprovals mt-3" type="file">                    
-                    </div>
-                    <div class="col-12 mt-5 mb-3" style="text-align: end;">
-                      <button type="button" class="buttonapprove">APPROVE</button>
-                      <button type="button" class="buttonreject">REJECT</button>
-                    </div>               
-                  </div>
-                </div>
-              </div>
-            </div>
-            </div>
-          </div>
-
         </div>
-
       </div>
-
-
-
-
     </div>
-
-
-
-
-
-
   </div>
   <?php } ?>
-
-
-
   <script src="../navbar.js"></script>
+  <script src="approvals.js"></script>
+
 </body>
 
 </html>
