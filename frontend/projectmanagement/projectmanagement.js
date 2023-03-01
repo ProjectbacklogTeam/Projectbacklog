@@ -1,8 +1,40 @@
+function showsuccessAlert() {
+  Swal.fire({
+    title: 'Success',
+    text: 'send email success!',
+    icon: 'success',
+    confirmButtonText: 'Ok',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    showCancelButton: false
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.reload();
+    }
+  });
+}
 
+
+function showsendemailsuccessAlert() {
+  Swal.fire({
+    title: 'Success',
+    text: 'Your data was saved !',
+    icon: 'success',
+    confirmButtonText: 'Ok',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    showCancelButton: false
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.reload();
+    }
+  });
+}
 
 
 function loadpjmanagement() {
   getreqall();
+
 }
 
 
@@ -79,7 +111,41 @@ var getpjmanagment = function (year) {
       var jsonObj = JSON.parse(result);
       console.log(jsonObj)
       for (let req of jsonObj) {
+        
+        if (req.firstname == null) {
+          var firstname = ""
+        } else {
+          var firstname = req.firstname
+        }   
+        
+        if (req.lastname == null) {
+          var lastname = ""
+        } else {
+          var lastname = req.lastname
+        }   
+        
+        if (req.topic == null) {
+          var topic = ""
+        } else {
+          var topic = req.topic
+        }   
+        
+        if (req.email == null) {
+          var email = ""
+        } else {
+          var email = req.email
+        }
 
+        if (req.detail == null) {
+          var detail = ""
+        } else {
+          var detail = req.detail
+        }
+
+        
+        
+        
+        
         if (req.startdate == null) {
           var startdate = "0000-00-00"
         } else {
@@ -90,6 +156,10 @@ var getpjmanagment = function (year) {
         } else {
           var enddate = req.enddate
         }
+
+
+
+
         $(document).ready(function() {
           $("#startdate"+req.idplan).datepicker({
             format: "dd/mm/yyyy",
@@ -101,6 +171,10 @@ var getpjmanagment = function (year) {
             autoclose: true,
             todayHighlight: true
           });
+        });
+
+        $("#approver"+req.idplan).ready(function(){
+          getoptionapprover(req.idplan);
         });
 
         var startdateparts = startdate.split('-');
@@ -131,12 +205,41 @@ var getpjmanagment = function (year) {
         };
         var formattedendDate = enddateObject.toLocaleDateString('en-GB', options);
         formattedendDate = formattedendDate.replace('.', '');
-
         
+        if(req.startdate==null){
+          let todaystrat = new Date();
+          let daystrat= todaystrat.getDate();
+          let monthstrat = todaystrat.getMonth() + 1;
+          let yearstart = todaystrat.getFullYear();
+          var formattedstartDate_v2 = `${daystrat}/${monthstrat}/${yearstart}`
+        }else{
+          var datestartStringv2 = String(req.startdate) 
+          var datestartPartsv2 = datestartStringv2.split("-");
+          var datestartObjv2 = new Date(datestartPartsv2[0], datestartPartsv2[1] - 1, datestartPartsv2[2]);
+          var formattedstartDate_v2 = datestartObjv2.getDate() + "/" + (datestartObjv2.getMonth() + 1) + "/" + datestartObjv2.getFullYear();
+  
+        }
+
+
+        if(req.enddate==null){
+          let todayend = new Date();
+          let dayend = todayend.getDate();
+          let monthend = todayend.getMonth() + 1;
+          let yearend = todayend.getFullYear();
+          var formatteddateend_v2 = `${dayend}/${monthend}/${yearend}`
+        }else{
+          var dateendStringv2 = String(req.enddate)
+          var dateendPartsv2 = dateendStringv2.split("-");
+          var dateendObjv2 = new Date(dateendPartsv2[0], dateendPartsv2[1] - 1, dateendPartsv2[2]);
+          var formatteddateend_v2 = dateendObjv2.getDate() + "/" + (dateendObjv2.getMonth() + 1) + "/" + dateendObjv2.getFullYear();
+        }
+
+        console.log(req.enddate)
+        console.log(formatteddateend_v2)
         
 
         var row = `
-                  <tr>
+                  <tr >
                         <th scope="row">`+ req.id + `</th>
                         <td>`+ req.processname + `</td>
                         <td style="color: ` + (req.statusname == 'Approve' ? 'green' : (req.statusname == 'Reject' ? 'red' : (req.statusname == 'Waiting Send Approve' ? 'blue' : 'orange'))) + `;">` + req.statusname + `</td>        
@@ -172,56 +275,64 @@ var getpjmanagment = function (year) {
                     <td colspan="18">
                     <div class="card card-body" style="width:100%">    
                                 <div class="row">
-                                <div class="col-6">
+                                <div class="col-4">
                                 <div style="text-align:start;font-size:15px;font-weight: bold;">
                                 <span  class="mt-5">Start Date</span>
                                 </div>
                                 <div class="input-group date mt-2">
-                                  <input type="text" class="form-control" id="startdate`+req.idplan+`" placeholder="dd/mm/yyyy" >
+                                  <input value="`+formattedstartDate_v2+`" type="text" class="form-control" id="startdate`+req.idplan+`" placeholder="dd/mm/yyyy" disabled>
                                 </div>
                                 <div class="mt-5" style="text-align:start;font-size:15px;font-weight: bold;">
                                 <span >End Date</span>
                                 </div>
                                 <div class="input-group date mt-2">
-                                  <input type="text" class="form-control" id="enddate`+req.idplan+`" placeholder="dd/mm/yyyy" >
+                                  <input value="`+formatteddateend_v2+`" type="text" class="form-control" id="enddate`+req.idplan+`" placeholder="dd/mm/yyyy" disabled>
                                 </div>
                                 <div class="mt-3 mb-3" style="text-align: end;">
-                                <button type="button" class="buttonsave"  data-bs-toggle="modal" data-bs-target="#successalert" onclick="changetimeplan(`+req.idplan+`)">SAVE</button>                   
+                                <button id="toggletimechange`+ req.idplan + `" style="display:` + ((req.statusreq >= 2)  ? 'inline' : 'none') + `;" class="buttonedit"  onclick="toggletimechange(` + req.idplan + `)">Edit</button>
+                                <button id="savetimechange`+ req.idplan + `" type="button" class="buttonsave"  data-bs-toggle="modal" data-bs-target="#successalert" onclick="changetimeplan(`+req.idplan+`)" disabled>SAVE</button>                   
                                 </div>
                                 </div>
                                
     
-                                  <div class="col-6 paperemail" >
+                                  <div class="col-8 paperemail" >
                                     <div class="row mt-3">
                                       <span>ส่ง Email เพื่อยืนยันการอนุมัติ</span>
+                                      <div class="col-12 mb-1 mt-4">
+                                        <div class="input-group mb-3">
+                                          <span class="input-group-text" id="inputGroup-sizing-default">Approver</span>
+                                          <input value="`+firstname+" "+lastname+`" class="form-control" id="approver`+req.idplan+`" list="approverlist`+req.idplan+`"  OnChange ="changinputemail(`+req.idplan+`)"  placeholder="search..." `+ ((req.statusreq == 3)  ? 'disabled' : 'none') + ` required>
+                                          <datalist id="approverlist`+req.idplan+`">
+                                          
+                                          
+                                          </datalist>
+                                          </div>
+                                      </div>
+                                  
+
                                       <div class="col-6 mb-1 mt-4">
                                         <div class="input-group mb-3">
                                           <span class="input-group-text" id="inputGroup-sizing-default">Topic</span>
-                                          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                          <input value="`+topic+`" id="topic`+req.idplan+`" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" `+ ((req.statusreq == 3)  ? 'disabled' : 'none') + `>
                                         </div>
                                       </div>
                                       <div class="col-6 mb-1 mt-4">
                                         <div class="input-group mb-3">
                                           <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
-                                          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                          <input value="`+email+`" id="email`+req.idplan+`" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" `+ ((req.statusreq == 3)  ? 'disabled' : 'none') + `>
                                         </div>
                                       </div>
                                       <div class="col-12 mb-1 mt-2">
-                                        <textarea type="text" style="width:100%;height:100px"></textarea>
+                                        <textarea  id="detail`+req.idplan+`" type="text" style="width:100%;height:100px"  `+ ((req.statusreq == 3)  ? 'disabled' : 'none') + `>`+detail+`</textarea>
                                       </div>
-                                      <div class="col-6 mb-1 mt-2">
-                                        <span>Work Flow </span>
-                                        <input class="mt-3 w-100" type="text" disabled>
-                                      </div>
-                                      <div class="col-6 mb-1 mt-2 ">
-                                        <span>Extract File
-                                        </span>
-                                        <input class="mt-3 w-100" type="text" disabled>
-                                      </div>
+                                     
                                     </div>
+                                   
                                     <div class="col-12 mt-3 mb-3" style="text-align: end;">
-                                      <button type="button" class="buttonsend">SEND</button>
-                          
+                                      <button  style="display:` + ((req.statusreq == 3) ? 'none' : 'inline') + `;margin-right: 3%;" class="buttonsend" onclick="sendemail(`+req.idplan+`,`+req.id+`)">SEND</button>
+                                      <button id="togglesendemail`+ req.idplan + `" style="display:` + ((req.statusreq == 3)  ? 'inline' : 'none') + `;" class="buttonedit"  onclick="togglesendemail(` + req.idplan + `)">Edit</button>
+                                      <button  id="updatesendemail`+ req.idplan + `" style="display:` + ((req.statusreq == 3) ? 'inline' : 'none') + `;" class="buttonsend"  onclick="updatesendemail(`+req.idplan+`,`+req.id+`)" data-bs-toggle="modal" data-bs-target="#successsentemailalert`+req.idplan+`" disabled>SEND</button>
+
                                     </div>
                           
                                   </div>
@@ -259,28 +370,14 @@ var getpjmanagment = function (year) {
                     </div>
                   </div>
                   
-              <div class="modal fade" id="successalert" tabindex="-1"  data-bs-backdrop="static" role="dialog" aria-hidden="true" style="  background: hsla(0, 0%, 100%, 0.55);
-              backdrop-filter: blur(5px);">
-              <div class="modal-dialog modal-dialog-centered" role="document" id="successalert" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-content" style="border-radius: 5%;background-color:white;">
-                  
-                  <div class="modal-body" style="text-align: center;font-size:20px;font-weight: bold;">
-                    <i class="fa-regular fa-circle-check fa-6x mb-5 mt-3" style="color:#29C821;"></i><br>
-                    <p>Success</p><br>
-                    <p>Your Change date success !</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal"><a onclick="window.location.reload()">OK</a></button>
-                  </div>
-                </div>
-              </div>
-            </div>
                              
                           
                     `
         reqall_tabel.insertAdjacentHTML('beforeend', row);
         colormonth(req.startdate, req.enddate, req.id);
       }
+
+      
 
     }
 
@@ -415,11 +512,8 @@ var savepjmanagement = function (id) {
       var jsonObj = JSON.parse(result);
       if (jsonObj.status == 'OK') {
         req_statusupdate(id)
-        window.location.reload()
-
-      } else {
-        alert('not ok');
-      }
+         showsendemailsuccessAlert()
+      } 
 
     })
     .catch(error => console.log('error', error));
@@ -467,7 +561,6 @@ var getreqall = function () {
     .then(response => response.text())
     .then(result => {
       localStorage.setItem("result", result)
-      console.log(result)
       reqall_tabel.innerHTML = '';
       var jsonObj = JSON.parse(result);
       console.log(jsonObj)
@@ -750,3 +843,171 @@ var requriment_one = function (id) {
 
 }
 
+function sendemail(pjid,idreq) {
+  var myheaders = new Headers()
+  myheaders.append("Content-Type", "application/json");
+  
+  const approverInput = document.getElementById("approver"+pjid);
+  const selectedOption = Array.from(approverInput.list.options).find(option => option.value === approverInput.value);
+  const idselectapprover = selectedOption.getAttribute("data-value")
+  
+  
+  
+  var raw = JSON.stringify({
+      "topic": document.getElementById("topic"+pjid).value,
+      "email":document.getElementById("email"+pjid).value,
+      "detail": document.getElementById("detail"+pjid).value,
+      "projectmanagementid": pjid,
+      "idapprover": idselectapprover,
+      "idreq": idreq,
+      "idstatus": 3,
+  })
+  console.log(raw)
+  var requestOptions = {
+    method: 'POST',
+    headers: myheaders,
+    body: raw,
+    redirect: 'follow',
+  };
+
+  fetch("http://localhost/projectbacklog/backend/projectmanagement/sendemailap_db.php", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      var jsonObj = JSON.parse(result);
+      if (jsonObj.status == 'OK') {
+        showsendemailsuccessAlert()
+      } else {
+        alert('not ok');
+      }
+
+    })
+    .catch(error => console.log('error', error));
+}
+
+
+
+
+function updatesendemail(pjid,idreq) {
+  var myheaders = new Headers()
+  myheaders.append("Content-Type", "application/json");
+  
+  const approverInput = document.getElementById("approver"+pjid);
+  const selectedOption = Array.from(approverInput.list.options).find(option => option.value === approverInput.value);
+  const idselectapprover = selectedOption.getAttribute("data-value")
+  
+  var raw = JSON.stringify({
+      "topic": document.getElementById("topic"+pjid).value,
+      "email":document.getElementById("email"+pjid).value,
+      "detail": document.getElementById("detail"+pjid).value,
+      "projectmanagementid": pjid,
+      "idreq": idreq,
+      "idapprover": idselectapprover,
+  })
+  console.log(raw)
+  var requestOptions = {
+    method: 'PATCH',
+    headers: myheaders,
+    body: raw,
+    redirect: 'follow',
+  };
+
+  fetch("http://localhost/projectbacklog/backend/projectmanagement/sendemailap_db.php", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      var jsonObj = JSON.parse(result);
+      if (jsonObj.status == 'OK') {
+        showsendemailsuccessAlert()
+        console.log('updateeeeeeeeeeeeee')
+      } else {
+        alert('not ok');
+      }
+    })
+    .catch(error => console.log('error', error));
+}
+
+
+
+var getoptionapprover= function (idplan) {
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+  var approver_option = document.getElementById('approverlist'+idplan);
+  console.log(approver_option)
+  fetch("http://localhost/projectbacklog/backend/projectmanagement/sendemailap_db.php/datalistapprover", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      var jsonObj = JSON.parse(result);
+      console.log(jsonObj);
+      for (let approvar of jsonObj) {
+        rowapprovar =
+          `
+              <option data-value ="`+ approvar.id +`"  value="`+approvar.firstname+" "+approvar.lastname+`"> </opion>                 
+         
+          `
+          approver_option.insertAdjacentHTML('beforeend', rowapprovar);
+      }
+     
+    }
+    )
+}
+
+
+
+var changinputemail = function(idplan){
+  const approverInput = document.getElementById("approver"+idplan);
+
+  // Find the selected option based on the input value
+  const selectedOption = Array.from(approverInput.list.options).find(option => option.value === approverInput.value);
+  const idselect = selectedOption.getAttribute("data-value")
+  console.log(idselect)
+  const emailbox = document.getElementById("email"+idplan)
+  console.log(emailbox)
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+  fetch("http://localhost/projectbacklog/backend/projectmanagement/sendemailap_db.php/datalistapprover", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      var jsonObj = JSON.parse(result);
+      console.log(jsonObj);
+      for (let approvar of jsonObj) {
+        console.log(approvar.id)
+        if(idselect==approvar.id){
+          emailbox.value = approvar.email
+          console.log("hi")
+        }
+      }
+     
+    }
+    )
+}
+
+function togglesendemail(idplan) {
+  var approver = document.getElementById("approver" + idplan)
+  var topic = document.getElementById("topic" + idplan);
+  var email = document.getElementById("email" + idplan);
+  var detail = document.getElementById("detail" + idplan);
+  var updatesendemail = document.getElementById("updatesendemail" + idplan);
+ 
+
+  approver.disabled = !approver.disabled;
+  topic.disabled = !topic.disabled;
+  email.disabled = !email.disabled;
+  detail.disabled = !detail.disabled;
+  updatesendemail.disabled = !updatesendemail.disabled;
+}
+
+
+function toggletimechange(idplan){
+  var timestart = document.getElementById("startdate"+idplan)
+  var timeend = document.getElementById("enddate"+idplan)
+  var btnsavetimechange = document.getElementById("savetimechange"+idplan)
+
+  timestart.disabled = !timestart.disabled
+  timeend.disabled = !timeend.disabled
+  btnsavetimechange.disabled = !btnsavetimechange.disabled
+
+
+}

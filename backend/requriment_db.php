@@ -13,25 +13,25 @@
                 foreach($db->query("SELECT * FROM asis") as $row){
                     array_push($reqasis,array(
                         'id' => $row['id'],
-                        'name' => $row['name']
+                        'name' => $row['name_asis']
                     ));
                 }
                 foreach($db->query("SELECT * FROM budget") as $row){
                     array_push($reqbudget,array(
                         'id' => $row['id'],
-                        'name'=> $row['name']
+                        'name'=> $row['name_budget']
                     ));
                 }   
                 foreach($db->query("SELECT * FROM doingby") as $row){
                     array_push($reqdoingby,array(
                         'id' => $row['id'],
-                        'name'=> $row['name']
+                        'name'=> $row['name_doingby']
                     ));
                 }          
                 foreach($db->query("SELECT * FROM tobe") as $row){
                     array_push($reqtobe,array(
                         'id' => $row['id'],
-                        'name'=> $row['name']
+                        'name'=> $row['name_tobe']
                     ));
                 }
                 $optionselectreq = array( $reqasis,$reqtobe,$reqdoingby,$reqbudget);

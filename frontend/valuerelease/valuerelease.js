@@ -248,10 +248,17 @@ var getreqapproveallTovaluerelease = function () {
                             </div>
                             <div class="col-4" >
                             <span>Estimate ภายนอก</span><br>
+                            <div class="mt-3">
+                            <input type="number" id="estimatenumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
+                            </div>
+                            
                             <textarea  id="estimate`+ req.idexcute + `" type="text" class="mt-3" style="height:80px;width:100%"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>`+estimate+`</textarea>
                             </div>
                             <div class="col-4" >
                             <span>Value Release</span><br>
+                            <div class="mt-3">
+                            <input type="number" id="valuerelease_excutenumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
+                            </div>
                             <textarea  id="valuerelease_excute`+ req.idexcute + `" type="text" class="mt-3" style="height:80px;width:100%"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>`+valuerelease+`</textarea>
                             </div>
                       </div>
@@ -263,14 +270,23 @@ var getreqapproveallTovaluerelease = function () {
                       <div class="row mt-2" >
                         <div class="col-4" >
                           <span>Benefit people</span><br>
+                          <div class="mt-3">
+                          <input type="number" id="benefitpeoplenumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
+                          </div>
                           <textarea id="benefitpeople`+ req.idexcute + `" type="text" class="mt-3" style="height:80px;width:100%"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>`+benefitpeople+`</textarea>
                         </div>
                         <div class="col-4" >
                           <span>Benefit money</span><br>
+                          <div class="mt-3">
+                          <input type="number" id="benefitmoneynumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
+                          </div>
                           <textarea id="benefitmoney`+ req.idexcute + `" type="text" class="mt-3" style="height:80px;width:100%"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>`+benefitmoney+`</textarea>
                         </div>
                         <div class="col-4" >
                           <span> Banefit mandays</span><br>
+                          <div class="mt-3">
+                          <input type="number" id="benefitpeoplemandaysnumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
+                          </div>
                           <textarea  id="benefitpeoplemandays`+ req.idexcute + `" type="text" class="mt-3" style="height:80px;width:100%"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>`+benefitpeoplemandays+`</textarea>
                         </div>
                       </div>
@@ -371,10 +387,15 @@ var savevaluerelease = function (idexcute) {
     "benefitpeople": document.getElementById("benefitpeople" + idexcute).value,
     "benefitmoney": document.getElementById("benefitmoney" + idexcute).value,
     "benefitpeoplemandays": document.getElementById("benefitpeoplemandays" + idexcute).value,
+    "estimatenumber": document.getElementById("estimatenumber" + idexcute).value,
+    "valuereleasenumber": document.getElementById("valuerelease_excutenumber" + idexcute).value,
+    "benefitpeoplemandaysnumber": document.getElementById("benefitpeoplemandaysnumber" + idexcute).value,
+    "benefitpeoplenumber": document.getElementById("benefitpeoplenumber" + idexcute).value,
+    "benefitmoneynumber": document.getElementById("benefitmoneynumber" + idexcute).value,
     "filebefore": document.getElementById("filebefore" + idexcute).value,
     "fileafter": document.getElementById("fileafter" + idexcute).value,
     "excute_id": idexcute,
-    "statusvaluerelease": 1,
+    "statusvaluereleases": 1,
   })
   console.log(raw)
   var requestOptions = {
@@ -436,6 +457,11 @@ var updatevaluerelease = function (idexcute) {
     "benefitpeople": document.getElementById("benefitpeople" + idexcute).value,
     "benefitmoney": document.getElementById("benefitmoney" + idexcute).value,
     "benefitpeoplemandays": document.getElementById("benefitpeoplemandays" + idexcute).value,
+    "estimatenumber": document.getElementById("estimatenumber" + idexcute).value,
+    "valuereleasenumber": document.getElementById("valuerelease_excutenumber" + idexcute).value,
+    "benefitpeoplemandaysnumber": document.getElementById("benefitpeoplemandaysnumber" + idexcute).value,
+    "benefitpeoplenumber": document.getElementById("benefitpeoplenumber" + idexcute).value,
+    "benefitmoneynumber": document.getElementById("benefitmoneynumber" + idexcute).value,
     "filebefore": document.getElementById("filebefore" + idexcute).value,
     "fileafter": document.getElementById("fileafter" + idexcute).value,
     "excute_id": idexcute,
@@ -478,6 +504,20 @@ function toggleeditvaluerelease(idexcute) {
   var filebefore = document.getElementById("filebefore" + idexcute)
   var fileafter = document.getElementById("fileafter" + idexcute)
   var btnsavevaluerelease = document.getElementById("updatevaluerelease" + idexcute)
+  
+  var  valuereleasenumber = document.getElementById("valuerelease_excutenumber" + idexcute)
+  var  benefitpeoplemandaysnumber = document.getElementById("benefitpeoplemandaysnumber" + idexcute)
+  var  benefitpeoplenumber = document.getElementById("benefitpeoplenumber" + idexcute)
+  var  benefitmoneynumber = document.getElementById("benefitmoneynumber" + idexcute)
+  var  estimatenumber = document.getElementById("estimatenumber" + idexcute)
+
+  valuereleasenumber.disabled = !valuereleasenumber.disabled;
+  benefitpeoplemandaysnumber.disabled = !benefitpeoplemandaysnumber.disabled;
+  benefitpeoplenumber.disabled = !benefitpeoplenumber.disabled;
+  benefitmoneynumber.disabled = !benefitmoneynumber.disabled;
+  estimatenumber.disabled = !estimatenumber.disabled;
+
+
 
 
   mandays.disabled = !mandays.disabled;

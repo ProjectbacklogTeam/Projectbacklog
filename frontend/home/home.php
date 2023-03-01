@@ -4,15 +4,15 @@ session_start();
 // include '../../backend/requriment.php';
 
 if (isset($_SESSION['admin_login'])) {
-  $idadmin = $_SESSION['admin_login'];
+  $idadmin = $_SESSION['admin_login_id'];
   $iduser = null;
   $idapprover = null;
 } else if (isset($_SESSION['approver_login'])) {
-  $idapprover = $_SESSION['approver_login'];
+  $idapprover = $_SESSION['approver_login_id'];
   $idadmin = null;
   $iduser = null;
 } else if (isset($_SESSION['user_login'])) {
-  $iduser = $_SESSION['user_login'];
+  $iduser = $_SESSION['user_login_id'];
   $idapprover = null;
   $idadmin = null;
 }
@@ -27,6 +27,12 @@ if (isset($_SESSION['admin_login'])) {
   <meta name="viewport" item="width=device-width, initial-scale=1.0">
   <title>Home</title>
   <!-- Bootstrap 5 CSS -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js" integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
 
   <!-- Bootstrap 5 JavaScript -->
@@ -38,14 +44,7 @@ if (isset($_SESSION['admin_login'])) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-  <!-- <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'rel='stylesheet'>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" ></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" ></script> -->
 
-
-  <!-- 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sriracha">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
@@ -54,13 +53,16 @@ if (isset($_SESSION['admin_login'])) {
 
 <body onload="onloadfunction()">
   <div class="container-fluid">
-    <div class="row flex-nowrap">
+    <div class="contenthome row flex-nowrap" style="overflow: auto;">
       <?php include('../navbar.php'); ?>
       <?php if ((isset($_SESSION['admin_login'])) || (isset($_SESSION['user_login'])) || (isset($_SESSION['approver_login']))) { ?>
-        <div class="row" style="height: 20%;width: 1500px;">
-          <span style="font-size: xx-large;font-weight: bold;padding-left: 2rem;margin-bottom: 3%;margin-top:  2%;">
-            DIGITAL TRANFORMATION DASHBOARD
-          </span><br>
+        <div class="row rowhome">
+
+          <div class="headertopichome">
+            <span>
+              DIGITAL TRANFORMATION DASHBOARD
+            </span><br>
+          </div>
           <div class="flexbox center" style="margin-left: .5rem;">
 
             <div class="item">
@@ -179,48 +181,199 @@ if (isset($_SESSION['admin_login'])) {
             </div>
           </div>
           <div class="paperdashboard">
-            <div class="row">
-              <div class="col-xl-3 col-md-6 mb-4">
+            <div class="row mb-5">
+              <div class="col-4  mb-1">
                 <div class="card border-left-primary shadow h-100 py-2">
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
                       <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                          Request requriment</div>
-                        <div  class="h5 mb-0 font-weight-bold text-gray-800" id="reqalldashboard">
+                          ASIS PROCESS</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="reqalldashboard">
 
                         </div>
                       </div>
                       <div class="col-auto">
-                      <i class="fa-solid fa-book fa-2x"></i>
+                        <i class="fa-solid fa-book fa-2x"></i>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-xl-3 col-md-6 mb-4">
+              <div class="col-4 mb-1">
                 <div class="card border-left-primary shadow h-100 py-2">
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
                       <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                          Request requriment</div>
-                        <div  class="h5 mb-0 font-weight-bold text-gray-800" id="emphatizedashboard">
+                          TOBE PROCESS</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="tobedashboard">
 
                         </div>
                       </div>
                       <div class="col-auto">
-                      <i class="fa-solid fa-book fa-2x"></i>
+                        <i class="fa-solid fa-book fa-2x"></i>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-12">
-              
+              <div class="col-4 mb-1">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                          VALUE</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="emphatizedashboard">
+
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fa-solid fa-book fa-2x"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+              <div class="col-md-2">
+                <div class="card border-left-warning shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                          PEOPLE MANAGEMENT
+                        </div><br>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="peoplemanagement">
+                          
+                        </div>
+                        <i class="fa-solid fa-list-check fa-2x"></i>
+
+                      </div>
+                      <!-- <div class="col-auto">
+                        <i class="fa-solid fa-list-check fa-2x"></i>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="card border-left-warning shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                          PEOPLE CAPABILITY AND CULTURE
+                        </div><br>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="peoplecapacity">
+                        </div>
+                      </div>
+                      <!-- <div class="col-auto">
+                        <i class="fa-solid fa-people-group fa-2x"></i>
+
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2">
+                <div class="card border-left-warning shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                          LICENSE TO OPERATE AND PERMIT
+                        </div><br>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="license">
+                        </div>
+                      </div>
+                      <!-- <div class="col-auto">
+                        <i class="fa-solid fa-id-card fa-2x"></i>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2">
+                <div class="card border-left-warning shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                          ENVIRONMENTAL SOCIAL AND GOVERNANCE
+                        </div><br>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="environmental">
+                        </div>
+                      </div>
+                      <!-- <div class="col-auto">
+                        <i class="fa-solid fa-handshake fa-2x"></i>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2">
+                <div class="card border-left-warning shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                          ECOSYSTEM AND FACILITY MANAGEMENT
+                        </div><br>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="ecosystem">
+                        </div>
+                      </div>
+                      <!-- <div class="col-auto">
+                        <i class="fa-solid fa-seedling fa-2x"></i>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+
+            </div>
+
+
+            <div class="row justify-content-center mt-4">
+              <div class="col-6">
+                <canvas id="chart_bar_department" style="z-index: -1;"></canvas>
+
 
               </div>
-              
+              <div class="col-6" style="padding:1rem">
+                <canvas id="chart_pie_allreq" style="z-index: 6;"></canvas>
+
+
+              </div>
+
+
+
+
+
+            </div>
+            <div class="row mt-5">
+              <div class="col-6">
+                <canvas id="chart_bar_allreq"></canvas>
+
+
+              </div>
+              <div class="col-6">
+                <canvas id="chart_bar_allreq"></canvas>
+
+
+              </div>
+
             </div>
 
 
@@ -241,7 +394,7 @@ if (isset($_SESSION['admin_login'])) {
               <div class="col-6 mb-5">
                 <div class="input-group date mb-3">
                   <span class="input-group-text" id="inputGroup-sizing-default">วันที่ขอ</span>
-                  <input  type="text" class="form-control" id="startdate" placeholder="dd/mm/yyyy" disabled>
+                  <input type="text" class="form-control" id="startdate" placeholder="dd/mm/yyyy" disabled>
                 </div>
               </div>
               <div class="col-6 mb-5">
@@ -257,7 +410,6 @@ if (isset($_SESSION['admin_login'])) {
                 <div class="input-group">
                   <label class="input-group-text" for="inputGroupSelect01">ASIS</label>
                   <select class="form-select" id="asis_id" disabled>
-                    <option value="0" selected>Select...</option>
 
 
                   </select>
@@ -267,7 +419,6 @@ if (isset($_SESSION['admin_login'])) {
                 <div class="input-group">
                   <label class="input-group-text" for="inputGroupSelect01">TOBE</label>
                   <select class="form-select" id="tobe_id" disabled>
-                    <option value="0" selected>Select...</option>
 
                   </select>
                 </div>
@@ -277,7 +428,6 @@ if (isset($_SESSION['admin_login'])) {
                   <label class="input-group-text" for="inputGroupSelect01">Doing By</label>
 
                   <select class="form-select" id="doingby_id" disabled>
-                    <option  value="0" selected>Select...</option>
 
                   </select>
                 </div>
@@ -286,33 +436,22 @@ if (isset($_SESSION['admin_login'])) {
                 <div class="input-group">
                   <label class="input-group-text" for="inputGroupSelect01">BUDJET</label>
                   <select class="form-select" id="budget_id" disabled>
-                    <option value="0" selected>Select...</option>
 
                   </select>
                 </div>
               </div>
               <div class="col-12" style="text-align:end ;">
-                <button class="buttonsave" id="savereq" onclick="requriment_create()" data-bs-toggle="modal" data-bs-target="#successalert" disabled>บันทึก</button>
-              </div>
-              <div class="modal fade" id="successalert" tabindex="-1" data-bs-backdrop="static" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document" id="successalert" tabindex="-1" role="dialog" aria-hidden="true">
-                  <div class="modal-content" style="border-radius: 5%;">
-
-                    <div class="modal-body" style="text-align: center;font-size:20px;font-weight: bold;">
-                      <i class="fa-regular fa-circle-check fa-6x mb-5 mt-3" style="color:#29C821;"></i><br>
-                      <p>Success</p><br>
-                      <p>Your data was saved !</p>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-success" data-bs-dismiss="modal"><a onclick="window.location.reload()">OK</a></button>
-                    </div>
-                  </div>
-                </div>
+                <button class="buttonsave" id="savereq" onclick="requriment_create()" disabled>SAVE</button>
               </div>
 
 
             </div>
             <script>
+              $(document).ready(function() {
+                var currentYear = new Date().getFullYear();
+                getchartpriority(currentYear);
+              });
+
               $("#startdate").datepicker({
                 format: "dd/mm/yyyy",
                 autoclose: true,
@@ -324,8 +463,10 @@ if (isset($_SESSION['admin_login'])) {
                 todayHighlight: true
               });
 
+             
+
               let todaystrat = new Date();
-              let daystrat= todaystrat.getDate();
+              let daystrat = todaystrat.getDate();
               let monthstrat = todaystrat.getMonth() + 1;
               let yearstart = todaystrat.getFullYear();
               var formattedstartDate_v2 = `${daystrat}/${monthstrat}/${yearstart}`
@@ -339,7 +480,7 @@ if (isset($_SESSION['admin_login'])) {
               document.getElementById("enddate").value = formatteddateend_v2
 
 
-          
+
 
 
 
@@ -385,7 +526,6 @@ if (isset($_SESSION['admin_login'])) {
 
                 }
               }
-
 
               // Hide success message after 5 seconds
               // setTimeout(function() {
@@ -442,7 +582,7 @@ if (isset($_SESSION['admin_login'])) {
                   .then(result => {
                     var jsonObj = JSON.parse(result);
                     if (jsonObj.status == 'OK') {
-
+                      showsuccessAlert()
                     } else {
                       alert('not ok');
                     }
@@ -450,8 +590,6 @@ if (isset($_SESSION['admin_login'])) {
                   })
                   .catch(error => console.log('error', error));
               }
-
-
             </script>
 
           </div>
@@ -493,14 +631,10 @@ if (isset($_SESSION['admin_login'])) {
     </div>
 
   </div>
-
-
-
-
-
-  </div>
-  <script src="../projectmanagement/projectmanagement.html"></script>
+  <!-- <script src="../projectmanagement/projectmanagement.html"></script> -->
   <script language="JavaScript" src="home.js"></script>
+  <!-- <script src="../projectmanagement/projectmanagement.js"></script> -->
+
 <?php } ?>
 
 </body>

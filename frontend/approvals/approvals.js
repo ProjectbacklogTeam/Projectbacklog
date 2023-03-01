@@ -30,25 +30,56 @@ var getreqapproverall = function () {
                     var enddate = req.enddate
                   }
                 if (req.processname == null) {
-                    var processname = "ยังไม่ระบุ"
+                    var processname = ""
                 } else {
                     var processname = req.processname
                 }
-                if (req.doingby_id == null) {
-                    var doingby_id = "ยังไม่ระบุ"
+                if (req.doingby == null) {
+                    var doingby = ""
                 } else {
-                    var doingby_id = req.doingby_id
+                    var doingby = req.doingby
                 }
                 if (req.firstname == null) {
-                    var firstname = "ยังไม่ระบุ"
+                    var firstname = ""
                 } else {
                     var firstname = req.firstname
                 }
                 if (req.lastname == null) {
-                    var lastname = "ยังไม่ระบุ"
+                    var lastname = ""
                 } else {
                     var lastname = req.lastname
                 }
+
+
+                if(req.workflowname == "" || req.workflowname == null){
+                    var workflowname = "";
+                  }else{
+                    var workflowname = req.workflowname;
+                  }
+          
+                  if(req.bussinessflowname == "" || req.bussinessflowname == null){
+                    var bussinessflowname = "";
+                  }else{
+                    var bussinessflowname = req.bussinessflowname;
+                  }
+          
+                  if(req.extractfilename == "" || req.extractfilename == null){
+                    var extractfilename = "";
+                  }else{
+                    var extractfilename = req.extractfilename;
+                  }
+          
+                  if(req.scopeofworkname == "" || req.scopeofworkname == null ){
+                    var scopeofworkname = "";
+                  }else{
+                    var scopeofworkname = req.scopeofworkname;
+                  }
+          
+                  if(req.riskmanagementname == "" || req.riskmanagementname == null){
+                    var riskmanagementname = "";
+                  }else{
+                    var riskmanagementname = req.riskmanagementname;
+                  }
 
 
                 var startdateparts = startdate.split('-');
@@ -66,6 +97,8 @@ var getreqapproverall = function () {
         
         
         
+
+
                 var enddateparts = enddate.split('-');
                 var enddateyear = parseInt(enddateparts[0]);
                 var enddatemonth = parseInt(enddateparts[1]);
@@ -85,8 +118,8 @@ var getreqapproverall = function () {
                       <td>`+ formattedstartDate + `</td>
                       <td>`+ formattedendDate + `</td>
                       <td>`+ processname + `</td>
-                      <td>`+ doingby_id + `</td>
-                      <td id="statuscolor" style="color: ` + (req.status == 'Approve' ? 'green' : (req.status == 'Reject' ? 'red' : 'orange')) + `;">`+ req.status + `</td>
+                      <td>`+ doingby + `</td>
+                      <td id="statuscolor" style="color: ` + (req.status == 'Approve' ? 'green' : (req.status == 'Reject' ? 'red' : 'orange')) + `;background: ` + (req.status == 'Approve' ? 'linear-gradient(45deg, #F1FEE7 5%, #F1FEE7 50%, #F1FEE7 50%)' : (req.status == 'Reject' ? 'linear-gradient(45deg, #FEE7E7 5%, #FEE7E7 50%, #FEE7E7 50%)' : 'linear-gradient(45deg, #FEF1E7 5%, #FEF1E7 50%, #FEF1E7 50%)')) + `;">`+ req.status + `</td>
                       <td>              
                         <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#approvaldeail`+ req.id + `"
                         aria-expanded="false" aria-controls="collapseExample">
@@ -115,17 +148,17 @@ var getreqapproverall = function () {
                         </div>
                         <div class="col-3 mt-3">
                         <span>Request Division</span><br>
-                        <input value="`+ req.requestdivision + `" class="inputapprovals mt-3" type="text" style="width:100%"  disabled>
+                        <input value="`+ req.division + `" class="inputapprovals mt-3" type="text" style="width:100%"  disabled>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-3 mt-3">
                         <span>Request Department</span><br>
-                        <input value="`+ req.requestdepartment + `" class="inputapprovals mt-3" type="text" style="width:100%"  disabled>
+                        <input value="`+ req.department + `" class="inputapprovals mt-3" type="text" style="width:100%"  disabled>
                         </div>
                         <div class="col-3  mt-3">
                         <span>Request Section</span><br>
-                        <input value="`+ req.requestsection + `" class="inputapprovals mt-3" type="text" style="width:100%"  disabled>
+                        <input value="`+ req.section + `" class="inputapprovals mt-3" type="text" style="width:100%"  disabled>
                         </div>
                         <div class="col-3  mt-3">
                         <span>TO BE</span><br>
@@ -158,38 +191,39 @@ var getreqapproverall = function () {
 
                     <div class="col-4" style="padding-left: 1rem;">
                     <div class="row">
-                        <div class="col-12 mt-3">
-                        
-                            <span>Exclusions & Constraints</span><br>
-                            <input value="`+ req.exclusions + `" class="inputapprovals mt-3" type="text" style="width:100%"  disabled>
-                        
-                        </div>
-                        
-        
-                        <div class="row mt-4">
+              
+                        <div class="row mt-2">
                         <div class="col-6 mb-1 mt-2">
                             <span>Scope of Work </span><br>
                             <input id="scopeofwork" class="mt-3" type="file" style="width:100%"  disabled>
+                            <a style="display:`+(scopeofworkname==""  ? "none":"inline")+`" href = "../../backend/home/fileupload/scopeofwork/`+scopeofworkname+`" target="_blank"><i class="mt-2 fa-solid fa-file fa-2x"></i></a>
+
                         </div>
+                        <div class="col-6 mb-1 mt-2">
+                            <span>Risk Management </span><br>
+                            <input id="riskmanagement`+ req.id + `" class="mt-3" type="file" disabled><br/>
+                            <a style="display:`+(riskmanagementname=="" ? "none":"inline")+`" href = "../../backend/home/fileupload/riskmanagement/`+riskmanagementname+`" target="_blank"><i class="mt-2 fa-solid fa-file fa-2x"></i></a>
+                          </div>
                         <div class="col-6 mb-1 mt-2">
                         <span>Bussiness Flow </span><br>
                           <input id="bussinessflow" class="mt-3" type="file" style="width:100%"  disabled>
-                        </div>
+                          <a style="display:`+(bussinessflowname=="" ? "none":"inline")+`" href = "../../backend/home/fileupload/bussinessflow/`+bussinessflowname+`" target="_blank"><i class="mt-2 fa-solid fa-file fa-2x"></i></a>
+                          </div>
+                          <div class="col-6 mt-3">                  
+                          <span>Work Flow ( swim lane ) </span><br>
+                          <input class="inputapprovals mt-3" type="file" style="width:100%"  disabled> 
+                          <a style="display:`+(workflowname=="" ? "none":"inline")+`" href = "../../backend/home/fileupload/workflow/`+workflowname+`" target="_blank"><i class="mt-2 fa-solid fa-file fa-2x"></i></a>
+
+                          </div>
                         </div>
                         <div class="row">
-                        <div class="col-6 mt-3">                  
-                            <span>Work Flow</span><br>
-                            <input class="inputapprovals mt-3" type="file" style="width:100%"  disabled> 
-                        </div>
+                       
                         <div class="col-6 mt-3" >                     
                             <span>Extract File</span><br>
                             <input class="inputapprovals mt-3" type="file" style="width:100%"  disabled>               
                         </div>
                         </div>
-                        <div class="col-12 mt-3">
-                            <span>Approvals</span><br>
-                            <input  value="`+ req.approvals + `" class="inputapprovals mt-3" type="text" style="width:100%"  disabled>                    
-                        </div>
+                      
                         <div class="col-12 mt-5 mb-3" style="text-align: end;">
                         <button type="button" style="display:`+ (req.status == 'Approve' ? 'none' : 'inline')+ `;" class="buttonapprove" onclick="approve(`+ req.id +`,`+req.idapproval+`)" >APPROVE</button>
                         <button type="button" data-bs-toggle="modal" data-bs-target="#rejectalert`+req.id+`" class="buttonreject">REJECT</button>
@@ -328,3 +362,4 @@ function reject(id) {
         })
         .catch(error => console.log('error', error));
 }
+

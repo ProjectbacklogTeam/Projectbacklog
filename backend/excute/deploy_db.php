@@ -7,7 +7,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 if ($_SERVER['REQUEST_METHOD'] == 'PATCH') {
     try {
-        $stmt1 = $db->prepare("UPDATE requirements SET statusforprocess=? WHERE id=?");
+        $stmt1 = $db->prepare("UPDATE requirements SET statusforprocess_req=? WHERE id=?");
         $stmt1->bindParam(1, $data->statusforprocess);
         $stmt1->bindParam(2, $data->Requirements_id);
         if ($stmt1->execute()) {

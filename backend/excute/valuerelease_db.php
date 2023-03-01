@@ -33,18 +33,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     'codeuser' => $row[42],
                     'firstname' => $row[43],
                     'lastname' => $row[44],
-                    'mandays' => $row[48],
-                    'startdatevaluerelease' => $row[49],
-                    'enddatevaluerelease' => $row[50],
-                    'wage' => $row[51],
-                    'estimate' => $row[52],
-                    'valuerelease' => $row[53],
-                    'benefitpeople' => $row[54],
-                    'benefitmoney' => $row[55],
-                    'benefitpeoplemandays' => $row[56],
-                    'filebefore' => $row[57],
-                    'fileafter' => $row[58],
-                    'statusvaluerelease' => $row[60],
+                    'mandays' => $row["mandays_value"],
+                    'startdatevaluerelease' => $row["startdates_value"],
+                    'enddatevaluerelease' => $row["enddates_value"],
+                    'wage' => $row["wages_value"],
+                    'estimate' => $row["estimates_value"],
+                    'valuerelease' => $row["valuereleases_value"],
+                    'benefitpeople' => $row["benefitpeoples_value"],
+                    'benefitmoney' => $row["benefitmoneys_value"],
+                    'benefitpeoplemandays' => $row["benefitpeoplemandayss_value"],
+                    'filebefore' => $row["filebefores_value"],
+                    'fileafter' => $row["fileafter_value"],
+                    'statusvaluerelease' => $row["statusvaluereleases"],
                                                       
                 )
             );
@@ -58,20 +58,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
-        $stmt1 = $db->prepare("INSERT INTO valuerelease (mandays,startdate,enddate,wage,estimate,valuerelease,benefitpeople,benefitmoney,benefitpeoplemandays,filebefore,fileafter,excute_id,statusvaluerelease) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $stmt1 = $db->prepare("INSERT INTO valuerelease (mandays_value,startdates_value,enddates_value,wages_value,estimates_value,estimates_value_number,valuereleases_value,valuereleases_value_number,benefitpeoples_value,benefitpeoples_value_number,benefitmoneys_value,benefitmoneys_value_number,benefitpeoplemandayss_value,benefitpeoplemandayss_value_number,filebefores_value,fileafter_value,excute_id,statusvaluereleases) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         $stmt1->bindParam(1, $data->mandays);
         $stmt1->bindParam(2, $data->startdate);
         $stmt1->bindParam(3, $data->enddate);
         $stmt1->bindParam(4, $data->wage);
         $stmt1->bindParam(5, $data->estimate);
-        $stmt1->bindParam(6, $data->valuerelease);
-        $stmt1->bindParam(7, $data->benefitpeople);
-        $stmt1->bindParam(8, $data->benefitmoney);
-        $stmt1->bindParam(9, $data->benefitpeoplemandays);
-        $stmt1->bindParam(10, $data->filebefore);
-        $stmt1->bindParam(11, $data->fileafter);
-        $stmt1->bindParam(12, $data->excute_id);
-        $stmt1->bindParam(13, $data->statusvaluerelease);
+        $stmt1->bindParam(6, $data->estimatenumber);
+        $stmt1->bindParam(7, $data->valuerelease);
+        $stmt1->bindParam(8, $data->valuereleasenumber);
+        $stmt1->bindParam(9, $data->benefitpeople);
+        $stmt1->bindParam(10, $data->benefitpeoplenumber);
+        $stmt1->bindParam(11, $data->benefitmoney);
+        $stmt1->bindParam(12, $data->benefitmoneynumber);
+        $stmt1->bindParam(13, $data->benefitpeoplemandays);
+        $stmt1->bindParam(14, $data->benefitpeoplemandaysnumber);
+        $stmt1->bindParam(15, $data->filebefore);
+        $stmt1->bindParam(16, $data->fileafter);
+        $stmt1->bindParam(17, $data->excute_id);
+        $stmt1->bindParam(18, $data->statusvaluereleases);
         if ($stmt1->execute()) {
             echo json_encode(array("status" => "OK"));
         } else {
@@ -85,19 +90,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 if ($_SERVER['REQUEST_METHOD'] == 'PATCH') {
     try {
-        $stmt1 = $db->prepare("UPDATE valuerelease SET mandays=?,startdate=?,enddate=?,wage=?,estimate=?,valuerelease=?,benefitpeople=?,benefitmoney=?,benefitpeoplemandays=?,filebefore=?,fileafter=? WHERE excute_id = ?");
+        $stmt1 = $db->prepare("UPDATE valuerelease SET mandays_value=?,startdates_value=?,enddates_value=?,wages_value=?,estimates_value=?,estimates_value_number=?,valuereleases_value=?,valuereleases_value_number=?,benefitpeoples_value=?,benefitpeoples_value_number=?,benefitmoneys_value=?,benefitmoneys_value_number=?,benefitpeoplemandayss_value=?,benefitpeoplemandayss_value_number=?,filebefores_value=?,fileafter_value=? WHERE excute_id = ?");
         $stmt1->bindParam(1, $data->mandays);
         $stmt1->bindParam(2, $data->startdate);
         $stmt1->bindParam(3, $data->enddate);
         $stmt1->bindParam(4, $data->wage);
         $stmt1->bindParam(5, $data->estimate);
-        $stmt1->bindParam(6, $data->valuerelease);
-        $stmt1->bindParam(7, $data->benefitpeople);
-        $stmt1->bindParam(8, $data->benefitmoney);
-        $stmt1->bindParam(9, $data->benefitpeoplemandays);
-        $stmt1->bindParam(10, $data->filebefore);
-        $stmt1->bindParam(11, $data->fileafter);
-        $stmt1->bindParam(12, $data->excute_id);
+        $stmt1->bindParam(6, $data->estimatenumber);
+        $stmt1->bindParam(7, $data->valuerelease);
+        $stmt1->bindParam(8, $data->valuereleasenumber);
+        $stmt1->bindParam(9, $data->benefitpeople);
+        $stmt1->bindParam(10, $data->benefitpeoplenumber);
+        $stmt1->bindParam(11, $data->benefitmoney);
+        $stmt1->bindParam(12, $data->benefitmoneynumber);
+        $stmt1->bindParam(13, $data->benefitpeoplemandays);
+        $stmt1->bindParam(14, $data->benefitpeoplemandaysnumber);
+        $stmt1->bindParam(15, $data->filebefore);
+        $stmt1->bindParam(16, $data->fileafter);
+        $stmt1->bindParam(17, $data->excute_id);
+
         if ($stmt1->execute()) {
             echo json_encode(array("status" => "OK"));
         } else {

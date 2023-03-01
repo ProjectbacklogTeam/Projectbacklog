@@ -34,43 +34,45 @@ unset($_SESSION['approver_login']);
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-6" style="background: linear-gradient(to left, rgb(255, 69, 69), rgb(255, 119, 119));height: 800px;border-top-right-radius: 5%;border-bottom-right-radius: 5%;">
-        <div class="div center" style="margin-top: 40%;font-size: xx-large;font-weight: bold;width: 100%;padding-left: 10rem;">
-          <span style="color: black;padding-left: 1rem;">
-            WELCOME TO
+      <div id="backgroundlogin1"class="col-6 backgroundlogin1" >
+
+        <div id="headertextlogin" class="headertextlogin" style="font-weight: bold;text-align:center">
+          <span style="color: black;">
+          Welcom to 
           </span>
           <span style="color: white;">
-            BACKLOG
+          Project Management
           </span><br>
-          <span style="color: black;font-size: x-large;">
-            Please log in to acces your account
+          <span style="color: black;">
+          Digital Transformation Architect
           </span><br>
         </div>
-        <div class="center" style="margin-top: 310px;padding-left: 6rem;">
+        <div id="footertextlogin" class="textfooterlogin center" style="text-align:center">
           <span style="color: rgb(255, 255, 255);font-size: xx-small;text-align: center;">
-            Digital Transformation Architect
+          DATA DRIVEN - Ts<br>Center of Excellence & Data Driven
+
           </span>
         </div>
       </div>
-      <div class="col-6">
-        <div class="mb-5 mb-xl-0" style="margin-left: 10%;margin-top: 15%">
+      <div class="col-6 backgroundlogin2">
+        <div id="cardlogin" class="cardlogin mb-5 mb-xl-0">
           <div class="card" style="
               background: hsla(0, 0%, 100%, 0.55);
               border-radius: 5%;
               backdrop-filter: blur(30px);
-              width: 500px;
+              max-width: 30rem;
               ">
             <div class="card-body p-lg-5 shadow-5 text-center">
-              <div class="col-lg-6 mb-5 mb-lg-0 center" style="padding-left: .15rem;width: 70%;height: 100%;">
-                <img src="..\picture\scg.png" class="w-100  rounded-4 shadow-4" alt="" style="border-radius: 15%; " />
+              <div id="imagelogin" class="col-lg-6 mb-5 mb-lg-0 center" style="padding-left: .15rem;width: 70%;height: 100%;">
+                <img src="..\picture\scgv2.png" class="w-100  rounded-4 shadow-4" alt="" style="border-radius: 15%; " />
               </div>
               <form action="../../backend/login/login_db.php" id="formlogin" method="post">
                 <?php if (isset($_SESSION['error'])) : ?>
                   <div class="error">
                     <h3>
                       <?php
-                          echo $_SESSION['error'];
-                          unset($_SESSION['error']);
+                      echo $_SESSION['error'];
+                      unset($_SESSION['error']);
                       ?>
                     </h3>
                   </div>
@@ -83,7 +85,7 @@ unset($_SESSION['approver_login']);
                         <label class="form-label" for="form3Example1"><i class="fa-solid fa-user fa-2xl"></i></label>
                       </div>
                       <div class="col-9">
-                        <input type="text" name="username" class="inputlogin" placeholder="   SCG ID"required />
+                        <input type="text" name="username" class="inputlogin" placeholder="   SCG ID" required />
                       </div>
                     </div>
                     <br />

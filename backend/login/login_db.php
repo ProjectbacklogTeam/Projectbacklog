@@ -33,13 +33,14 @@ if (isset($_POST['btn_login'])) {
                                 $_SESSION['success'] = "Admin successfully";
                                 $admin = $db->prepare("SELECT * FROM admin JOIN detail  on detail.id = admin.detail_id WHERE login_id = $db_id");
                                 $admin->execute();
-                                while ($row = $admin->fetch(PDO::FETCH_ASSOC)) {
-                                    $_SESSION['admin_login'] = $row['id'];
-                                    $_SESSION['codeuser'] = $row['codeuser'];
-                                    $_SESSION['firstname'] = $row['firstname'];
-                                    $_SESSION['lastname'] = $row['lastname'];
-                                    $_SESSION['nickname'] = $row['nickname'];
-                                    $_SESSION['email'] = $row['email'];
+                                while ($row = $admin->fetch(PDO::FETCH_BOTH)) {
+                                    $_SESSION['admin_login_id'] = $row[0];
+                                    $_SESSION['admin_login'] = $row['id'];     
+                                    $_SESSION['codeuser'] = $row['codeuser_detail'];
+                                    $_SESSION['firstname'] = $row['firstname_detail'];
+                                    $_SESSION['lastname'] = $row['lastname_detail'];
+                                    $_SESSION['nickname'] = $row['nickname_detail'];
+                                    $_SESSION['email'] = $row['email_detail'];
                                 }
                                 header("location: ../../frontend/home/home.php");
                                 break;
@@ -48,13 +49,14 @@ if (isset($_POST['btn_login'])) {
                                 $_SESSION['success'] = "approver successfully";
                                 $approver = $db->prepare("SELECT * FROM approver JOIN detail  on detail.id = approver.detail_id WHERE login_id = $db_id");
                                 $approver->execute();
-                                while ($row = $approver->fetch(PDO::FETCH_ASSOC)) {
+                                while ($row = $approver->fetch(PDO::FETCH_BOTH)) {
+                                    $_SESSION['approver_login_id'] = $row[0];
                                     $_SESSION['approver_login'] = $row['id'];
-                                    $_SESSION['codeuser'] = $row['codeuser'];
-                                    $_SESSION['firstname'] = $row['firstname'];
-                                    $_SESSION['lastname'] = $row['lastname'];
-                                    $_SESSION['nickname'] = $row['nickname'];
-                                    $_SESSION['email'] = $row['email'];
+                                    $_SESSION['codeuser'] = $row['codeuser_detail'];
+                                    $_SESSION['firstname'] = $row['firstname_detail'];
+                                    $_SESSION['lastname'] = $row['lastname_detail'];
+                                    $_SESSION['nickname'] = $row['nickname_detail'];
+                                    $_SESSION['email'] = $row['email_detail'];
                                 }
                                 header("location: ../../frontend/home/home.php");
                                 break;
@@ -63,18 +65,19 @@ if (isset($_POST['btn_login'])) {
                                 $_SESSION['success'] = "User successfully";
                                 $user = $db->prepare("SELECT * FROM user JOIN detail  on detail.id = user.detail_id WHERE login_id = $db_id");
                                 $user->execute();
-                                while ($row = $user->fetch(PDO::FETCH_ASSOC)) {
+                                while ($row = $user->fetch(PDO::FETCH_BOTH)) {
+                                    $_SESSION['user_login_id'] = $row[0];
                                     $_SESSION['user_login'] = $row['id'];
-                                    $_SESSION['codeuser'] = $row['codeuser'];
-                                    $_SESSION['firstname'] = $row['firstname'];
-                                    $_SESSION['lastname'] = $row['lastname'];
-                                    $_SESSION['nickname'] = $row['nickname'];
-                                    $_SESSION['email'] = $row['email'];
+                                    $_SESSION['codeuser'] = $row['codeuser_detail'];
+                                    $_SESSION['firstname'] = $row['firstname_detail'];
+                                    $_SESSION['lastname'] = $row['lastname_detail'];
+                                    $_SESSION['nickname'] = $row['nickname_detail'];
+                                    $_SESSION['email'] = $row['email_detail'];
                                 }
                                 header("location: ../../frontend/home/home.php");
                                 break;
                             default:
-                                $_SESSION['error'] = "Wrong username or password ";
+                                $_SESSION['error'] = "Wrong username or password";
                                 header("location: ../../frontend/login/login.php");
                         }
                     }

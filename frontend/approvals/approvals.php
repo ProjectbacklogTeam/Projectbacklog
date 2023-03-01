@@ -25,7 +25,7 @@
 <body onload="loadfunctionapproval()">
 <?php if ((isset($_SESSION['admin_login'])) || (isset($_SESSION['approver_login'])))  {?>
   <div class="container-fluid">
-    <div class="row flex-nowrap">
+    <div class="row flex-nowrap" >
     <?php include('../navbar.php'); ?>  
       <div class="row" style="height: 20%;">
         <span style="font-size: xx-large;font-weight: bold;padding-left: 2rem;margin-bottom: 3%;margin-top:  2%;">

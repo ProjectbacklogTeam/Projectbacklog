@@ -12,65 +12,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         JOIN approvals on excute.Approvals_id = approvals.id
         JOIN requirements on approvals.Requirements_id = requirements.id
         JOIN doingby on  requirements.doingby_id = doingby.id 
-        JOIN tobe on requirements.tobe_id = tobe.id 
-        JOIN asis on requirements.asis_id = asis.id 
-        JOIN budget on requirements.budget_id = budget.id 
         JOIN status on requirements.status_id = status.id
-        LEFT JOIN admin on requirements.admin_id = admin.id
-        LEFT JOIN approver on requirements.approver_id = approver.id
-        LEFT JOIN user on requirements.user_id = user.id
-        JOIN detail on admin.detail_id = detail.id OR approver.detail_id = detail.id OR user.detail_id = detail.id
-        LEFT JOIN prototype on prototype.excute_id = excute.id
-        LEFT JOIN coding on coding.excute_id = excute.id
-        LEFT JOIN testing on testing.excute_id = excute.id
-        LEFT JOIN preparedata on preparedata.excute_id = excute.id
-        LEFT JOIN plancoding on plancoding.excute_id = excute.id
             ') as $row) {
             array_push(
                 $requirementsall,
                 array(
                     'idexcute' => $row[0],
                     'id' => $row[5],
-                    'processname' => $row[6],
-                    'startdate' => $row[7],
-                    'enddate' => $row[8],
-                    'painpoint' => $row[9],
-                    'description' => $row[10],
-                    'results_benefit' => $row[11],
-                    'exclusion_constraints' => $row[12],
-                    'work_flow' => $row[13],
-                    'extract_file' => $row[14],
-                    'riskmanagement' => $row[15],
-                    'scopeofwork' => $row[16],
-                    'bussinessflow' => $row[17],
-                    'statusforprocess' => $row[18],
-                    'doing_by' => $row[29],
-                    'tobe' => $row[31],
-                    'asis' => $row[33],
-                    'budget' => $row[35], 
-                    'status' => $row[38],
-                    'codeuser' => $row[49],
-                    'firstname' => $row[50],
-                    'lastname' => $row[51],
-                    'fileprototype' => $row[55],
-                    'linkprototype' => $row[56],
-                    'linkcoding' => $row[60],
-                    'linktesting' => $row[63],
-                    'system_status' => $row['systemflowchart_status'],
-                    'dataflow_status' => $row['dataflowdiagram_status'],
-                    'erdiagram_status' => $row['erdiargram_status'],
-                    'datadic_status' => $row['datadic_status'],
-                    'usecase_status' => $row['usecasediagram_status'],
-                    'linkprepare' => $row['linkprepare'],
-                    'statusplan'=> $row['statusplan'],
-                    'start_coding'=> $row['startcoding'],
-                    'end_coding'=> $row['endcoding'],
-                    'format_coding'=> $row['format'],
-                    'name_university_coding'=> $row['name_university'],
-                    'database_coding'=> $row['databasecoding'],
-                    'languages_coding'=> $row['languages'],
-               
-                    
+                    'processname' => $row["processname_req"],
+                    'startdate' => $row["startdate_req"],
+                    'enddate' => $row["enddate_req"],                  
+                    'doingbyname' => $row["name_doingby"],
+                    'status' => $row["name_status"],        
                 )
             );
         }
@@ -80,6 +33,88 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         die();
     }
 }
+// if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+//     try {
+//         $requirementsall = array();
+//         foreach ($db->query('SELECT * from `excute`
+//         JOIN approvals on excute.Approvals_id = approvals.id
+//         JOIN requirements on approvals.Requirements_id = requirements.id
+//         JOIN doingby on  requirements.doingby_id = doingby.id 
+//         JOIN tobe on requirements.tobe_id = tobe.id 
+//         JOIN asis on requirements.asis_id = asis.id 
+//         JOIN budget on requirements.budget_id = budget.id 
+//         JOIN status on requirements.status_id = status.id
+//         LEFT JOIN admin on requirements.admin_id = admin.id
+//         LEFT JOIN approver on requirements.approver_id = approver.id
+//         LEFT JOIN user on requirements.user_id = user.id
+//         JOIN detail on admin.detail_id = detail.id OR approver.detail_id = detail.id OR user.detail_id = detail.id
+//         LEFT JOIN prototype on prototype.excute_id = excute.id
+//         LEFT JOIN coding on coding.excute_id = excute.id
+//         LEFT JOIN testing on testing.excute_id = excute.id
+//         LEFT JOIN preparedata on preparedata.excute_id = excute.id
+//         LEFT JOIN plancoding on plancoding.excute_id = excute.id
+//         LEFT JOIN confirmprototype on confirmprototype.prototype_id = prototype.id
+// 		LEFT JOIN implement on implement.id_excute = excute.id
+//             ') as $row) {
+//             array_push(
+//                 $requirementsall,
+//                 array(
+//                     'idexcute' => $row[0],
+//                     'id' => $row[5],
+//                     'processname' => $row["processname_req"],
+//                     'startdate' => $row["startdate_req"],
+//                     'enddate' => $row["enddate_req"],
+//                     'painpoint' => $row["painpoint_req"],
+//                     'description' => $row["description_req"],
+//                     'results_benefit' => $row["results_benefit_req"],
+//                     'exclusion_constraints' => $row["exclusion_constraints_req"],
+//                     'work_flow' => $row["work_flow_req"],
+//                     'extract_file' => $row["extract_file_req"],
+//                     'riskmanagement' => $row["riskmanagement_req"],
+//                     'scopeofwork' => $row["scopeofwork_req"],
+//                     'bussinessflow' => $row["bussinessflow_req"],
+//                     'statusforprocess' => $row["statusforprocess_req"],
+//                     'doing_by' => $row["name_doingby"],
+//                     'tobe' => $row["name_tobe"],
+//                     'asis' => $row["name_asis"],
+//                     'budget' => $row["name_budget"], 
+//                     'status' => $row["name_status"],
+//                     'codeuser' => $row["codeuser_detail"],
+//                     'firstname' => $row["firstname_detail"],
+//                     'lastname' => $row["lastname_detail"],
+//                     'fileprototype' => $row["file_prototype"],
+//                     'linkprototype' => $row["link_prototype"],
+//                     'linkcoding' => $row["link_coding"],
+//                     'linktesting' => $row["link_testing"],
+//                     'system_status' => $row['systemflowchart_status_preparedata'],
+//                     'dataflow_status' => $row['dataflowdiagram_status_preparedata'],
+//                     'erdiagram_status' => $row['erdiargram_status_preparedata'],
+//                     'datadic_status' => $row['datadic_status_preparedata'],
+//                     'usecase_status' => $row['usecasediagram_status_preparedata'],
+//                     'linkprepare' => $row['linkprepare_preparedata'],
+//                     'statusplan'=> $row['statusplan_plancoding'],
+//                     'start_coding'=> $row['startcoding_plancoding'],
+//                     'end_coding'=> $row['endcoding_plancoding'],
+//                     'format_coding'=> $row['format_plancoding'],
+//                     'name_university_coding'=> $row['name_university_plancoding'],
+//                     'database_coding'=> $row['databasecoding_plancoding'],
+//                     'languages_coding'=> $row['languages_plancoding'],
+//                     'idprototype'=>$row[53],
+//                     'emailconfirmprototype'=>$row['email_confirmprototype'],
+//                     'topicconfirmprototype'=>$row['topic_confirmprototype'],
+//                     'detailconfirmprototype'=>$row['detail_confirmprototype'],
+//                     'emailimplement'=>$row['email_implement'],
+//                     'topicimplement'=>$row['topic_implement'],
+//                     'detailimplement'=>$row['detail_implement'],                    
+//                 )
+//             );
+//         }
+//         echo json_encode($requirementsall);
+//     } catch (PDOException $e) {
+//         print "Error!: " . $e->getMessage() . "<br/>";
+//         die();
+//     }
+// }
 
 
 
