@@ -111,7 +111,7 @@ unset($_SESSION['approver_login']);
                 </div>
 
                 <!-- Submit button -->
-                <button type="submit" name="btn_login" class="buttonlogin" style="height: 50px;">
+                <button  type="submit" name="btn_login" class="buttonlogin" style="height: 50px;">
                   Sign In
                 </button>
 
@@ -126,6 +126,8 @@ unset($_SESSION['approver_login']);
 
   </div>
 </body>
+<script language="JavaScript" src="login.js"></script>
+
 
 </html>
 

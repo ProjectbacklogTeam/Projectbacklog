@@ -158,13 +158,25 @@ session_start();
               </div>
             </div>
           </div>
+
+          <div class="row">
+            <div class="col-4" style="margin-left: 4%;">
+              <div class="input-group">
+                <input id="searchinputexcute" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <button type="button" class="btn btn-primary" onclick="searchTableexcute()"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
+              </div>
+            </div>
+            <div class="col-8">
+             
+            </div>
+          </div>
           <div class="paperapprovals">
-            <table class="table">
+            <table class="table" id="tableexcute">
               <thead>
-                <th scope="col">Request id</th>
-                <th scope="col">Request Date</th>
-                <th scope="col">Request Enddate</th>
-                <th scope="col">Process Name</th>
+                <th scope="col" onclick="sortBy(0)">Request id</th>
+                <th scope="col" onclick="sortBy(1)"> Request Date</th>
+                <th scope="col" onclick="sortBy(2)">Request Enddate</th>
+                <th scope="col" onclick="sortBy(3)">Process Name</th>
                 <th scope="col">Doing By</th>
                 <th scope="col">Process Status</th>
                 <th scope="col"></th>

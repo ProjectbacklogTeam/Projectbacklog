@@ -51,12 +51,12 @@ if (isset($_SESSION['admin_login'])) {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
-<body onload="onloadfunction()">
+<body onload="onloadfunction()" class="bodyhome">
   <div class="container-fluid">
     <div class="contenthome row flex-nowrap" style="overflow: auto;">
       <?php include('../navbar.php'); ?>
       <?php if ((isset($_SESSION['admin_login'])) || (isset($_SESSION['user_login'])) || (isset($_SESSION['approver_login']))) { ?>
-        <div class="row rowhome">
+        <div class="row rowhome ">
 
           <div class="headertopichome">
             <span>
@@ -79,7 +79,7 @@ if (isset($_SESSION['admin_login'])) {
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" onclick="totalprocesseempathize()">
+                <button class="buttonprocess" disabled>
                   <i class="fa-solid fa-user-pen fa-2x"></i>
                 </button>
                 <span>
@@ -181,56 +181,92 @@ if (isset($_SESSION['admin_login'])) {
             </div>
           </div>
           <div class="paperdashboard">
-            <div class="row mb-5">
-              <div class="col-4  mb-1">
+            <div class="row flex-nowrap ">
+              <div class="col-2 mt-3 ">
                 <div class="card border-left-primary shadow h-100 py-2">
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
                       <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="text-align:center">
                           ASIS PROCESS</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800" id="reqalldashboard">
 
                         </div>
                       </div>
                       <div class="col-auto">
-                        <i class="fa-solid fa-book fa-2x"></i>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-4 mb-1">
+              <div class="col-2 mt-3 ">
                 <div class="card border-left-primary shadow h-100 py-2">
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
                       <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="text-align:center">
                           TOBE PROCESS</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800" id="tobedashboard">
 
                         </div>
                       </div>
                       <div class="col-auto">
-                        <i class="fa-solid fa-book fa-2x"></i>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-4 mb-1">
-                <div class="card border-left-primary shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                          VALUE</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="emphatizedashboard">
+              <div class="row" style="height: 10rem;">
+                <div class="col-8  ">
+                  <div class="row mt-3 ">
+                    <div class="col-12">
+
+                    </div>
+                    <div class="col-4 ">
+                      <div class="card">
+                        <div class="card-body" style="padding-bottom: 3rem">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="text-align: center;">
+                            MANDAYS
+                          </div><br>
+                          <div class="card-text">
+                            <div id="mandays_summary">
+
+                            </div>
+
+                          </div>
 
                         </div>
                       </div>
-                      <div class="col-auto">
-                        <i class="fa-solid fa-book fa-2x"></i>
+                    </div>
+                    <div class="col-4 ">
+                      <div class="card">
+                        <div class="card-body" style="padding-bottom: 3rem">
+                          <div class=" text-xs font-weight-bold text-primary text-uppercase mb-1" style="text-align: center;">
+                            MONEY
+                          </div><br>
+                          <div class="card-text ">
+                            <div id="money_summary">
+
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-4 ">
+                      <div class="card">
+                        <div class="card-body" style="padding-bottom: 3rem">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="text-align: center;">
+                            PEOPLE
+                          </div><br>
+                          <div class="card-text">
+                            <div id="people_summary">
+
+                            </div>
+
+                          </div>
+
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -242,19 +278,23 @@ if (isset($_SESSION['admin_login'])) {
                 <div class="card border-left-warning shadow h-100 py-2">
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
+                      <div class="col-12">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                           PEOPLE MANAGEMENT
                         </div><br>
+                      </div>
+                      <div class="col-6">
                         <div class="h5 mb-0 font-weight-bold text-gray-800" id="peoplemanagement">
-                          
+
                         </div>
-                        <i class="fa-solid fa-list-check fa-2x"></i>
 
                       </div>
-                      <!-- <div class="col-auto">
-                        <i class="fa-solid fa-list-check fa-2x"></i>
-                      </div> -->
+                      <div class="col-6 manageicon">
+                        <i class="fa-solid fa-list-check fa-4x"></i>
+
+                      </div>
+
+
                     </div>
                   </div>
                 </div>
@@ -263,17 +303,18 @@ if (isset($_SESSION['admin_login'])) {
                 <div class="card border-left-warning shadow h-100 py-2">
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
+                      <div class="col-12">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                           PEOPLE CAPABILITY AND CULTURE
                         </div><br>
+                      </div>
+                      <div class="col-6">
                         <div class="h5 mb-0 font-weight-bold text-gray-800" id="peoplecapacity">
                         </div>
                       </div>
-                      <!-- <div class="col-auto">
-                        <i class="fa-solid fa-people-group fa-2x"></i>
-
-                      </div> -->
+                      <div class="col-6 manageicon">
+                        <i class="fa-solid fa-people-group fa-4x"></i>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -283,16 +324,19 @@ if (isset($_SESSION['admin_login'])) {
                 <div class="card border-left-warning shadow h-100 py-2">
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
+                      <div class="col-12">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                           LICENSE TO OPERATE AND PERMIT
                         </div><br>
+                      </div>
+                      <div class="col-6">
+
                         <div class="h5 mb-0 font-weight-bold text-gray-800" id="license">
                         </div>
                       </div>
-                      <!-- <div class="col-auto">
-                        <i class="fa-solid fa-id-card fa-2x"></i>
-                      </div> -->
+                      <div class="col-6 manageicon">
+                        <i class="fa-solid fa-id-card fa-4x"></i>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -302,16 +346,18 @@ if (isset($_SESSION['admin_login'])) {
                 <div class="card border-left-warning shadow h-100 py-2">
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
+                      <div class="col-12">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                           ENVIRONMENTAL SOCIAL AND GOVERNANCE
                         </div><br>
+                      </div>
+                      <div class="col-6 mr-2">
                         <div class="h5 mb-0 font-weight-bold text-gray-800" id="environmental">
                         </div>
                       </div>
-                      <!-- <div class="col-auto">
-                        <i class="fa-solid fa-handshake fa-2x"></i>
-                      </div> -->
+                      <div class="col-6 manageicon">
+                        <i class="fa-solid fa-handshake fa-4x"></i>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -321,16 +367,19 @@ if (isset($_SESSION['admin_login'])) {
                 <div class="card border-left-warning shadow h-100 py-2">
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
+                      <div class="col-12">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                           ECOSYSTEM AND FACILITY MANAGEMENT
                         </div><br>
+                      </div>
+                      <div class="col-6">
+
                         <div class="h5 mb-0 font-weight-bold text-gray-800" id="ecosystem">
                         </div>
                       </div>
-                      <!-- <div class="col-auto">
-                        <i class="fa-solid fa-seedling fa-2x"></i>
-                      </div> -->
+                      <div class="col-6 manageicon">
+                        <i class="fa-solid fa-seedling fa-4x"></i>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -347,12 +396,12 @@ if (isset($_SESSION['admin_login'])) {
 
             <div class="row justify-content-center mt-4">
               <div class="col-6">
-                <canvas id="chart_bar_department" style="z-index: -1;"></canvas>
+                <canvas id="chart_bar_department" style="background-color: white; box-shadow: 0 0 2px 1px #cccccc;"></canvas>
 
 
               </div>
-              <div class="col-6" style="padding:1rem">
-                <canvas id="chart_pie_allreq" style="z-index: 6;"></canvas>
+              <div class="col-6">
+                <canvas id="chart_pie_allreq" style="background-color: white; box-shadow: 0 0 2px 1px #cccccc;"></canvas>
 
 
               </div>
@@ -362,14 +411,14 @@ if (isset($_SESSION['admin_login'])) {
 
 
             </div>
-            <div class="row mt-5">
+            <div class="row" style="background-color: white;padding:2rem;margin-top: 2rem!important; box-shadow: 0 0 2px 1px #cccccc;">
               <div class="col-6">
                 <canvas id="chart_bar_allreq"></canvas>
 
 
               </div>
               <div class="col-6">
-                <canvas id="chart_bar_allreq"></canvas>
+                <canvas id="chart_bar_reqpercentinyear"></canvas>
 
 
               </div>
@@ -463,7 +512,7 @@ if (isset($_SESSION['admin_login'])) {
                 todayHighlight: true
               });
 
-             
+
 
               let todaystrat = new Date();
               let daystrat = todaystrat.getDate();
@@ -597,26 +646,29 @@ if (isset($_SESSION['admin_login'])) {
           <div class="row" style="margin-top:150px">
             <div class="col-6" style="margin-left: 4%;">
               <div class="input-group">
-                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                <button type="button" class="btn btn-primary"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
+                <input id="searchinput" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <button type="button" class="btn btn-primary" onclick="searchTable()"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
               </div>
             </div>
-            <div class="col-6">
-
+            <div class="col-5" id="colfeedback">
+              <div class="input-group" >
+              <span class="input-group-text" id="inputGrouplink_feedback" >Link Feedback</span>
+                <input type="text" class="form-control" id="link_feedback" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-warning" type="button" id="button-addon2" onclick="savefeedback()">SAVE</button>
+              </div>
             </div>
           </div>
 
 
           <div class="papertablereq">
-            <table class="table mt-1">
+            <table class="table mt-1" id="tablereqall">
               <thead style="text-align:center;font-size: 10px;">
-                <th scope="col">Request id</th>
-                <th scope="col">Request Date</th>
-                <th scope="col">Request Enddate</th>
-                <th scope="col">Process Name</th>
-                <th scope="col">Doing By</th>
+                <th scope="col" onclick="sortBy(0)">Request id</th>
+                <th scope="col" onclick="sortBy(1)">Request Date</th>
+                <th scope="col" onclick="sortBy(2)">Request Enddate</th>
+                <th scope="col" onclick="sortBy(3)">Process Name</th>
+                <th scope="col" onclick="sortBy(4)">Doing By</th>
                 <th scope="col" colspan="10">process</th>
-
                 <th scope="col"></th>
                 <th scope="col"></th>
               </thead>

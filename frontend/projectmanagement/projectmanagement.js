@@ -14,6 +14,25 @@ function showsuccessAlert() {
   });
 }
 
+function showLoadingSpinner() {
+  Swal.fire({
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    showConfirmButton: false,
+    customClass: {
+      popup: 'loading-spinner'
+    },
+    onOpen: function() {
+      swal.showLoading();
+    }
+  });
+}
+
+function hideLoadingSpinner() {
+  // Hide the SweetAlert dialog box
+  swal.close();
+}
+
 
 function showsendemailsuccessAlert() {
   Swal.fire({
@@ -327,14 +346,14 @@ var getpjmanagment = function (year) {
                                       </div>
                                      
                                     </div>
-                                   
+
                                     <div class="col-12 mt-3 mb-3" style="text-align: end;">
                                       <button  style="display:` + ((req.statusreq == 3) ? 'none' : 'inline') + `;margin-right: 3%;" class="buttonsend" onclick="sendemail(`+req.idplan+`,`+req.id+`)">SEND</button>
                                       <button id="togglesendemail`+ req.idplan + `" style="display:` + ((req.statusreq == 3)  ? 'inline' : 'none') + `;" class="buttonedit"  onclick="togglesendemail(` + req.idplan + `)">Edit</button>
                                       <button  id="updatesendemail`+ req.idplan + `" style="display:` + ((req.statusreq == 3) ? 'inline' : 'none') + `;" class="buttonsend"  onclick="updatesendemail(`+req.idplan+`,`+req.id+`)" data-bs-toggle="modal" data-bs-target="#successsentemailalert`+req.idplan+`" disabled>SEND</button>
 
                                     </div>
-                          
+
                                   </div>
                                 </div>
                         
@@ -564,6 +583,12 @@ var getreqall = function () {
       reqall_tabel.innerHTML = '';
       var jsonObj = JSON.parse(result);
       console.log(jsonObj)
+
+
+      var datalabel_in_year_current = []
+      var data_in_year_current = []
+
+
       for (let req of jsonObj) {
         console.log(req);
         if (req.startdate == null) {
@@ -581,6 +606,55 @@ var getreqall = function () {
         } else {
           var processname = req.processname
         }
+        if (req.painpoint == null) {
+          var painpoint = ""
+        } else {
+          var painpoint = req.painpoint
+        }
+        if (req.results == null) {
+          var results = ""
+        } else {
+          var results = req.results
+        }
+
+        if (req.description == null) {
+          var description = ""
+        } else {
+          var description = req.description
+        }
+        if (req.workflowname == "" || req.workflowname == null) {
+          var workflowname = "";
+        } else {
+          var workflowname = req.workflowname;
+        }
+
+        if (req.bussinessflowname == "" || req.bussinessflowname == null) {
+          var bussinessflowname = "";
+        } else {
+          var bussinessflowname = req.bussinessflowname;
+        }
+
+        if (req.extractfilename == "" || req.extractfilename == null) {
+          var extractfilename = "";
+        } else {
+          var extractfilename = req.extractfilename;
+        }
+
+        if (req.scopeofworkname == "" || req.scopeofworkname == null) {
+          var scopeofworkname = "";
+        } else {
+          var scopeofworkname = req.scopeofworkname;
+        }
+
+        if (req.riskmanagementname == "" || req.riskmanagementname == null) {
+          var riskmanagementname = "";
+        } else {
+          var riskmanagementname = req.riskmanagementname;
+        }
+
+
+
+
         $(document).ready(function() {
           $("#startdate"+req.id).datepicker({
             format: "dd/mm/yyyy",
@@ -593,7 +667,47 @@ var getreqall = function () {
             todayHighlight: true
           });
         });
-      
+        var startdateparts = startdate.split('-');
+        var startdateyear = parseInt(startdateparts[0]);
+        var startdatemonth = parseInt(startdateparts[1]);
+        var startdateday = parseInt(startdateparts[2]);
+        var startdateObject = new Date(startdateyear, startdatemonth - 1, startdateday);
+        var options = {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric'
+        };
+        var formattedstartDate = startdateObject.toLocaleDateString('en-GB', options);
+        formattedstartDate = formattedstartDate.replace('.', '');
+
+        var formattedstartDate_v2 = `${startdateday}/${startdatemonth}/${startdateyear}`
+
+
+
+
+
+        var enddateparts = enddate.split('-');
+        var enddateyear = parseInt(enddateparts[0]);
+        var enddatemonth = parseInt(enddateparts[1]);
+        var enddateday = parseInt(enddateparts[2]);
+        var enddateObject = new Date(enddateyear, enddatemonth - 1, enddateday);
+        var options = {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric'
+        };
+        var formattedendDate = enddateObject.toLocaleDateString('en-GB', options);
+        formattedendDate = formattedendDate.replace('.', '');
+
+
+        var formatteddateend_v2 = `${enddateday}/${enddatemonth}/${enddateyear}`
+
+
+        var currentYear = new Date().getFullYear();
+        if (startdateyear == currentYear) {
+          datalabel_in_year_current.push(processname)
+          data_in_year_current.push(req.statusforprocess)
+        }
        
         var row = `
               <tr id="rowpjmanage`+ req.id + `" style="text-align:center" >
@@ -625,12 +739,12 @@ var getreqall = function () {
                     </button>
                     </td>
               </tr>
-              <div class="modal fade" id="updatereqone`+ req.id + `" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-sm" style="margin-left: 60px;">
+              <div class="modal fade" id="updatereqone`+ req.id + `" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" aria-hidden="true">
+              <div class="modal-dialog modal-lg" style="margin-left: 60px;">
                 <div class="modal-content" style="width: 1100px; margin-left: 130px;">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Requirements Update</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="exampleModalLabel">Emphathize</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="window.location.reload()"></button>
                   </div>
                   <div class="modal-body" style="height: 1000px;width: 1000px;">
                     <div class="row">
@@ -672,37 +786,39 @@ var getreqall = function () {
                             </div>
                           </div>
                           <div class="col-6 mb-1">
-                            <div class="input-group mb-3">
+                            <div class="input-group date mb-3" style="width:100%">
                               <span class="input-group-text" id="inputGroup-sizing-default">วันที่ขอ</span>
-                              <input type="date" value="`+ startdate + `"  id="startdate` + req.id + `" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled>
-                              
-                              </div>
+                              <input  type="text" value="`+ formattedstartDate_v2 + `" id="startdate` + req.id + `" class="form-control" placeholder="dd/mm/yyyy" disabled>
+                            </div>
                           </div>
                           <div class="col-6 mb-1">
-                            <div class="input-group mb-3">
-                              <span class="input-group-text" id="inputGroup-sizing-default">วันที่ต้องการใช้ระบบ</span>
-                              <input type="date" value="`+ enddate + `" id="enddate` + req.id + `" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled>
+                            <div class="input-group date mb-3" style="width:100%">
+                              <span class="input-group-text" id="inputGroup-sizing-default">วันที่ต้องใช้ระบบ</span>
+                              <input type="text" value="`+ formatteddateend_v2 + `" id="enddate` + req.id + `" class="form-control" placeholder="dd/mm/yyyy" disabled>
                             </div>
+                           
+                          
                           </div>
                           <div class="col-6 mb-1">
                             <div class="input-group">
                               <label class="input-group-text" for="inputGroupSelect01">ASIS</label>
                               <select class="form-select" id="asis`+ req.id + `" disabled>
+
                               </select>
                             </div>
                           </div>
                           <div class="col-6 mb-1">
                             <div class="input-group">
                               <label class="input-group-text" for="inputGroupSelect01">TOBE</label>
-                              <select class="form-select" id="tobe`+ req.id + `" disabled>
-                             
+                              <select class="form-select"  id="tobe`+ req.id + `" disabled>
+
                               </select>
                             </div>
                           </div>
                           <div class="col-6 mb-1">
                             <div class="input-group">
                               <label class="input-group-text" for="inputGroupSelect01">Doing By</label>
-                              <select class="form-select" id="doingby`+ req.id + `" disabled>
+                              <select class="form-select"  id="doingby`+ req.id + `" disabled>
 
                               </select>
                             </div>
@@ -711,49 +827,61 @@ var getreqall = function () {
                             <div class="input-group">
                               <label class="input-group-text" for="inputGroupSelect01">BUDJET</label>
                               <select class="form-select" id="budget`+ req.id + `" disabled>
-                             
+
                               </select>
                             </div>
                           </div>
                           <div class="col-6 mb-1 mt-2">
                             <span>Pain Point</span><br>
-                            <textarea id="painpoint`+ req.id + `" class="mt-3" type="text" style="height:90px;width:100%" disabled></textarea>
+                            <textarea id="painpoint`+ req.id + `" class="mt-3" type="text" style="height:90px;width:100%" disabled>` + painpoint + `</textarea>
                           </div>
                           <div class="col-6 mb-1 mt-2">
                             <span>Results & Benefit</span><br>
-                            <textarea id="benefit`+ req.id + `" class="mt-3" type="text" style="height:90px;width:100%" disabled></textarea>
+                            <textarea id="benefit`+ req.id + `" class="mt-3" type="text" style="height:90px;width:100%" disabled>` + results + `</textarea>
                           </div>
                           <div class="col-6 mb-1 mt-2">
                             <span>Description</span><br>
-                            <textarea id="description`+ req.id + `" class="mt-3" type="text" style="height:90px;width:100%" disabled></textarea>
+                            <textarea id="description`+ req.id + `" class="mt-3" type="text" style="height:90px;width:100%" disabled>` + description + `</textarea>
+                          </div>
+                       
+                        
+                        <form id="fileallinupdate" enctype="multipart/form-data">
+                        <div class="col-6 mb-1 mt-2">
+                            <span>Scope of Work </span><br>
+                            <input id="scopeofwork`+ req.id + `" class="mt-3" type="file" disabled><br/>
+                            <a style="display:`+ (scopeofworkname == "" ? "none" : "inline") + `" href = "../../backend/home/fileupload/scopeofwork/` + scopeofworkname + `" target="_blank"><i class="mt-2 fa-solid fa-file fa-2x"></i></a>
                           </div>
                           <div class="col-6 mb-1 mt-2">
-                            <span>Scope of Work </span><br>
-                            <input id="scopeofwork`+ req.id + `" class="mt-3" type="file" disabled>
+                            <span>Risk Management </span><br>
+                            <input id="riskmanagement`+ req.id + `" class="mt-3" type="file" disabled><br/>
+                            <a style="display:`+ (riskmanagementname == "" ? "none" : "inline") + `" href = "../../backend/home/fileupload/riskmanagement/` + riskmanagementname + `" target="_blank"><i class="mt-2 fa-solid fa-file fa-2x"></i></a>
                           </div>
                           <div class="col-6 mb-1 mt-2">
                           <span>Bussiness Flow </span><br>
-                            <input id="bussinessflow`+ req.id + `" class="mt-3" type="file" disabled>
+                            <input id="bussinessflow`+ req.id + `" class="mt-3" type="file" disabled><br/>
+                            <a style="display:`+ (bussinessflowname == "" ? "none" : "inline") + `" href = "../../backend/home/fileupload/bussinessflow/` + bussinessflowname + `" target="_blank"><i class="mt-2 fa-solid fa-file fa-2x"></i></a>
                           </div>
                           <div class="col-6 mb-1 mt-2">
-                            <span>Work Flow (Flowเดิมของระบบ) </span><br>
-                            <input id="workflow`+ req.id + `" class="mt-3" type="file" disabled>
-                          </div>
+                            <span>Work Flow ( swim lane )  </span><br>
+                            <input  style="color:red;" id="workflow`+ req.id + `" class="mt-3" type="file" disabled><br/>
+                             <a style="display:`+ (workflowname == "" ? "none" : "inline") + `" href = "../../backend/home/fileupload/workflow/` + workflowname + `" target="_blank"><i class="mt-2 fa-solid fa-file fa-2x"></i></a>
+                            </div>
                           <div class="col-6 mb-1 mt-2">
                             <span>Extract File (แนบไฟล์เดิมของระบบ)</span><br>
-                            <input id="extractfile`+ req.id + `" class="mt-3" type="file" disabled>
+                            <input id="extractfile`+ req.id + `" class="mt-3" type="file" disabled><br/>
+                            <a style="display:`+ (extractfilename == "" ? "none" : "inline") + `" href = "../../backend/home/fileupload/extractfile/` + extractfilename + `" target="_blank"><i class="mt-2 fa-solid fa-file fa-2x"></i></a>
                           </div>
-                          <div class="col-6 mb-1 mt-2">
-                            <span>Approvals</span><br>
-                            <input id="approvals`+ req.id + `" class="mt-3" type="text" disabled>
-                          </div>                                           
-                        </div>
-        
-        
-                      </div>
-        
-                    </div>
-        
+                        </form>
+                          
+                          <div class="col-11 mt-2" style="text-align:end ;">
+                          <button class="buttonedit" onclick="togglebtnedit(`+ req.id + `)" >เเก้ไข</button>
+                          </div>
+                          <div class="col-1 mt-2" style="text-align:end ;">
+                            <button class="buttonsave" id="save-button`+ req.id + `"  onclick="patchupdate(` + req.id + `)" disabled>บันทึก</button>
+                          </div>    
+                        </div>      
+                      </div>     
+                    </div>       
                   </div>
                 </div>
         
@@ -761,7 +889,7 @@ var getreqall = function () {
         
               </div>
         
-            </div>        
+            </div>     
                 `
         reqall_tabel.insertAdjacentHTML('beforeend', row);
 
@@ -850,7 +978,8 @@ function sendemail(pjid,idreq) {
   const approverInput = document.getElementById("approver"+pjid);
   const selectedOption = Array.from(approverInput.list.options).find(option => option.value === approverInput.value);
   const idselectapprover = selectedOption.getAttribute("data-value")
-  
+  var loadingSpinner = document.getElementById('loadingSpinner');
+  loadingSpinner.style.display = 'block'
   
   
   var raw = JSON.stringify({
@@ -875,6 +1004,8 @@ function sendemail(pjid,idreq) {
     .then(result => {
       var jsonObj = JSON.parse(result);
       if (jsonObj.status == 'OK') {
+        loadingSpinner.style.display = 'none';
+
         showsendemailsuccessAlert()
       } else {
         alert('not ok');
@@ -890,11 +1021,13 @@ function sendemail(pjid,idreq) {
 function updatesendemail(pjid,idreq) {
   var myheaders = new Headers()
   myheaders.append("Content-Type", "application/json");
-  
+  showLoadingSpinner();
+
+
   const approverInput = document.getElementById("approver"+pjid);
   const selectedOption = Array.from(approverInput.list.options).find(option => option.value === approverInput.value);
   const idselectapprover = selectedOption.getAttribute("data-value")
-  
+
   var raw = JSON.stringify({
       "topic": document.getElementById("topic"+pjid).value,
       "email":document.getElementById("email"+pjid).value,
@@ -916,6 +1049,7 @@ function updatesendemail(pjid,idreq) {
     .then(result => {
       var jsonObj = JSON.parse(result);
       if (jsonObj.status == 'OK') {
+        hideLoadingSpinner();
         showsendemailsuccessAlert()
         console.log('updateeeeeeeeeeeeee')
       } else {
@@ -1011,3 +1145,6 @@ function toggletimechange(idplan){
 
 
 }
+
+
+

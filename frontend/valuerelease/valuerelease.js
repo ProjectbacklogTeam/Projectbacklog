@@ -85,18 +85,46 @@ var getreqapproveallTovaluerelease = function () {
         }
 
 
-        // $(document).ready(function () {
-        //   $("#startdate" + req.idexcute).datepicker({
-        //     dateFormat: "dd/mm/yy",
-        //     autoclose: true,
-        //     todayHighlight: true,
-        //   });
-        //   $("#enddate" + req.idexcute).datepicker({
-        //     dateFormat: "dd/mm/yy",
-        //     autoclose: true,
-        //     todayHighlight: true,
-        //   });
-        // });
+        
+        if(req.estimates_value_number==null ){
+          var estimates_value_number="";
+        }else{
+          var estimates_value_number=req.estimates_value_number
+        }
+        if(req.valuereleases_value_number==null ){
+          var valuereleases_value_number="";
+        }else{
+          var valuereleases_value_number=req.valuereleases_value_number
+        }
+        if(req.benefitpeoples_value_number==null ){
+          var benefitpeoples_value_number="";
+        }else{
+          var benefitpeoples_value_number=req.benefitpeoples_value_number
+        }       
+        if(req.benefitpeoplemandayss_value_number==null ){
+          var benefitpeoplemandayss_value_number="";
+        }else{
+          var benefitpeoplemandayss_value_number=req.benefitpeoplemandayss_value_number
+        }
+        if(req.benefitmoneys_value_number==null ){
+          var benefitmoneys_value_number="";
+        }else{
+          var benefitmoneys_value_number=req.benefitmoneys_value_number
+        }
+
+        if(req.filebefore==null ){
+          var filebefore="";
+        }else{
+          var filebefore=req.filebefore
+        }
+
+        if(req.fileafter==null ){
+          var fileafter="";
+        }else{
+          var fileafter=req.fileafter
+        }
+
+        
 
 
         $(document).ready(function () {
@@ -176,7 +204,7 @@ var getreqapproveallTovaluerelease = function () {
 
         var row = `
                     <tr>
-                          <th scope="row" id="req">`+ req.idreq + `</th>
+                          <td scope="row" id="req">`+ req.idreq + `</td>
                           <td>`+ formattedstartDate + `</td>
                           <td>`+ formattedendDate + `</td>
                           <td>`+ processname + `</td>
@@ -249,7 +277,7 @@ var getreqapproveallTovaluerelease = function () {
                             <div class="col-4" >
                             <span>Estimate ภายนอก</span><br>
                             <div class="mt-3">
-                            <input type="number" id="estimatenumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
+                            <input value="`+estimates_value_number+`" type="number" id="estimatenumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
                             </div>
                             
                             <textarea  id="estimate`+ req.idexcute + `" type="text" class="mt-3" style="height:80px;width:100%"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>`+estimate+`</textarea>
@@ -257,7 +285,7 @@ var getreqapproveallTovaluerelease = function () {
                             <div class="col-4" >
                             <span>Value Release</span><br>
                             <div class="mt-3">
-                            <input type="number" id="valuerelease_excutenumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
+                            <input value="`+valuereleases_value_number+`" type="number" id="valuerelease_excutenumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
                             </div>
                             <textarea  id="valuerelease_excute`+ req.idexcute + `" type="text" class="mt-3" style="height:80px;width:100%"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>`+valuerelease+`</textarea>
                             </div>
@@ -271,21 +299,21 @@ var getreqapproveallTovaluerelease = function () {
                         <div class="col-4" >
                           <span>Benefit people</span><br>
                           <div class="mt-3">
-                          <input type="number" id="benefitpeoplenumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
+                          <input value="`+benefitpeoples_value_number+`" type="number" id="benefitpeoplenumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
                           </div>
                           <textarea id="benefitpeople`+ req.idexcute + `" type="text" class="mt-3" style="height:80px;width:100%"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>`+benefitpeople+`</textarea>
                         </div>
                         <div class="col-4" >
                           <span>Benefit money</span><br>
                           <div class="mt-3">
-                          <input type="number" id="benefitmoneynumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
+                          <input value="`+benefitmoneys_value_number+`" type="number" id="benefitmoneynumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
                           </div>
                           <textarea id="benefitmoney`+ req.idexcute + `" type="text" class="mt-3" style="height:80px;width:100%"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>`+benefitmoney+`</textarea>
                         </div>
                         <div class="col-4" >
                           <span> Banefit mandays</span><br>
                           <div class="mt-3">
-                          <input type="number" id="benefitpeoplemandaysnumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
+                          <input value="`+benefitpeoplemandayss_value_number+`" type="number" id="benefitpeoplemandaysnumber`+ req.idexcute + `"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
                           </div>
                           <textarea  id="benefitpeoplemandays`+ req.idexcute + `" type="text" class="mt-3" style="height:80px;width:100%"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>`+benefitpeoplemandays+`</textarea>
                         </div>
@@ -296,7 +324,7 @@ var getreqapproveallTovaluerelease = function () {
                           <div class="input-group" >
                             <span class="input-group-text mt-3" id="inputGroup-sizing-default">ATTECTH
                               LINK</span>
-                            <input value="`+req.filebefore+`" id="filebefore`+ req.idexcute + `" type="text" class="form-control mt-3"
+                            <input value="`+filebefore+`" id="filebefore`+ req.idexcute + `" type="text" class="form-control mt-3"
                               aria-label="Sizing example input"
                               aria-describedby="inputGroup-sizing-default"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
                           </div>
@@ -306,7 +334,7 @@ var getreqapproveallTovaluerelease = function () {
                           <div class="input-group" >
                             <span class="input-group-text mt-3" id="inputGroup-sizing-default">ATTECTH
                               LINK</span>
-                            <input value="`+req.fileafter+`" id="fileafter`+ req.idexcute + `" type="text" class="form-control mt-3"
+                            <input value="`+fileafter+`" id="fileafter`+ req.idexcute + `" type="text" class="form-control mt-3"
                               aria-label="Sizing example input"
                               aria-describedby="inputGroup-sizing-default"  `+ ((req.statusvaluerelease == 1) ? 'disabled' : 'none') +`>
                           </div>
@@ -341,7 +369,7 @@ var getreqapproveallTovaluerelease = function () {
                     `
 
 
-        reqallapproval_tabel.insertAdjacentHTML('afterend', row);
+        reqallapproval_tabel.insertAdjacentHTML('beforeend', row);
 
       }
 
@@ -532,4 +560,75 @@ function toggleeditvaluerelease(idexcute) {
   filebefore.disabled = !filebefore.disabled;
   fileafter.disabled = !fileafter.disabled;
   btnsavevaluerelease.disabled = !btnsavevaluerelease.disabled;
+}
+
+
+
+cPrev = -1;
+function sortBy(c) {
+  rows = document.getElementById("tablevalurelease").rows.length; // num of rows
+  columns = document.getElementById("tablevalurelease").rows[0].cells.length; // num of columns
+ 
+  console.log(rows);
+  arrTable = [...Array(rows)].map(e => Array(columns)); // create an empty 2d array
+
+
+  for (ro=0; ro<rows; ro++) { // cycle through rows
+      for (co=0; co<columns; co++) { // cycle through columns
+          arrTable[ro][co] = document.getElementById("tablevalurelease").rows[ro].cells[co].innerHTML;
+      }
+  }
+  th = arrTable.shift(); // remove the header row from the array, and save it
+  
+  
+  if (c !== cPrev) { // different column is clicked, so sort by the new column
+      arrTable.sort(
+          function (a, b) {
+              if (a[c] === b[c]) {
+                  return 0;
+              } else {
+                  return (a[c] < b[c]) ? -1 : 1;
+              }
+          }
+      );
+  } else { // if the same column is clicked then reverse the array
+      arrTable.reverse();
+  }
+  cPrev = c;
+  arrTable.unshift(th);
+  for (ro=0; ro<rows; ro++) {
+      for (co=0; co<columns; co++) {
+          document.getElementById("tablevalurelease").rows[ro].cells[co].innerHTML = arrTable[ro][co];
+      }
+  }
+}
+
+
+
+function searchTablevaluerelease() {
+
+  const tableBody = document.querySelector("#valuereleasetable");
+  console.log(tableBody);
+  const rows = Array.from(tableBody.querySelectorAll('tr'));
+  console.log(rows);
+
+  const searchTerm = document.querySelector('#searchinputvaluerelease').value.toLowerCase();
+  console.log(searchTerm);
+
+  rows.forEach(row => {
+    const cells = Array.from(row.querySelectorAll('td'));
+    console.log(cells);
+
+    const match = cells.some(cell => {
+      const cellContent = cell.textContent.toLowerCase();
+      if (!isNaN(cellContent) && cellContent.trim() !== '') {
+        // convert the cell content to a number and check for a match
+        return parseFloat(cellContent) === parseFloat(searchTerm);
+      } else {
+        // check for a match using string comparison
+        return cellContent.includes(searchTerm);
+      }
+    });
+    row.style.display = match ? '' : 'none';
+  });
 }

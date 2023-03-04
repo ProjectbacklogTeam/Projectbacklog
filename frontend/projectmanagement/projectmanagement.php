@@ -76,13 +76,13 @@ session_start();
 
 
           <div class="paperprojectplan">
-            <table class="table">
+            <table class="table" id="tableplanproject">
               <thead style="text-align:center">
                 <th scope="col">Request Id</th>
-                <th scope="col">Process Name</th>
-                <th scope="col">status</th>
+                <th scope="col" >Process Name</th>
+                <th scope="col" >status</th>
                 <th scope="col"></th>
-                <th scope="col">date</th>
+                <th scope="col" >date</th>
                 <th scope="col">Jan.</th>
                 <th scope="col">Feb.</th>
                 <th scope="col">Mar.</th>

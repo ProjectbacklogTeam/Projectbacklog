@@ -2,9 +2,65 @@ html {
     font-size: calc(60%+0.8vmin);
 }
 
+.loading-spinner {
+    display: none;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #db3434;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.bodyhome {
+    background-color: #f4f4f4;
+}
+
 #chart_bar_allreq {
-    height: 200px;
-  }
+    height: 250px;
+}
+
+#chart_bar_department {
+    padding: 1rem;
+}
+
+#reqalldashboard,
+#tobedashboard {
+    text-align: center;
+    font-size: 50px;
+    margin: 1rem auto;
+    font-weight: bold;
+}
+
+.manageicon {
+    color: #3b3131;
+}
+
+.card-text {
+    font-weight: bold;
+    font-size: 30px;
+    margin-top: 2rem;
+    text-align: center;
+    color: #ECAF44;
+}
+
+.badge-soft-success {
+    background-color: rgba(75, 191, 115, .175);
+    color: #4bbf73;
+}
+
+
 /* .container-fluid {
     padding-left: 0rem;
     padding-right: 0rem;
@@ -79,7 +135,7 @@ html {
     max-height: 500px;
     max-width: 100%;
     padding: 0 auto;
-    
+
 }
 
 .boxs {
@@ -156,12 +212,9 @@ html {
 .paperdashboard {
     font-size: 10px;
     line-height: 11px;
-    /* max-width: 100rem; */
-    /* padding: 500px 20px 5px 5px; */
     padding: 1rem 1rem 5rem 1rem;
     margin: 6px 70px 6px 70px;
-    background-color: white;
-    /* box-shadow: 0 0 2px 1px #cccccc; */
+    /* background-color: white; */
 
 
 }
@@ -172,7 +225,7 @@ html {
     width: 800px;
     height: 500px;
     margin: 6px 70px 6px 170px;
-    background-color: white;
+    /* background-color: rgb(255, 41, 41); */
     overflow: visible;
     border-radius: 2%;
     padding: 1rem;
@@ -198,8 +251,8 @@ html {
 }
 
 
-.border-left-warning{
-    border-top: 0.5rem solid #ff8913cb;
+.border-left-warning {
+    /* border-top: 0.5rem solid #ff8913cb; */
     max-width: 100%;
     font-size: 8px;
 
@@ -214,7 +267,7 @@ html {
     height: 500px;
     margin: 6px 70px 6px 70px;
     background-color: white;
-    overflow: visible;
+    overflow: auto;
     border-radius: 2%;
     padding: 1rem;
 
@@ -412,7 +465,7 @@ th {
 }
 
 .buttonsend:hover {
-    box-shadow: rgb(167, 129, 255)  0px 5px 0px 0px;
+    box-shadow: rgb(167, 129, 255) 0px 5px 0px 0px;
 }
 
 .buttonsend:active {
@@ -422,7 +475,8 @@ th {
     transform: translateY(5px);
     transition: 200ms;
 }
-.buttonsend:disabled{
+
+.buttonsend:disabled {
     padding: 15px 15px;
     border-radius: 10px;
     border: 0;
@@ -434,6 +488,7 @@ th {
     color: hsl(0, 100%, 98%);
     font-weight: bold;
 }
+
 .buttonsend:active:disabled {
     background-color: rgb(188, 177, 218);
     /*50, 168, 80*/
@@ -750,7 +805,7 @@ th {
     color: black;
     width: 100%;
     background-color: white;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
     height: 60px;
@@ -760,10 +815,10 @@ th {
     max-width: 70rem;
 }
 
-
+/* 
 @media only screen and (max-width: 800px) {
 
-    .container-fluid{
+    .container-fluid {
         padding-left: 0;
         padding-right: 0;
     }
@@ -917,11 +972,12 @@ th {
 
 
     }
-} 
-    .headertextlogin {
-        margin: 20rem auto;
-        font-size: 25px
-    }
+} */
+
+.headertextlogin {
+    margin: 20rem auto;
+    font-size: 25px
+}
 
 .backgroundlogin1 {
     background: linear-gradient(to left, rgb(255, 69, 69), rgb(255, 119, 119));
@@ -933,4 +989,12 @@ th {
 .cardlogin {
     margin: 7rem 5rem auto;
 
+}
+
+#inputGrouplink_feedback{
+    background: #ffd483 !important;
+}
+
+.fa-file{
+    color: #db3434;
 }

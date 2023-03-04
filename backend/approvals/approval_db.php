@@ -65,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     'division' => $row['name_division'],
                     'department' => $row['name_department'],
                     'section' => $row['name_section'],
+                    'approver_id' => $row[2],
 
                 )
             );

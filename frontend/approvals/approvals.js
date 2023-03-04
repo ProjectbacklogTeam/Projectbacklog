@@ -17,7 +17,25 @@ var getreqapproverall = function () {
             reqallapproval_tabel.innerHTML = '';
             var jsonObj = JSON.parse(result);
             console.log(jsonObj)
+
+
+            var adminloginID = localStorage.getItem("idadmin");
+            var approverloginID = localStorage.getItem("idapprover");
+
+            if (adminloginID == "null" || adminloginID == null) {
+              var adminlogin = 0
+            } else {
+              adminlogin = Number(adminloginID)
+            }
+            if (approverloginID == "null" || approverloginID == null) {
+              var approverlogin = 0
+            } else {
+              approverlogin = Number(approverloginID)
+            }
+
             for (let req of jsonObj) {
+           
+
     
                 if (req.startdate == null) {
                     var startdate = "0000-00-00"
@@ -112,6 +130,9 @@ var getreqapproverall = function () {
                 var formattedendDate = enddateObject.toLocaleDateString('en-GB', options);
                 formattedendDate = formattedendDate.replace('.', '');
 
+       
+
+             
                 var row = `
                   <tr>
                       <th scope="row" id="req">`+ req.id + `</th>
@@ -263,8 +284,9 @@ var getreqapproverall = function () {
               
                   `
 
-
-                  reqallapproval_tabel.insertAdjacentHTML('afterend', row);
+                  if((approverlogin == req.approver_id) || (adminlogin != 0 )){
+                    reqallapproval_tabel.insertAdjacentHTML('afterend', row);
+                  }
 
             }
 

@@ -51,6 +51,10 @@ var getreqall = function () {
 
 
 
+      var summandays = 0
+      var sumpeople = 0
+      var summoney = 0
+
 
 
 
@@ -72,6 +76,8 @@ var getreqall = function () {
         userlogin = Number(userloginID)
       }
 
+
+
       var admin_id = 0
       var approver_id = 0
       var user_id = 0
@@ -81,24 +87,56 @@ var getreqall = function () {
 
 
       console.log(jsonObj)
+
+      var datalabel_in_year_current = []
+      var data_in_year_current = []
+
       for (let req of jsonObj) {
 
-        
-      if(req.department_id == "18"){
-        count_PEOPLEMANAGEMENT = count_PEOPLEMANAGEMENT+1
-      }
-      if(req.department_id == "16"){
-        count_PEOPLECAPABILITYANDCULTURE = count_PEOPLECAPABILITYANDCULTURE+1
-      }
-      if(req.department_id == "10"){
-        count_LICENSETOOPERATEANDPERMIT = count_LICENSETOOPERATEANDPERMIT+1
-      }
-      if(req.department_id == "9"){
-        count_ENVIRONMENTALSOCIALANDGOVERNANCE = count_ENVIRONMENTALSOCIALANDGOVERNANCE+1
-      }
-      if(req.department_id == "8"){
-        count_ECOSYSTEMANDFACILITYMANAGEMENT = count_ECOSYSTEMANDFACILITYMANAGEMENT+1
-      }
+
+
+
+        if (req.benefitpeoples_value_number == null) {
+          var benefitpeoples_value_number = 0;
+        } else {
+          var benefitpeoples_value_number = Number(req.benefitpeoples_value_number)
+        }
+        if (req.benefitpeoplemandayss_value_number == null) {
+          var benefitpeoplemandayss_value_number = 0;
+        } else {
+          var benefitpeoplemandayss_value_number = Number(req.benefitpeoplemandayss_value_number)
+        }
+        if (req.benefitmoneys_value_number == null) {
+          var benefitmoneys_value_number = 0;
+        } else {
+          var benefitmoneys_value_number = Number(req.benefitmoneys_value_number)
+        }
+
+
+
+
+
+        summandays = summandays + benefitpeoplemandayss_value_number
+        summoney = summoney + benefitmoneys_value_number
+        sumpeople = sumpeople + benefitpeoples_value_number
+
+
+
+        if (req.department_id == "18") {
+          count_PEOPLEMANAGEMENT = count_PEOPLEMANAGEMENT + 1
+        }
+        if (req.department_id == "16") {
+          count_PEOPLECAPABILITYANDCULTURE = count_PEOPLECAPABILITYANDCULTURE + 1
+        }
+        if (req.department_id == "10") {
+          count_LICENSETOOPERATEANDPERMIT = count_LICENSETOOPERATEANDPERMIT + 1
+        }
+        if (req.department_id == "9") {
+          count_ENVIRONMENTALSOCIALANDGOVERNANCE = count_ENVIRONMENTALSOCIALANDGOVERNANCE + 1
+        }
+        if (req.department_id == "8") {
+          count_ECOSYSTEMANDFACILITYMANAGEMENT = count_ECOSYSTEMANDFACILITYMANAGEMENT + 1
+        }
 
 
         if (req.statusforprocess == 1) {
@@ -157,7 +195,7 @@ var getreqall = function () {
           var enddate = req.enddate
         }
 
-        
+
         if (req.processname == null) {
           var processname = ""
         } else {
@@ -262,12 +300,12 @@ var getreqall = function () {
 
         $(document).ready(function () {
           $("#startdate" + req.id).datepicker({
-            format: "dd/mm/yy",
+            format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
           });
           $("#enddate" + req.id).datepicker({
-            format: "dd/mm/yy",
+            format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
           });
@@ -285,7 +323,10 @@ var getreqall = function () {
         };
         var formattedstartDate = startdateObject.toLocaleDateString('en-GB', options);
         formattedstartDate = formattedstartDate.replace('.', '');
-        //var formattedstartDate = startdateObject.toLocaleDateString('th-TH', options);
+
+        var formattedstartDate_v2 = `${startdateday}/${startdatemonth}/${startdateyear}`
+
+
 
 
 
@@ -303,10 +344,19 @@ var getreqall = function () {
         formattedendDate = formattedendDate.replace('.', '');
 
 
+        var formatteddateend_v2 = `${enddateday}/${enddatemonth}/${enddateyear}`
+
+
+        var currentYear = new Date().getFullYear();
+        if (startdateyear == currentYear) {
+          datalabel_in_year_current.push(processname)
+          data_in_year_current.push(req.statusforprocess)
+        }
+
 
         var row = `
                 <tr">
-                    <th scope="row" id="req">`+ req.id + `</th>
+                    <td scope="row" id="req">`+ req.id + `</td>
                     <td>`+ formattedstartDate + `</td>
                     <td>`+ formattedendDate + `</td>
                     <td>`+ processname + `</td>
@@ -403,6 +453,9 @@ var getreqall = function () {
                     </div>
                     </td>
                     <td>
+                      <a href="`+ req.link_feedback + `" target="_blank" style="display:` + (((req.statusforprocess == 10)  && ((adminlogin == admin_id && adminlogin != 0) || (adminlogin != approverlogin && adminlogin != userlogin))) ? 'inline' : ((req.statusforprocess >= 10) && (req.statusforprocess <= 10) && approverlogin == approver_id && approverlogin != 0) ? 'inline': ((req.statusforprocess >= 10) && (req.statusforprocess <= 10) && userlogin == user_id && userlogin != 0) ? 'inline':'none') + `"><i class="fa-solid fa-book fa-3x" ></i></a>
+                    </td>
+                    <td>
                     <button type="button" onclick="requriment_one(`+ req.id + `)"  class="btn btn-warning" id="buttonupdate` + req.id + `" name="btn_update" style="color:white;display:` + (((adminlogin == admin_id && adminlogin != 0) || (adminlogin != approverlogin && adminlogin != userlogin)) ? 'inline' : (approverlogin == approver_id && approverlogin != 0) ? 'inline' : (userlogin == user_id && userlogin != 0) ? 'inline' : 'none') + `"  data-bs-toggle="modal" data-bs-target="#updatereqone` + req.id + `">
                         UPDATE
                     </button>
@@ -462,13 +515,13 @@ var getreqall = function () {
                           <div class="col-6 mb-1">
                             <div class="input-group date mb-3" style="width:100%">
                               <span class="input-group-text" id="inputGroup-sizing-default">วันที่ขอ</span>
-                              <input  type="text" value="`+ formattedstartDate + `" id="startdate` + req.id + `" class="form-control" placeholder="dd/mm/yyyy" disabled>
+                              <input  type="text" value="`+ formattedstartDate_v2 + `" id="startdate` + req.id + `" class="form-control" placeholder="dd/mm/yyyy" disabled>
                             </div>
                           </div>
                           <div class="col-6 mb-1">
                             <div class="input-group date mb-3" style="width:100%">
-                              <span class="input-group-text" id="inputGroup-sizing-default">วันที่ขอ</span>
-                              <input type="text" value="`+ formattedendDate + `" id="enddate` + req.id + `" class="form-control" placeholder="dd/mm/yyyy" disabled>
+                              <span class="input-group-text" id="inputGroup-sizing-default">วันที่ต้องใช้ระบบ</span>
+                              <input type="text" value="`+ formatteddateend_v2 + `" id="enddate` + req.id + `" class="form-control" placeholder="dd/mm/yyyy" disabled>
                             </div>
                            
                           
@@ -551,7 +604,7 @@ var getreqall = function () {
                           <button class="buttonedit" onclick="togglebtnedit(`+ req.id + `)" >เเก้ไข</button>
                           </div>
                           <div class="col-1 mt-2" style="text-align:end ;">
-                            <button class="buttonsave" id="save-button`+ req.id + `"  onclick="patchupdate(` + req.id + `)" disabled>บันทึก</button>
+                            <button class="buttonsave" id="save-button`+ req.id + `"  onclick="patchupdate(` + req.id + `,`+req.statusforprocess+`,`+req.status_req+`)" disabled>บันทึก</button>
                           </div>    
                         </div>      
                       </div>     
@@ -589,11 +642,31 @@ var getreqall = function () {
                 </div>
               </div>                           
                 `
+        var colfeedback = document.getElementById("colfeedback")
+        if (adminlogin != 0) {
+          colfeedback.style.display = 'inline'
+        } else {
+          colfeedback.style.display = 'none'
+        }
+
+
 
         reqall_tabel.insertAdjacentHTML('beforeend', row);
 
+
+
       }
-      
+      console.log(summandays)
+      var mandays_summary = document.getElementById("mandays_summary")
+      mandays_summary.innerHTML = "฿ " + summandays
+
+      var people_summary = document.getElementById("people_summary")
+      people_summary.innerHTML = "฿ " + sumpeople
+
+      var money_summary = document.getElementById("money_summary")
+      money_summary.innerHTML = "฿ " + summoney
+
+
       var tobedashboard = document.getElementById("tobedashboard");
       tobedashboard.innerHTML = countprocess10
 
@@ -613,6 +686,8 @@ var getreqall = function () {
       tobedashboard_ecosystem.innerHTML = count_ECOSYSTEMANDFACILITYMANAGEMENT
 
 
+
+
       var ctx3 = document.getElementById('chart_bar_department').getContext('2d');
       var myChart3 = new Chart(ctx3, {
         type: 'bar',
@@ -626,8 +701,8 @@ var getreqall = function () {
                 "#FF6464",
                 "#FF8585",
                 "#FFC24F",
-                "#FFD688",  
-                "#FFF854",    
+                "#FFD688",
+                "#FFF854",
               ],
             borderWidth: 1,
 
@@ -668,7 +743,7 @@ var getreqall = function () {
         }
       });
 
-      
+
 
       var ctx1 = document.getElementById('chart_pie_allreq').getContext('2d');
       var myChart1 = new Chart(ctx1, {
@@ -686,19 +761,18 @@ var getreqall = function () {
                 "#FF4141",
                 "#FF6464",
                 "#FF8585",
-                "#FFA600",
-                "#FFC24F",
-                "#FFD688",
-                "#FFE6B7",
-                "#FFF400",
-                "#FFF854",
+                "#FFC1C1",
+                "#FFCF91",
+                "#FFBD69",
+                "#FFBD19",
+                "#FFB14C",
+                "#FF8F00",
               ],
-        
+
             borderWidth: 1,
 
           }]
         },
-
         options: {
           responsive: true,
           maintainAspectRatio: false,
@@ -711,25 +785,25 @@ var getreqall = function () {
               offset: 15,
               padding: {
                 top: 5,
-                bottom: 0,
+                bottom: 5,
                 left: 15,
                 right: 10
               },
-              borderColor: '#fff',
+              borderColor: '#000000',
               borderRadius: 25,
               backgroundColor: (context) => {
                 const value = context.dataset.data[context.dataIndex];
-                return value !== 0 ? context.dataset.backgroundColor : 'transparent';
+                return value !== 0 ? context.dataset.backgroundColor : 'transparent' ;
               },
-            
+
               font: {
                 weight: 'bold',
-                size: '14'
+                size: '13'
               },
-              formatter: function(value, context) {
-                if(value != 0){
+              formatter: function (value, context) {
+                if (value != 0) {
                   return context.chart.data.labels[context.dataIndex] + ': ' + value;
-                }else{
+                } else {
                   return "";
                 }
               }
@@ -742,13 +816,107 @@ var getreqall = function () {
               text: 'PROJECT BY PROCESS STATUS ',
               color: 'black',
             },
-            tooltips: {
-              enabled: false
-            },                       
-          },                           
+            labels: {
+              visible: true,
+              position: "above",
+
+            }
+
+          },
+
         },
-        plugins:[ChartDataLabels]
-      
+        plugins: [ChartDataLabels]
+
+
+      });
+
+
+      var ctx2 = document.getElementById('chart_bar_reqpercentinyear').getContext('2d');
+      var myChart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: datalabel_in_year_current,
+          datasets: [{
+            label: 'Number of project',
+            data: data_in_year_current,
+            backgroundColor:
+              ["#FF0000",
+                "#FF4141",
+                "#FF6464",
+                "#FF8585",
+                "#FFA600",
+                "#FFC24F",
+                "#FFD688",
+                "#FFE6B7",
+                "#FFF400",
+                "#FFF854",
+                "#FFFB93",
+                "#FFFDC2",
+              ],
+            borderWidth: 1,
+
+          }]
+        },
+
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            datalabels: {
+              color: 'black',
+              anchor: 'end',
+              align: 'center',
+              offset: 15,
+              padding: {
+                top: 10,
+                bottom: 10,
+                left: 5,
+                right: 5,
+              },
+              borderColor: '#fff',
+              backgroundColor: 'white',
+              borderRadius: 25,
+              font: {
+                weight: 'bold',
+                size: '16'
+              },
+              formatter: function (value, context) {
+                if (value != 0) {
+                  return Math.round(value * 100) / 10 + '%';
+                } else {
+                  return "";
+                }
+              }
+            },
+            legend: {
+              display: false // hide the legend
+            },
+            title: {
+              display: true,
+              text: 'PROJECT PERCENT YEAR ' + currentYear,
+              color: 'black',
+            }
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                stepSize: 1
+              },
+            },
+            y: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                stepSize: 1
+              }
+            }
+          }
+        },
+        plugins: [ChartDataLabels]
 
       });
 
@@ -756,7 +924,10 @@ var getreqall = function () {
 
 
 
+
     }
+
+
 
     )
     .catch(error => console.log('error', error));
@@ -793,9 +964,9 @@ var hidebutton = function (reqid, localadmin, localapprover, localuser, adminid,
 }
 
 
-function patchupdate(reqid) {
+function patchupdate(reqid,statusforprocess,statusformanage) {
   uploadfile(reqid)
-  updatereq(reqid)
+  updatereq(reqid,statusforprocess,statusformanage)
 }
 
 var uploadfile = function (reqid) {
@@ -830,13 +1001,46 @@ var uploadfile = function (reqid) {
 
 
 
-var updatereq = function (reqid) {
+var updatereq = function (reqid,statusforprocess,statusformanage) {
   var myheaders = new Headers()
   myheaders.append("Content-Type", "application/json");
+
+  console.log(statusforprocess)
+  var statusmanage = 0
+  if(statusformanage == 3){
+    statusmanage = statusformanage
+  }else{
+    statusmanage = 1
+  }
+
+
+  var statusprocess = 0
+  if(statusforprocess>3){
+    statusprocess = statusforprocess
+  }else{
+    statusprocess = 2
+  }
+
+
+  var startdateString = document.getElementById("startdate" + reqid).value
+  var startdateparts = startdateString.split('/');
+  var startdateObject = new Date(startdateparts[2], startdateparts[1] - 1, startdateparts[0], 0, 0, 0, 0);
+  var startdatetimezoneOffset = startdateObject.getTimezoneOffset() / 60;
+  startdateObject.setUTCHours(17 - startdatetimezoneOffset, 0, 0, 0); // set time to 17:00:00.000 in TST
+  var startdateformattedDate = startdateObject.toISOString().substr(0, 10);
+
+
+  var enddateString = document.getElementById("enddate" + reqid).value
+  var enddateparts = enddateString.split('/');
+  var enddateObject = new Date(enddateparts[2], enddateparts[1] - 1, enddateparts[0], 0, 0, 0, 0);
+  var enddatetimezoneOffset = enddateObject.getTimezoneOffset() / 60;
+  enddateObject.setUTCHours(17 - enddatetimezoneOffset, 0, 0, 0); // set time to 17:00:00.000 in TST
+  var enddateformattedDate = enddateObject.toISOString().substr(0, 10);
+
   var raw = JSON.stringify({
     "processname": document.getElementById("processname" + reqid).value,
-    "startdate": document.getElementById("startdate" + reqid).value,
-    "enddate": document.getElementById("enddate" + reqid).value,
+    "startdate": startdateformattedDate,
+    "enddate": enddateformattedDate,
     "painpoint": document.getElementById("painpoint" + reqid).value,
     "description": document.getElementById("description" + reqid).value,
     "results_benefit": document.getElementById("benefit" + reqid).value,
@@ -844,10 +1048,13 @@ var updatereq = function (reqid) {
     "asis_id": document.getElementById("asis" + reqid).value,
     "doingby_id": document.getElementById("doingby" + reqid).value,
     "budget_id": document.getElementById("budget" + reqid).value,
-    "status": 1,
-    "statusforprocess": 2,
+    "status": statusmanage,
+    "statusforprocess": statusprocess,
     "id": reqid,
   })
+
+
+  console.log(raw)
 
   var requestOptions = {
     method: 'PATCH',
@@ -880,19 +1087,19 @@ var updatereq = function (reqid) {
         const description = document.getElementById("description" + reqid);
         const scopeofwork = document.getElementById("scopeofwork" + reqid);
         const riskmanagement = document.getElementById("riskmanagement" + reqid);
-      
+
         const bussinessflow = document.getElementById("bussinessflow" + reqid);
         const workflow = document.getElementById("workflow" + reqid);
         const extractfile = document.getElementById("extractfile" + reqid);
 
-        
+
         requestid.disabled = true;
         requestemp.disabled = true;
         requestname.disabled = true;
         requestdivition.disabled = true;
         requestdepartment.disabled = true;
         requestsection.disabled = true;
-        processname.disabled =true;
+        processname.disabled = true;
         startdate.disabled = true;
         enddate.disabled = true;
         asis.disabled = true;
@@ -1366,4 +1573,106 @@ var getchartpriority = function (year) {
     )
     .catch(error => console.log('error', error));
 
+}
+
+
+
+function savefeedback() {
+  var myheaders = new Headers()
+  myheaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    "link_feedback": document.getElementById("link_feedback").value,
+    "idfeedback":1,
+  })
+  console.log(raw)
+  var requestOptions = {
+    method: 'PATCH',
+    headers: myheaders,
+    body: raw,
+    redirect: 'follow',
+  };
+
+  fetch("http://localhost/projectbacklog/backend/home/feedback_db.php", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      console.log(result)
+      var jsonObj = JSON.parse(result);
+      if (jsonObj.status == 'OK') {
+        showsuccessAlert()
+      } else {
+        alert('not ok');
+      }
+
+    })
+    .catch(error => console.log('error', error));
+}
+
+
+cPrev = -1;
+function sortBy(c) {
+  rows = document.getElementById("tablereqall").rows.length; // num of rows
+  columns = document.getElementById("tablereqall").rows[0].cells.length; // num of columns
+ 
+  console.log(rows);
+  console.log(columns);
+
+  arrTable = [...Array(rows)].map(e => Array(columns)); // create an empty 2d array
+
+
+  for (ro=0; ro<rows; ro++) { // cycle through rows
+      for (co=0; co<columns; co++) { // cycle through columns
+          arrTable[ro][co] = document.getElementById("tablereqall").rows[ro].cells[co].innerHTML;
+      }
+  }
+  th = arrTable.shift(); // remove the header row from the array, and save it
+  
+  
+  if (c !== cPrev) { // different column is clicked, so sort by the new column
+      arrTable.sort(
+          function (a, b) {
+              if (a[c] === b[c]) {
+                  return 0;
+              } else {
+                  return (a[c] < b[c]) ? -1 : 1;
+              }
+          }
+      );
+  } else { // if the same column is clicked then reverse the array
+      arrTable.reverse();
+  }
+  cPrev = c;
+  arrTable.unshift(th);
+  for (ro=0; ro<rows; ro++) {
+      for (co=0; co<columns; co++) {
+          document.getElementById("tablereqall").rows[ro].cells[co].innerHTML = arrTable[ro][co];
+      }
+  }
+}
+
+
+
+function searchTable() {
+  const tableBody = document.querySelector('#reqall_tabel');
+  console.log(tableBody);
+  const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+  console.log(rows);
+
+  const searchTerm = document.querySelector('#searchinput').value.toLowerCase();
+
+  rows.forEach(row => {
+    const cells = Array.from(row.querySelectorAll('td'));
+    const match = cells.some(cell => {
+      const cellContent = cell.textContent.toLowerCase();
+      if (!isNaN(cellContent) && cellContent.trim() !== '') {
+        // convert the cell content to a number and check for a match
+        return parseFloat(cellContent) === parseFloat(searchTerm);
+      } else {
+        // check for a match using string comparison
+        return cellContent.includes(searchTerm);
+      }
+    });
+    row.style.display = match ? '' : 'none';
+  });
 }

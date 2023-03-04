@@ -1,3 +1,9 @@
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") {
+    window.location.reload();
+  }
+});
+
 function showsuccessAlert() {
   Swal.fire({
     title: 'Success',
@@ -15,6 +21,26 @@ function showsuccessAlert() {
   // });
 }
 
+
+
+function showLoadingSpinner() {
+  Swal.fire({
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    showConfirmButton: false,
+    customClass: {
+      popup: 'loading-spinner'
+    },
+    onOpen: function() {
+      swal.showLoading();
+    }
+  });
+}
+
+function hideLoadingSpinner() {
+  // Hide the SweetAlert dialog box
+  swal.close();
+}
 
 
 function loadexcute() {
@@ -599,7 +625,7 @@ var getdataexcute_one = async function (idexcute) {
                                          <input value="`+ linkprototype + `" id="prototypelink` + req.idexcute + `" type="text" class="form-control" aria-label="Sizing example input"
                                           aria-describedby="inputGroup-sizing-default"`+ (((req.statusforprocess >= 4) && (req.statusforprocess <= 10)) ? 'disabled' : 'none') + `> 
                                          <div class="d-flex justify-content-center mt-5" style="width: 100%;">
-                                           <button class="buttonsave" style="display:`+ (((req.statusforprocess >= 4) && (req.statusforprocess <= 10)) ? 'none' : 'inline') + `" id="saveprototype` + req.idexcute + `" onclick="uploadfileprototype(` + req.idexcute + `,` + req.id + `)" data-bs-toggle="modal" >SAVE</button>
+                                           <button class="buttonsave" style="display:`+ (((req.statusforprocess >= 4) && (req.statusforprocess <= 10)) ? 'none' : 'inline') + `" id="saveprototype` + req.idexcute + `" onclick="uploadfileprototype(` + req.idexcute + `,` + req.id + `)" >SAVE</button>
                                            <button class="buttonsave"  style="display:`+ (((req.statusforprocess >= 4) && (req.statusforprocess <= 10)) ? 'inline' : 'none') + `" id="updateprototype` + req.idexcute + `" onclick="patchfileprototype(` + req.idexcute + `)"  disabled>SAVE</button>
                                            <button class="buttonedit" style="display:`+ (((req.statusforprocess >= 4) && (req.statusforprocess <= 10)) ? 'inline' : 'none') + `" id="editprototype` + req.idexcute + `" onclick="toggleeditprototype(` + req.idexcute + `)">Edit</button>
                                          </div>
@@ -1241,7 +1267,6 @@ var getreqapproveallToExcute = async function () {
   await fetch("http://localhost/projectbacklog/backend/excute/excute_db.php", requestOptions)
     .then(response => response.text())
     .then(result => {
-      reqallapproval_tabel.innerHTML = '';
       var jsonObj = JSON.parse(result);
       console.log(jsonObj)
 
@@ -1395,7 +1420,7 @@ var getreqapproveallToExcute = async function () {
 
         var row = `
                   <tr>
-                        <th scope="row" id="req">`+ req.id + `</th>
+                        <td scope="row" id="req">`+ req.id + `</td>
                         <td>`+ formattedstartDate + `</td>
                         <td>`+ formattedendDate + `</td>
                         <td>`+ processname + `</td>
@@ -1410,7 +1435,7 @@ var getreqapproveallToExcute = async function () {
                
                   `
 
-        reqallapproval_tabel.insertAdjacentHTML('afterend', row);
+        reqallapproval_tabel.insertAdjacentHTML('beforeend', row);
 
 
       }
@@ -1777,7 +1802,6 @@ function updatetesting(idexcute) {
 function confirmdeploy(idreq) {
   var myheaders = new Headers()
   myheaders.append("Content-Type", "application/json");
-  console.log(idexcute)
 
   var raw = JSON.stringify({
     "Requirements_id": idreq,
@@ -1829,6 +1853,8 @@ function sendemailconfirmprototype(idexcute, idreq, idprototype) {
   var myheaders = new Headers()
   myheaders.append("Content-Type", "application/json");
 
+  showLoadingSpinner()
+
   console.log(idprototype)
   var raw = JSON.stringify({
     "topic": document.getElementById("topic_confirmprototype" + idexcute).value,
@@ -1851,6 +1877,7 @@ function sendemailconfirmprototype(idexcute, idreq, idprototype) {
     .then(result => {
       var jsonObj = JSON.parse(result);
       if (jsonObj.status == 'OK') {
+        hideLoadingSpinner()
         showsuccessAlert()
       } else {
         alert('not ok');
@@ -1881,6 +1908,9 @@ function sendemailimplement(idexcute, idreq) {
   var myheaders = new Headers()
   myheaders.append("Content-Type", "application/json");
 
+
+  showLoadingSpinner()
+
   var raw = JSON.stringify({
     "topic": document.getElementById("topic_implement" + idexcute).value,
     "email": document.getElementById("email_implement" + idexcute).value,
@@ -1902,6 +1932,7 @@ function sendemailimplement(idexcute, idreq) {
     .then(result => {
       var jsonObj = JSON.parse(result);
       if (jsonObj.status == 'OK') {
+        hideLoadingSpinner()
         showsuccessAlert()
       } else {
         alert('not ok');
@@ -1974,6 +2005,9 @@ var patchfileprototype = function (idexcute) {
 
 
 var saveplancodeing = function (idexcute) {
+
+
+
   var file1 = document.getElementById('fileplancoding' + idexcute).files;
   var startcoding = document.getElementById("startcoding" + idexcute).value
   var endcoding = document.getElementById("endcoding" + idexcute).value
@@ -2024,9 +2058,28 @@ var saveplancodeing = function (idexcute) {
   xhttp.send(formData);
 }
 var updateplancodeing = function (idexcute) {
+
+
+
+  var startdateString = document.getElementById("startcoding" + idexcute).value
+  var startdateparts = startdateString.split('/');
+  var startdateObject = new Date(startdateparts[2], startdateparts[1] - 1, startdateparts[0], 0, 0, 0, 0);
+  var startdatetimezoneOffset = startdateObject.getTimezoneOffset() / 60;
+  startdateObject.setUTCHours(17 - startdatetimezoneOffset, 0, 0, 0); // set time to 17:00:00.000 in TST
+  var startdateformattedDate = startdateObject.toISOString().substr(0, 10);
+
+
+  var enddateString = document.getElementById("endcoding" + idexcute).value
+  var enddateparts = enddateString.split('/');
+  var enddateObject = new Date(enddateparts[2], enddateparts[1] - 1, enddateparts[0], 0, 0, 0, 0);
+  var enddatetimezoneOffset = enddateObject.getTimezoneOffset() / 60;
+  enddateObject.setUTCHours(17 - enddatetimezoneOffset, 0, 0, 0); // set time to 17:00:00.000 in TST
+  var enddateformattedDate = enddateObject.toISOString().substr(0, 10);
+
+
+
+
   var file1 = document.getElementById('fileplancoding' + idexcute).files;
-  var startcoding = document.getElementById("startcoding" + idexcute).value
-  var endcoding = document.getElementById("endcoding" + idexcute).value
   var formatcoding = document.getElementById("formatcoding" + idexcute).value
   var nameuniversitycoding = document.getElementById("nameuniversitycoding" + idexcute).value
   var databasecoding = document.getElementById("databasecoding" + idexcute).value
@@ -2036,8 +2089,8 @@ var updateplancodeing = function (idexcute) {
   var formData = new FormData();
   formData.append("fileplancoding", file1[0]);
   formData.append("idexcute", idexcute);
-  formData.append("startcoding", startcoding);
-  formData.append("endcoding", endcoding);
+  formData.append("startcoding", startdateformattedDate);
+  formData.append("endcoding", enddateformattedDate);
   formData.append("formatcoding", formatcoding);
   formData.append("nameuniversitycoding", nameuniversitycoding);
   formData.append("databasecoding", databasecoding);
@@ -2073,4 +2126,73 @@ var updateplancodeing = function (idexcute) {
   xhttp.send(formData);
 
 
+}
+
+
+cPrev = -1;
+function sortBy(c) {
+  rows = document.getElementById("tableexcute").rows.length; // num of rows
+  columns = document.getElementById("tableexcute").rows[0].cells.length; // num of columns
+ 
+  console.log(rows);
+  arrTable = [...Array(rows)].map(e => Array(columns)); // create an empty 2d array
+
+
+  for (ro=0; ro<rows; ro++) { // cycle through rows
+      for (co=0; co<columns; co++) { // cycle through columns
+          arrTable[ro][co] = document.getElementById("tableexcute").rows[ro].cells[co].innerHTML;
+      }
+  }
+  th = arrTable.shift(); // remove the header row from the array, and save it
+  
+  
+  if (c !== cPrev) { // different column is clicked, so sort by the new column
+      arrTable.sort(
+          function (a, b) {
+              if (a[c] === b[c]) {
+                  return 0;
+              } else {
+                  return (a[c] < b[c]) ? -1 : 1;
+              }
+          }
+      );
+  } else { // if the same column is clicked then reverse the array
+      arrTable.reverse();
+  }
+  cPrev = c;
+  arrTable.unshift(th);
+  for (ro=0; ro<rows; ro++) {
+      for (co=0; co<columns; co++) {
+          document.getElementById("tableexcute").rows[ro].cells[co].innerHTML = arrTable[ro][co];
+      }
+  }
+}
+
+
+function searchTableexcute() {
+
+  const tableBody = document.querySelector('#tablexcuteall');
+  console.log(tableBody);
+  const rows = Array.from(tableBody.querySelectorAll('tr'));
+  console.log(rows);
+
+  const searchTerm = document.querySelector('#searchinputexcute').value.toLowerCase();
+  console.log(searchTerm);
+
+  rows.forEach(row => {
+    const cells = Array.from(row.querySelectorAll('td'));
+    console.log(cells);
+
+    const match = cells.some(cell => {
+      const cellContent = cell.textContent.toLowerCase();
+      if (!isNaN(cellContent) && cellContent.trim() !== '') {
+        // convert the cell content to a number and check for a match
+        return parseFloat(cellContent) === parseFloat(searchTerm);
+      } else {
+        // check for a match using string comparison
+        return cellContent.includes(searchTerm);
+      }
+    });
+    row.style.display = match ? '' : 'none';
+  });
 }

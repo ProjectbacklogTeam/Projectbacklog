@@ -45,6 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     'filebefore' => $row["filebefores_value"],
                     'fileafter' => $row["fileafter_value"],
                     'statusvaluerelease' => $row["statusvaluereleases"],
+                    'estimates_value_number' => $row["estimates_value_number"],
+                    'valuereleases_value_number' => $row["valuereleases_value_number"],
+                    'benefitpeoples_value_number' => $row["benefitpeoples_value_number"],
+                    'benefitmoneys_value_number' => $row["benefitmoneys_value_number"],
+                    'benefitpeoplemandayss_value_number' => $row["benefitpeoplemandayss_value_number"],
                                                       
                 )
             );

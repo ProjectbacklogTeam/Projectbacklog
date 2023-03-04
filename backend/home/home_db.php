@@ -44,6 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         LEFT JOIN approver on requirements.approver_id = approver.id
         JOIN login on admin.login_id = login.id OR user.login_id = login.id OR approver.id = login.id
         JOIN detail on admin.detail_id = detail.id OR approver.detail_id = detail.id OR user.detail_id = detail.id
+        LEFT JOIN approvals on approvals.Requirements_id = requirements.id
+        LEFT JOIN excute on excute.Approvals_id = approvals.id
+        LEFT JOIN valuerelease on valuerelease.excute_id = excute.id
+        JOIN feedback
             ') as $row) {
 
             $workflowname = $row['work_flow_req'];
@@ -61,8 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     'enddate' => $row["enddate_req"],
                     'painpoint' => $row["painpoint_req"],
                     'results' => $row["results_benefit_req"],
-                    'description' => $row["description_req"],
-                    
+                    'description' => $row["description_req"],                 
                     'doingby' => $row["name_doingby"],
                     'asis' => $row["name_asis"],
                     'tobe' => $row["name_tobe"],
@@ -78,7 +81,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     'scopeofworkname'=> $scopeofworkname,
                     'riskmanagementname'=> $riskmanagementname,
                     'department_id'=> $row['department_id'],
-
+                    'benefitpeoples_value_number' => $row["benefitpeoples_value_number"],
+                    'benefitmoneys_value_number' => $row["benefitmoneys_value_number"],
+                    'benefitpeoplemandayss_value_number' => $row["benefitpeoplemandayss_value_number"],
+                    'link_feedback' => $row["link_feedback"],
+                    'status_req' => $row["status_req"],
+                    
                 )
             );
         }
@@ -133,3 +141,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'PATCH') {
         die();
     }
 }
+?>
