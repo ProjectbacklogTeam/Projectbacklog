@@ -13,13 +13,20 @@ try {
     LEFT JOIN admin on requirements.admin_id = admin.id
     LEFT JOIN approver on requirements.approver_id = approver.id
     LEFT JOIN user on requirements.user_id = user.id
-    JOIN detail on admin.detail_id = detail.id OR approver.detail_id = detail.id OR user.detail_id = detail.id
+    JOIN detail on admin.detail_admin_id = detail.id OR approver.detail_approver_id = detail.id OR user.detail_user_id = detail.id
     JOIN division on detail.division_id = division.id
     JOIN section on detail.section_id = section.id
     JOIN department on detail.department_id = department.id
     WHERE requirements.id = ?");
     $stmtone->execute([$_GET['id']]);
     foreach ($stmtone as $row) {
+
+
+        $workflowname = $row['work_flow_req'];
+        $bussinessflowname = $row['bussinessflow_req'];
+        $extractfilename = $row['extract_file_req'];
+        $scopeofworkname = $row['scopeofwork_req'];
+        $riskmanagementname = $row['riskmanagement_req'];
 
         $req = array(
             'id' => $row[0],
@@ -40,6 +47,19 @@ try {
             'division'=> $row['name_division'],
             'department'=> $row['name_department'],
             'section'=> $row['name_section'],
+            'processnameshortname'=> $row['shortname_req'],
+            'workflowname'=> $workflowname,
+            'bussinessflowname'=> $bussinessflowname,
+            'extractfilename'=> $extractfilename,
+            'scopeofworkname'=> $scopeofworkname,
+            'riskmanagementname'=> $riskmanagementname,
+            'painpoint' => $row["painpoint_req"],
+            'results' => $row["results_benefit_req"],
+            'description' => $row["description_req"],   
+            'relative' => $row["refer_req"],   
+            'admin_id' => $row['admin_id'],
+            'approver_id' => $row['approver_id'],
+            'user_id' => $row['user_id'],
         );
         echo json_encode($req);
         break;

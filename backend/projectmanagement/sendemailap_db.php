@@ -16,50 +16,60 @@ $data = json_decode(file_get_contents("php://input"));
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
-
-        $stmt = $db->prepare("INSERT INTO emailreqtoapprover (topic_toapprover,email_toapprover,detail_toapprover,projectmanagetment_id) VALUES (?,?,?,?)");
-        $stmt->bindParam(1, $data->topic);
-        $stmt->bindParam(2, $data->email);
-        $stmt->bindParam(3, $data->detail);
-        $stmt->bindParam(4, $data->projectmanagementid);
-        $stmt->execute();
+        $topic = $data->topic;
+        $email = $data->email;
+        $detail = $data->detail;
+        $idapprover = $data->idapprover;
 
 
-        $stmt2 = $db->prepare("INSERT INTO approvals (Requirements_id ,approver_id) VALUES (?,?)");
-        $stmt2->bindParam(1, $data->idreq);
-        $stmt2->bindParam(2, $data->idapprover);
-        $stmt2->execute();
-
-        $stmt3 = $db->prepare("UPDATE requirements SET status_req=? WHERE id=?");
-        $stmt3->bindParam(1, $data->idstatus);
-        $stmt3->bindParam(2, $data->idreq);
-
-
-        $mail = new PHPMailer();
-        $mail->CharSet = 'UTF-8';
-        $mail->isSMTP();
-        $mail->Host = "smtp.gmail.com";
-        $mail->SMTPAuth = true;
-        $mail->Username = "projectmanagement00001@gmail.com";
-        $mail->Password = "roznualebvlzcagz";
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
-
-        $mail->setFrom($data->email);
-        $mail->addAddress($data->email);
-
-        $mail->isHTML(true);
-        $mail->Subject = $data->topic;
-        $mail->Body = $data->detail;
-        $mail->send();
-
-
-
-
-        if ($stmt3->execute()) {
-            echo json_encode(array("status" => "OK"));
+        if (strlen($topic) == 0 || strlen($email) == 0 || strlen($detail) == 0 ||  strlen($idapprover) == 0) {
+            echo json_encode(array("status" => "ERROREMAIL"));
         } else {
-            echo json_encode(array("status" => "ERROR"));
+            $stmt = $db->prepare("INSERT INTO emailreqtoapprover (topic_toapprover,email_toapprover,detail_toapprover,projectmanagetment_id) VALUES (?,?,?,?)");
+            $stmt->bindParam(1, $data->topic);
+            $stmt->bindParam(2, $data->email);
+            $stmt->bindParam(3, $data->detail);
+            $stmt->bindParam(4, $data->projectmanagementid);
+            $stmt->execute();
+
+
+            $stmt2 = $db->prepare("INSERT INTO approvals (Requirements_id ,approver_id) VALUES (?,?)");
+            $stmt2->bindParam(1, $data->idreq);
+            $stmt2->bindParam(2, $data->idapprover);
+            $stmt2->execute();
+
+            $stmt3 = $db->prepare("UPDATE requirements SET status_req=?,status_id=? WHERE id=?");
+            $stmt3->bindParam(1, $data->idstatus);
+            $stmt3->bindParam(2, $data->idstatusforapprove);
+            $stmt3->bindParam(3, $data->idreq);
+
+
+            $mail = new PHPMailer();
+            $mail->CharSet = 'UTF-8';
+            $mail->isSMTP();
+            $mail->Host = "smtp.gmail.com";
+            $mail->SMTPAuth = true;
+            $mail->Username = "projectmanagement00001@gmail.com";
+            $mail->Password = "roznualebvlzcagz";
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
+
+            $mail->setFrom($data->email);
+            $mail->addAddress($data->email);
+
+            $mail->isHTML(true);
+            $mail->Subject = $data->topic;
+            $mail->Body = $data->detail;
+            $mail->send();
+
+
+
+
+            if ($stmt3->execute()) {
+                echo json_encode(array("status" => "OK"));
+            } else {
+                echo json_encode(array("status" => "ERROR"));
+            }
         }
     } catch (exception $e) {
         echo 'error :' . $e->getMessage() . '<br/>';
@@ -99,44 +109,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 if ($_SERVER['REQUEST_METHOD'] == 'PATCH') {
     try {
-        $stmt1 = $db->prepare("UPDATE emailreqtoapprover SET topic_toapprover=?,email_toapprover=?,detail_toapprover=? WHERE projectmanagetment_id  =?");
-        $stmt1->bindParam(1, $data->topic);
-        $stmt1->bindParam(2, $data->email);
-        $stmt1->bindParam(3, $data->detail);
-        $stmt1->bindParam(4, $data->projectmanagementid);
-      
-
-        $stmt2 = $db->prepare("UPDATE approvals SET approver_id = ?  WHERE Requirements_id = ? ");
-        $stmt2->bindParam(1, $data->idapprover);
-        $stmt2->bindParam(2, $data->idreq);
-        $stmt2->execute();
 
 
-        $mail = new PHPMailer();
-        $mail->CharSet = 'UTF-8';
-        $mail->isSMTP();
-        $mail->Host = "smtp.gmail.com";
-        $mail->SMTPAuth = true;
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
+        $topic = $data->topic;
+        $email = $data->email;
+        $detail = $data->detail;
+        $idapprover = $data->idapprover;
 
-        $mail->Username = "projectmanagement00001@gmail.com";
-        $mail->Password = "roznualebvlzcagz";
-
-        $mail->setFrom($data->email);
-        $mail->addAddress($data->email);
-
-        $mail->isHTML(true);
-        $mail->Subject = $data->topic;
-        $mail->Body = $data->detail;
-        $mail->send();
-
-        if ($stmt1->execute()) {
-            echo json_encode(array("status" => "OK"));
+        if (strlen($topic) == 0 || strlen($email) == 0 || strlen($detail) == 0 ||  strlen($idapprover) == 0) {
+            echo json_encode(array("status" => "ERROREMAIL"));
         } else {
-            echo json_encode(array("status" => "ERROR"));
-        }
 
+            $stmt1 = $db->prepare("UPDATE emailreqtoapprover SET topic_toapprover=?,email_toapprover=?,detail_toapprover=? WHERE projectmanagetment_id  =?");
+            $stmt1->bindParam(1, $data->topic);
+            $stmt1->bindParam(2, $data->email);
+            $stmt1->bindParam(3, $data->detail);
+            $stmt1->bindParam(4, $data->projectmanagementid);
+
+
+            $stmt2 = $db->prepare("UPDATE approvals SET approver_id = ?  WHERE Requirements_id = ? ");
+            $stmt2->bindParam(1, $data->idapprover);
+            $stmt2->bindParam(2, $data->idreq);
+            $stmt2->execute();
+
+
+            $mail = new PHPMailer();
+            $mail->CharSet = 'UTF-8';
+            $mail->isSMTP();
+            $mail->Host = "smtp.gmail.com";
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
+
+            $mail->Username = "projectmanagement00001@gmail.com";
+            $mail->Password = "roznualebvlzcagz";
+
+            $mail->setFrom($data->email);
+            $mail->addAddress($data->email);
+
+            $mail->isHTML(true);
+            $mail->Subject = $data->topic;
+            $mail->Body = $data->detail;
+            $mail->send();
+
+            if ($stmt1->execute()) {
+                echo json_encode(array("status" => "OK"));
+            } else {
+                echo json_encode(array("status" => "ERROR"));
+            }
+        }
     } catch (PDOException $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();

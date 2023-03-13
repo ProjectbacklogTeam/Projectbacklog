@@ -38,13 +38,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $stmt2->bindParam(2,  $idreq);
                     $stmt2->execute();
 
-                    if (in_array($file_extension1, $valid_ext1)) {
-                        if (move_uploaded_file($_FILES['prototypefile']['tmp_name'], $location1)) {
-                            if ($stmt1->execute()) {
-                                echo json_encode(array("status" => "OK"));
-                            } else {
-                                echo json_encode(array("status" => "ERROR"));
+                    $file_ext = strtolower(pathinfo($filename1, PATHINFO_EXTENSION));
+                    var_dump($file_ext);
+                    if (!in_array($file_ext, $valid_ext1)) {
+                        header("HTTP/1.1 400 Bad Request");
+                        echo json_encode(array("status" => "ERROR"));
+                    } else {
+                        if (in_array($file_extension1, $valid_ext1)) {
+                            if (move_uploaded_file($_FILES['prototypefile']['tmp_name'], $location1)) {
+                                if ($stmt1->execute()) {
+                                    echo json_encode(array("status" => "OK"));
+                                } else {
+                                    echo json_encode(array("status" => "ERROR"));
+                                }
                             }
+                        } else {
+                            echo json_encode(array("status" => "ERROR"));
                         }
                     }
                 } else {
@@ -70,23 +79,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $file_extension1 = strtolower($file_extension1);
                     $valid_ext1 = array("pdf", "doc", "docx", "jpg", "png", "jpeg");
 
-                    $stmt = $db->prepare("UPDATE prototype SET file_prototype = ?,link_prototype = ? WHERE excute_id =?");
+                    $stmt = $db->prepare("UPDATE prototype SET file_prototype = ? WHERE excute_id =?");
                     $stmt->bindParam(1, $newFileName1);
-                    $stmt->bindParam(2, $link);
-                    $stmt->bindParam(3, $excuteid);
+                    $stmt->bindParam(2, $excuteid);
 
-                    if (in_array($file_extension1, $valid_ext1)) {
-                        if (move_uploaded_file($_FILES['prototypefile']['tmp_name'], $location1)) {
-                            if ($stmt->execute()) {
-                                echo json_encode(array("status" => "OK"));
-                            } else {
-                                echo json_encode(array("status" => "ERROR"));
+
+                    $file_ext = strtolower(pathinfo($filename1, PATHINFO_EXTENSION));
+
+                    if (!in_array($file_ext, $valid_ext1)) {
+                        header("HTTP/1.1 400 Bad Request");
+                        echo json_encode(array("status" => "ERROR"));
+                    } else {
+                        if (in_array($file_extension1, $valid_ext1)) {
+                            if (move_uploaded_file($_FILES['prototypefile']['tmp_name'], $location1)) {
+                                if ($stmt->execute()) {
+                                    echo json_encode(array("status" => "OK"));
+                                } else {
+                                    echo json_encode(array("status" => "ERROR"));
+                                }
                             }
                         }
                     }
                 } else {
                     echo json_encode(array("status" => "notok"));
                 }
+
+
+
+                if (isset($link)) {
+                  
+                    $stmt = $db->prepare("UPDATE prototype SET link_prototype = ? WHERE excute_id =?");
+                    $stmt->bindParam(1, $link);
+                    $stmt->bindParam(2, $excuteid);
+
+                    if ($stmt->execute()) {
+                        echo json_encode(array("status" => "OK"));
+                    } else {
+                        echo json_encode(array("status" => "ERROR"));
+                    }
+                            
+                    
+                } else {
+                    echo json_encode(array("status" => "notok"));
+                }
+
+
+
+
+
             } catch (PDOException $e) {
                 print "Error!: " . $e->getMessage() . "<br/>";
                 die();

@@ -31,7 +31,7 @@ if (isset($_POST['btn_login'])) {
                         switch ($dbrole) {
                             case 1:                            
                                 $_SESSION['success'] = "Admin successfully";
-                                $admin = $db->prepare("SELECT * FROM admin JOIN detail  on detail.id = admin.detail_id WHERE login_id = $db_id");
+                                $admin = $db->prepare("SELECT * FROM admin JOIN detail  on detail.id = admin.detail_admin_id WHERE login_id = $db_id");
                                 $admin->execute();
                                 while ($row = $admin->fetch(PDO::FETCH_BOTH)) {
                                     $_SESSION['admin_login_id'] = $row[0];
@@ -44,10 +44,9 @@ if (isset($_POST['btn_login'])) {
                                 }
                                 header("location: ../../frontend/home/home.php");
                                 break;
-                            case 2:
-                               
+                            case 2:                              
                                 $_SESSION['success'] = "approver successfully";
-                                $approver = $db->prepare("SELECT * FROM approver JOIN detail  on detail.id = approver.detail_id WHERE login_id = $db_id");
+                                $approver = $db->prepare("SELECT * FROM approver JOIN detail  on detail.id = approver.detail_approver_id WHERE login_id = $db_id");
                                 $approver->execute();
                                 while ($row = $approver->fetch(PDO::FETCH_BOTH)) {
                                     $_SESSION['approver_login_id'] = $row[0];
@@ -63,7 +62,7 @@ if (isset($_POST['btn_login'])) {
                             case 3:
                                
                                 $_SESSION['success'] = "User successfully";
-                                $user = $db->prepare("SELECT * FROM user JOIN detail  on detail.id = user.detail_id WHERE login_id = $db_id");
+                                $user = $db->prepare("SELECT * FROM user JOIN detail  on detail.id = user.detail_user_id WHERE login_id = $db_id");
                                 $user->execute();
                                 while ($row = $user->fetch(PDO::FETCH_BOTH)) {
                                     $_SESSION['user_login_id'] = $row[0];

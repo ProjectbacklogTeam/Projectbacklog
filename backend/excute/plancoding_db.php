@@ -63,6 +63,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             try {
                 $idexcute =  $_POST['idexcute'];
 
+                $startcoding =  $_POST['startcoding'];
+                $endcoding =  $_POST['endcoding'];
+                $formatcoding =  $_POST['formatcoding'];
+                $nameuniversitycoding =  $_POST['nameuniversitycoding'];
+                $languagescoding =  $_POST['languagescoding'];
+                $databasecoding =  $_POST['databasecoding'];
+                $idexcute =  $_POST['idexcute'];
+                $statusplan =  $_POST['statusplan'];
+
                 if (isset($_FILES['fileplancoding']['name'])) {
                     $filename2 = $_FILES['fileplancoding']['name'];
                     $newFileName2 = uniqid("fileplancoding") . '-' . $filename2;
@@ -84,13 +93,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
                 $stmt = $db->prepare("UPDATE plancoding SET startcoding_plancoding = ?,endcoding_plancoding = ?,format_plancoding=?,name_university_plancoding=?,languages_plancoding=?,databasecoding_plancoding=? WHERE excute_id =?");
-                $stmt->bindParam(1, $data->startcoding);
-                $stmt->bindParam(2, $data->endcoding);
-                $stmt->bindParam(3, $data->formatcoding);
-                $stmt->bindParam(4, $data->nameuniversitycoding);
-                $stmt->bindParam(5, $data->languagescoding);
-                $stmt->bindParam(6, $data->databasecoding);
-                $stmt->bindParam(7, $data->idexcute);
+                $stmt->bindParam(1, $startcoding);
+                $stmt->bindParam(2, $endcoding);
+                $stmt->bindParam(3, $formatcoding);
+                $stmt->bindParam(4, $nameuniversitycoding);
+                $stmt->bindParam(5, $languagescoding);
+                $stmt->bindParam(6, $databasecoding);
+                $stmt->bindParam(7, $idexcute);
 
 
                 if ($stmt->execute()) {

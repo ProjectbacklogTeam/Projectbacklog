@@ -1,7 +1,51 @@
+*{
+    font-family: 'Chakra Petch';
+    line-height: 20px;
+}
+
+/* 
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgb(85, 0, 0);
+    border-radius: 10px;
+  } */
+
+
+
+input{
+    height: 40px !important;
+}
+
 html {
     font-size: calc(60%+0.8vmin);
 }
+body{
+    background-color: #eaeaea;
 
+}
+
+.navtag {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#iconlinkfeedback{
+    color: #8F1838;
+    margin-left: 2px;
+}
+
+#iconlinktoweb{
+    color: #3d96aa;
+}
 .loading-spinner {
     display: none;
     width: 100px;
@@ -24,7 +68,7 @@ html {
 }
 
 .bodyhome {
-    background-color: #f4f4f4;
+    background-color: #eaeaea;
 }
 
 #chart_bar_allreq {
@@ -39,7 +83,7 @@ html {
 #tobedashboard {
     text-align: center;
     font-size: 50px;
-    margin: 1rem auto;
+    margin: 2rem auto;
     font-weight: bold;
 }
 
@@ -52,7 +96,7 @@ html {
     font-size: 30px;
     margin-top: 2rem;
     text-align: center;
-    color: #ECAF44;
+    color: #2F2D30;
 }
 
 .badge-soft-success {
@@ -60,11 +104,10 @@ html {
     color: #4bbf73;
 }
 
-
-/* .container-fluid {
-    padding-left: 0rem;
-    padding-right: 0rem;
-} */
+.btn-search {
+    background-color: #c80000;
+    color: white;
+}
 
 .table {
     margin-left: auto;
@@ -72,10 +115,16 @@ html {
 }
 
 .navbarleft {
-    background: linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);
+    /* background: linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%); */
+    /* background: #EB455F; */
+    /* background: #9D202F; */
+    background-color: #c80000;
+    
     border-top-right-radius: 1.5rem;
     border-bottom-right-radius: 1.5rem;
-    font-size: 15px;
+
+
+    /* background: #eaffa6; */
 
 }
 
@@ -147,27 +196,32 @@ html {
 
 
 .buttonprocess {
-    background: linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);
+
+    background: #c80000;
     width: 75px;
     height: 70px;
     border-radius: 80%;
     border: none;
     color: white;
+    box-shadow: 3px 3px 3px 2px #9D202F;
 }
 
-.buttonprocess:hover {
+/* .buttonprocess:hover {
     background: linear-gradient(45deg, #e1a340 5%, #f08c1a 50%, #f08c1a 50%);
 
 
-}
+} */
 
 .buttonprocesssuccess {
-    background: linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%);
+    /* background: linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbfป1f 50%); */
+    background: #48773C;
     width: 75px;
     height: 70px;
     border-radius: 80%;
     border: none;
     color: white;
+    box-shadow: 3px 3px 3px 2px #9fc131;
+
 }
 
 .flexbox {
@@ -211,7 +265,6 @@ html {
 
 .paperdashboard {
     font-size: 10px;
-    line-height: 11px;
     padding: 1rem 1rem 5rem 1rem;
     margin: 6px 70px 6px 70px;
     /* background-color: white; */
@@ -221,22 +274,26 @@ html {
 
 .paperreq {
     font-size: 15px;
-    line-height: 11px;
     width: 800px;
     height: 500px;
     margin: 6px 70px 6px 170px;
     /* background-color: rgb(255, 41, 41); */
-    overflow: visible;
+    line-height: 15px !important; 
+    overflow: auto;
     border-radius: 2%;
     padding: 1rem;
 
+}
 
+.paperemperthize{
+    width: 1100px;
+     margin-left: 130px;
+     overflow: auto;
 }
 
 .papertablereq {
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 10px;
-    line-height: 11px;
     width: 100%;
     height: 600px;
     margin: 20px 70px 6px 70px;
@@ -247,7 +304,10 @@ html {
 }
 
 .border-left-primary {
-    border-left: 0.5rem solid #e7617a;
+    /* border-left: 0.5rem solid #e7617a; */
+    border-left: 0.5rem solid #9D202F;
+    color: #5a5959
+    ;
 }
 
 
@@ -262,7 +322,6 @@ html {
 .paperprojectmanagement {
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 15px;
-    line-height: 11px;
     width: 1100px;
     height: 500px;
     margin: 6px 70px 6px 70px;
@@ -273,9 +332,11 @@ html {
 
 }
 
+
+
 td {
-    text-align: center;
-    vertical-align: middle;
+    text-align: center !important;
+    vertical-align: middle !important;
 }
 
 th {
@@ -287,7 +348,6 @@ th {
 .paperprojectplan {
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 11px;
-    line-height: 11px;
     width: 1100px;
     height: 800px;
     margin: 6px 70px 6px 70px;
@@ -301,12 +361,12 @@ th {
 .paperapprovals {
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 15px;
-    line-height: 11px;
     width: 1100px;
     height: 800px;
     margin: 6px 70px 6px 70px;
     background-color: white;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 1rem;
     border-radius: 2%;
 }
@@ -314,7 +374,6 @@ th {
 .papervaluerelease {
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 15px;
-    line-height: 11px;
     width: 1100px;
     height: 800px;
     margin: 6px 70px 6px 70px;
@@ -328,20 +387,26 @@ th {
 
 .input-group {
     width: auto;
-    height: 50px;
+    height: 40px !important;
+    padding: 0 auto !important;
+    /* margin-top: 20px !important;
+    margin-bottom: 10px !important; */
 }
-
+.form-control{
+    height: 40px !important;
+}
 .buttonsave {
     font-weight: bold;
     padding: 15px 15px;
     border-radius: 10px;
     border: 0;
-    background-color: rgb(113, 210, 102);
+    background-color: #48773C;
     letter-spacing: 1.5px;
     font-size: 15px;
     transition: all .3s ease;
     box-shadow: rgb(50, 138, 37) 0px 5px 0px 0px;
     color: hsl(0, 0%, 100%);
+    line-height: 5px !important;
 }
 
 .buttonsave:hover {
@@ -377,15 +442,15 @@ th {
 }
 
 .btn-warning {
-    background-color: #ffa22f;
+    background-color: #CD8B2A;
     font-size: 10px;
     font-weight: bold;
     border: none;
-    color: white
+    color: white;
 }
 
 .btn-danger {
-    background-color: #ff355a;
+    background-color: #9D202F;
     font-size: 10px;
     font-weight: bold;
     border: none;
@@ -415,6 +480,8 @@ th {
     box-shadow: rgb(208, 121, 0) 0px 5px 0px 0px;
     color: hsl(0, 0%, 100%);
     height: 30px;
+    line-height: 5px !important;
+
 }
 
 .buttonupdate:hover {
@@ -461,6 +528,8 @@ th {
     box-shadow: rgb(167, 129, 255) 0px 5px 0px 0px;
     color: hsl(0, 0%, 100%);
     font-weight: bold;
+    line-height: 5px !important;
+
 
 }
 
@@ -510,6 +579,8 @@ th {
     box-shadow: rgb(50, 138, 37) 0px 5px 0px 0px;
     color: hsl(0, 0%, 100%);
     width: 120px;
+    line-height: 5px !important;
+
 }
 
 .buttonapprove:hover {
@@ -537,6 +608,8 @@ th {
     box-shadow: rgb(218, 51, 51) 0px 5px 0px 0px;
     color: hsl(0, 0%, 100%);
     width: 120px;
+    line-height: 5px !important;
+
 }
 
 .buttonreject:hover {
@@ -590,6 +663,8 @@ th {
     transition: all .3s ease;
     box-shadow: rgb(218, 51, 51) 0px 5px 0px 0px;
     color: hsl(0, 0%, 100%);
+    line-height: 5px !important;
+
 }
 
 .buttonedit:hover {
@@ -637,7 +712,6 @@ th {
 .paperprototype {
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 15px;
-    line-height: 11px;
     width: 700px;
     height: 280px;
     margin: 6px 70px 27px 152px;
@@ -648,7 +722,6 @@ th {
 .confirmprototype {
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 15px;
-    line-height: 11px;
     width: 700px;
     height: 380px;
     margin: 6px 70px 27px 152px;
@@ -660,23 +733,25 @@ th {
     border: 0.5px solid rgb(204, 204, 204);
     text-align: start;
 }
+.containercheckbox{
+    line-height: 50px ;
 
+}
 .paperpreparedata {
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 20px;
-    line-height: 40px;
+    line-height: 40px !important;
     width: 1000px;
-    height: 650px;
+    height: 700px;
     margin: 6px 70px 27px 152px;
     background-color: white;
     overflow-x: auto;
-    padding: 0rem 3rem 3rem 3rem;
+    padding: 0rem 3rem 0rem 3rem;
 }
 
 .papercoding {
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 15px;
-    line-height: 11px;
     width: 900px;
     height: 800;
     margin: 6px 70px 27px 152px;
@@ -687,7 +762,7 @@ th {
 .paperdiliver {
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 15px;
-    line-height: 30px;
+    line-height: 30px !important;
     width: 1000px;
     height: 650px;
     margin: 6px 70px 27px 152px;
@@ -698,9 +773,8 @@ th {
 .papervalue {
     box-shadow: 0 0 2px 1px #cccccc;
     font-size: 15px;
-    line-height: 11px;
     width: 700px;
-    height: 400px;
+    height: 450px;
     margin: 6px 70px 27px 152px;
     background-color: white;
     overflow: visible;
@@ -719,7 +793,10 @@ th {
 }
 
 .input-group-text {
-    background: linear-gradient(45deg, #ffedf1 5%, #ffedf1 50%, #ffedf1 50%);
+    background: #c80000;
+
+    color: white;
+    /* background: linear-gradient(45deg, #ffedf1 5%, #ffedf1 50%, #ffedf1 50%); */
     font-weight: bold;
     font-size: 10px;
 }
@@ -741,7 +818,7 @@ th {
 .card-body-dashboard {
     flex: 1 1 auto;
     min-height: 1px;
-    padding: 1.25rem;
+    padding: 1rem;
 }
 
 
@@ -975,13 +1052,15 @@ th {
 } */
 
 .headertextlogin {
-    margin: 20rem auto;
-    font-size: 25px
+    margin: 17rem auto;
+    font-size: 25px;
+    line-height: 40px !important;
+    
 }
 
 .backgroundlogin1 {
     background: linear-gradient(to left, rgb(255, 69, 69), rgb(255, 119, 119));
-    height: 50rem;
+    height: 48rem;
     border-top-right-radius: 5%;
     border-bottom-right-radius: 5%;
 }
@@ -991,10 +1070,48 @@ th {
 
 }
 
-#inputGrouplink_feedback{
-    background: #ffd483 !important;
+#inputGrouplink_feedback {
+    background: #c80000 !important;
 }
 
-.fa-file{
+.fa-file {
     color: #db3434;
+}
+
+/* .backgroungprocess{
+    background-image: url(picture/p_six_w.png);
+    background-repeat: round;
+    background-position: revert; 
+    z-index: 100;
+} */
+
+.btn-outline-warning{
+    background: #c80000;
+    color: white;
+}
+
+.text-color-dashboard{
+    color: #464646;
+    font-weight: bold;
+}
+
+
+#peoplemanagement,#peoplecapacity,#license,#environmental,#ecosystem{
+    font-size: 40px;
+}
+
+#mandays_summary,#people_summary{
+    color: #464646;
+    font-weight: bold;
+    font-size: 50px;
+}
+
+#money_summary{
+    color: #464646;
+    font-weight: bold;
+}
+
+textarea{
+    line-height: 20px;
+    height: 10rem !important;
 }

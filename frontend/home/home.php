@@ -28,7 +28,8 @@ if (isset($_SESSION['admin_login'])) {
   <title>Home</title>
   <!-- Bootstrap 5 CSS -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js" integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -44,42 +45,44 @@ if (isset($_SESSION['admin_login'])) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
+  <link href='https://fonts.googleapis.com/css?family=Chakra Petch' rel='stylesheet'>
   <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sriracha">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body onload="onloadfunction()" class="bodyhome">
   <div class="container-fluid">
-    <div class="contenthome row flex-nowrap" style="overflow: auto;">
+    <div class="contenthome row flex-nowrap">
       <?php include('../navbar.php'); ?>
       <?php if ((isset($_SESSION['admin_login'])) || (isset($_SESSION['user_login'])) || (isset($_SESSION['approver_login']))) { ?>
         <div class="row rowhome ">
 
           <div class="headertopichome">
             <span>
-              DIGITAL TRANFORMATION DASHBOARD
+              BUSINESS PROCESS DIGITALIZATION PROJECT
+              <!-- DIGITAL TRANFORMATION DASHBOARD -->
             </span><br>
           </div>
           <div class="flexbox center" style="margin-left: .5rem;">
-
-            <div class="item">
-              <div class="content">
-                <button class="buttonprocess " disabled>
-                  <i class="fa-solid fa-book fa-2x"></i>
-                </button>
-                <span>
-                  Requirements
-                </span>
+            <div class="backgroungprocess">
+              <div class="item">
+                <div class="content">
+                  <button class="buttonprocess mb-2 " disabled>
+                    <i class="fa-solid fa-book fa-2x"></i>
+                  </button>
+                  <span>
+                    Requirements
+                  </span>
+                </div>
               </div>
             </div>
 
+
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-user-pen fa-2x"></i>
                 </button>
                 <span>
@@ -90,7 +93,7 @@ if (isset($_SESSION['admin_login'])) {
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-person-circle-check fa-2x"></i>
                 </button>
                 <span>
@@ -101,7 +104,7 @@ if (isset($_SESSION['admin_login'])) {
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-swatchbook fa-2x"></i>
                 </button>
                 <span>
@@ -113,7 +116,7 @@ if (isset($_SESSION['admin_login'])) {
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-circle-check fa-2x"></i>
                 </button>
                 <span>
@@ -125,7 +128,7 @@ if (isset($_SESSION['admin_login'])) {
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-diagram-project fa-2x"></i> </button>
                 <span>
                   Prepare<br>Data
@@ -136,7 +139,7 @@ if (isset($_SESSION['admin_login'])) {
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-computer fa-2x"></i>
                 </button>
                 <span>
@@ -148,7 +151,7 @@ if (isset($_SESSION['admin_login'])) {
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-clipboard-check fa-2x"></i>
                 </button>
                 <span>
@@ -160,18 +163,18 @@ if (isset($_SESSION['admin_login'])) {
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-box-open fa-2x"></i>
                 </button>
                 <span>
-                  Delivered
+                  Control for Deploy
                 </span>
               </div>
             </div>
 
             <div class="item">
               <div class="content">
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-heart fa-2x"></i>
                 </button>
                 <span>
@@ -183,11 +186,11 @@ if (isset($_SESSION['admin_login'])) {
           <div class="paperdashboard">
             <div class="row flex-nowrap ">
               <div class="col-2 mt-3 ">
-                <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card border-left-primary shadow h-100 ">
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
                       <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="text-align:center">
+                        <div class="text-xs font-weight-bold text-color-dashboard text-uppercase mb-1" style="text-align:center">
                           ASIS PROCESS</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800" id="reqalldashboard">
 
@@ -200,11 +203,11 @@ if (isset($_SESSION['admin_login'])) {
                 </div>
               </div>
               <div class="col-2 mt-3 ">
-                <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card border-left-primary shadow h-100">
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
                       <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="text-align:center">
+                        <div class="text-xs font-weight-bold text-color-dashboard text-uppercase mb-1" style="text-align:center">
                           TOBE PROCESS</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800" id="tobedashboard">
 
@@ -216,7 +219,7 @@ if (isset($_SESSION['admin_login'])) {
                   </div>
                 </div>
               </div>
-              <div class="row" style="height: 10rem;">
+              <div class="row" style="height: 100%;">
                 <div class="col-8  ">
                   <div class="row mt-3 ">
                     <div class="col-12">
@@ -225,8 +228,8 @@ if (isset($_SESSION['admin_login'])) {
                     <div class="col-4 ">
                       <div class="card">
                         <div class="card-body" style="padding-bottom: 3rem">
-                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="text-align: center;">
-                            MANDAYS
+                          <div class="text-xs font-weight-bold text-color-dashboard text-uppercase mb-1" style="text-align: center;">
+                            Saving Mandays
                           </div><br>
                           <div class="card-text">
                             <div id="mandays_summary">
@@ -241,8 +244,8 @@ if (isset($_SESSION['admin_login'])) {
                     <div class="col-4 ">
                       <div class="card">
                         <div class="card-body" style="padding-bottom: 3rem">
-                          <div class=" text-xs font-weight-bold text-primary text-uppercase mb-1" style="text-align: center;">
-                            MONEY
+                          <div class=" text-xs font-weight-bold text-color-dashboard text-uppercase mb-1" style="text-align: center;">
+                            Saving MONEY
                           </div><br>
                           <div class="card-text ">
                             <div id="money_summary">
@@ -256,7 +259,7 @@ if (isset($_SESSION['admin_login'])) {
                     <div class="col-4 ">
                       <div class="card">
                         <div class="card-body" style="padding-bottom: 3rem">
-                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="text-align: center;">
+                          <div class="text-xs font-weight-bold text-color-dashboard text-uppercase mb-1" style="text-align: center;">
                             PEOPLE
                           </div><br>
                           <div class="card-text">
@@ -279,7 +282,7 @@ if (isset($_SESSION['admin_login'])) {
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
                       <div class="col-12">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xs font-weight-bold text-color-dashboard text-uppercase mb-1">
                           PEOPLE MANAGEMENT
                         </div><br>
                       </div>
@@ -290,7 +293,7 @@ if (isset($_SESSION['admin_login'])) {
 
                       </div>
                       <div class="col-6 manageicon">
-                        <i class="fa-solid fa-list-check fa-4x"></i>
+                        <i class="fa-solid fa-people-group fa-4x"></i>
 
                       </div>
 
@@ -304,7 +307,7 @@ if (isset($_SESSION['admin_login'])) {
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
                       <div class="col-12">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xs font-weight-bold text-color-dashboard text-uppercase mb-1">
                           PEOPLE CAPABILITY AND CULTURE
                         </div><br>
                       </div>
@@ -313,7 +316,7 @@ if (isset($_SESSION['admin_login'])) {
                         </div>
                       </div>
                       <div class="col-6 manageicon">
-                        <i class="fa-solid fa-people-group fa-4x"></i>
+                        <i class="fa-solid fa-chalkboard-user fa-4x"></i>
                       </div>
                     </div>
                   </div>
@@ -325,7 +328,7 @@ if (isset($_SESSION['admin_login'])) {
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
                       <div class="col-12">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xs font-weight-bold text-color-dashboard text-uppercase mb-1">
                           LICENSE TO OPERATE AND PERMIT
                         </div><br>
                       </div>
@@ -347,7 +350,7 @@ if (isset($_SESSION['admin_login'])) {
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
                       <div class="col-12">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xs font-weight-bold text-color-dashboard text-uppercase mb-1">
                           ENVIRONMENTAL SOCIAL AND GOVERNANCE
                         </div><br>
                       </div>
@@ -356,7 +359,7 @@ if (isset($_SESSION['admin_login'])) {
                         </div>
                       </div>
                       <div class="col-6 manageicon">
-                        <i class="fa-solid fa-handshake fa-4x"></i>
+                        <i class="fa-sharp fa-solid fa-helmet-safety fa-4x"></i>
                       </div>
                     </div>
                   </div>
@@ -368,7 +371,7 @@ if (isset($_SESSION['admin_login'])) {
                   <div class="card-body">
                     <div class="row no-gutters align-items-center">
                       <div class="col-12">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-xs font-weight-bold text-color-dashboard text-uppercase mb-1">
                           ECOSYSTEM AND FACILITY MANAGEMENT
                         </div><br>
                       </div>
@@ -378,7 +381,9 @@ if (isset($_SESSION['admin_login'])) {
                         </div>
                       </div>
                       <div class="col-6 manageicon">
-                        <i class="fa-solid fa-seedling fa-4x"></i>
+                        <i class="fa-solid fa-handshake fa-4x"></i>
+
+                        <!-- <i class="fa-solid fa-seedling fa-4x"></i> -->
                       </div>
                     </div>
                   </div>
@@ -394,13 +399,13 @@ if (isset($_SESSION['admin_login'])) {
             </div>
 
 
-            <div class="row justify-content-center mt-4">
-              <div class="col-6">
+            <div class="row justify-content-center mt-4" style="height:25rem">
+              <div class="col-5">
                 <canvas id="chart_bar_department" style="background-color: white; box-shadow: 0 0 2px 1px #cccccc;"></canvas>
 
 
               </div>
-              <div class="col-6">
+              <div class="col-7">
                 <canvas id="chart_pie_allreq" style="background-color: white; box-shadow: 0 0 2px 1px #cccccc;"></canvas>
 
 
@@ -411,7 +416,7 @@ if (isset($_SESSION['admin_login'])) {
 
 
             </div>
-            <div class="row" style="background-color: white;padding:2rem;margin-top: 2rem!important; box-shadow: 0 0 2px 1px #cccccc;">
+            <div class="row" style="height:25rem;background-color: white;padding:2rem;margin-top: 2rem!important; box-shadow: 0 0 2px 1px #cccccc;">
               <div class="col-6">
                 <canvas id="chart_bar_allreq"></canvas>
 
@@ -434,19 +439,19 @@ if (isset($_SESSION['admin_login'])) {
             <div class="row" style="margin-top: 5%;">
               <h1>Requirements</h1>
 
-              <div class="col-12 mt-3 mb-5">
+              <div class="col-12 mt-2 mb-2">
                 <div class="input-group mb-3">
                   <span class="input-group-text" id="inputGroup-sizing-default">ชื่อเรื่อง</span>
                   <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="processname" placeholder="กรุณาใส่ชื่อเรื่องอย่างน้อย 5 ตัวอักษร" oninput="checkinputname()" required>
                 </div>
               </div>
-              <div class="col-6 mb-5">
+              <div class="col-6 mb-2 mt-2">
                 <div class="input-group date mb-3">
                   <span class="input-group-text" id="inputGroup-sizing-default">วันที่ขอ</span>
                   <input type="text" class="form-control" id="startdate" placeholder="dd/mm/yyyy" disabled>
                 </div>
               </div>
-              <div class="col-6 mb-5">
+              <div class="col-6 mb-2 mt-2">
                 <div class="input-group date">
                   <span class="input-group-text" id="inputGroup-sizing-default">วันที่ต้องการใช้ระบบ</span>
                   <input type="text" class="form-control" id="enddate" placeholder="dd/mm/yyyy" disabled>
@@ -455,7 +460,7 @@ if (isset($_SESSION['admin_login'])) {
                 </div>
 
               </div>
-              <div class="col-6 mb-5">
+              <div class="col-6 mb-2 mt-2">
                 <div class="input-group">
                   <label class="input-group-text" for="inputGroupSelect01">ASIS</label>
                   <select class="form-select" id="asis_id" disabled>
@@ -464,7 +469,7 @@ if (isset($_SESSION['admin_login'])) {
                   </select>
                 </div>
               </div>
-              <div class="col-6 mb-5">
+              <div class="col-6 mb-2 mt-2">
                 <div class="input-group">
                   <label class="input-group-text" for="inputGroupSelect01">TOBE</label>
                   <select class="form-select" id="tobe_id" disabled>
@@ -472,7 +477,7 @@ if (isset($_SESSION['admin_login'])) {
                   </select>
                 </div>
               </div>
-              <div class="col-6 mb-5">
+              <div class="col-6 mb-2 mt-2">
                 <div class="input-group">
                   <label class="input-group-text" for="inputGroupSelect01">Doing By</label>
 
@@ -481,7 +486,7 @@ if (isset($_SESSION['admin_login'])) {
                   </select>
                 </div>
               </div>
-              <div class="col-6 mb-5">
+              <div class="col-6 mb-2 mt-2">
                 <div class="input-group">
                   <label class="input-group-text" for="inputGroupSelect01">BUDJET</label>
                   <select class="form-select" id="budget_id" disabled>
@@ -489,7 +494,7 @@ if (isset($_SESSION['admin_login'])) {
                   </select>
                 </div>
               </div>
-              <div class="col-12" style="text-align:end ;">
+              <div class="col-12 mt-2" style="text-align:end ;">
                 <button class="buttonsave" id="savereq" onclick="requriment_create()" disabled>SAVE</button>
               </div>
 
@@ -527,10 +532,6 @@ if (isset($_SESSION['admin_login'])) {
               let yearend = todayend.getFullYear();
               var formatteddateend_v2 = `${dayend}/${monthend}/${yearend}`
               document.getElementById("enddate").value = formatteddateend_v2
-
-
-
-
 
 
 
@@ -582,7 +583,14 @@ if (isset($_SESSION['admin_login'])) {
               //   window.location.reload()
               // }, 5000);
 
-              //<-------------- save requriment ------------------->     
+              //<-------------- save requriment ------------------->
+              var admin_id = <?php echo json_encode($idadmin) ?>;
+              var approver_id = <?php echo json_encode($idapprover) ?>;
+              var user_id = <?php echo json_encode($iduser) ?>;
+
+              
+
+
               function requriment_create() {
                 var myheaders = new Headers()
                 myheaders.append("Content-Type", "application/json");
@@ -611,9 +619,9 @@ if (isset($_SESSION['admin_login'])) {
                   "budget_id": document.getElementById("budget_id").value,
                   "doingby_id": document.getElementById("doingby_id").value,
                   "tobe_id": document.getElementById("tobe_id").value,
-                  "admin_id": <?php echo json_encode($idadmin) ?>,
-                  "user_id": <?php echo json_encode($iduser) ?>,
-                  "approver_id": <?php echo json_encode($idapprover) ?>,
+                  "admin_id": admin_id,
+                  "user_id": user_id,
+                  "approver_id": approver_id,
                   "status": 0,
                   "status_id": 4,
                   "statusforprocess": 1,
@@ -632,8 +640,8 @@ if (isset($_SESSION['admin_login'])) {
                     var jsonObj = JSON.parse(result);
                     if (jsonObj.status == 'OK') {
                       showsuccessAlert()
-                    } else {
-                      alert('not ok');
+                    } else if (jsonObj.status == 'TIMEERROR') {
+                      showerrortimeAlert();
                     }
 
                   })
@@ -643,16 +651,16 @@ if (isset($_SESSION['admin_login'])) {
 
           </div>
 
-          <div class="row" style="margin-top:150px">
+          <div class="row mb-1" style="margin-top:6rem">
             <div class="col-6" style="margin-left: 4%;">
               <div class="input-group">
                 <input id="searchinput" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                <button type="button" class="btn btn-primary" onclick="searchTable()"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
+                <button type="button" class="btn btn-search" onclick="searchTable()"><i class="fa-sharp fa-solid fa-magnifying-glass fa-2xs"></i></button>
               </div>
             </div>
             <div class="col-5" id="colfeedback">
-              <div class="input-group" >
-              <span class="input-group-text" id="inputGrouplink_feedback" >Link Feedback</span>
+              <div class="input-group">
+                <span class="input-group-text" id="inputGrouplink_feedback">LINK FEEDBACK</span>
                 <input type="text" class="form-control" id="link_feedback" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <button class="btn btn-outline-warning" type="button" id="button-addon2" onclick="savefeedback()">SAVE</button>
               </div>
@@ -663,11 +671,11 @@ if (isset($_SESSION['admin_login'])) {
           <div class="papertablereq">
             <table class="table mt-1" id="tablereqall">
               <thead style="text-align:center;font-size: 10px;">
-                <th scope="col" onclick="sortBy(0)">Request id</th>
-                <th scope="col" onclick="sortBy(1)">Request Date</th>
-                <th scope="col" onclick="sortBy(2)">Request Enddate</th>
-                <th scope="col" onclick="sortBy(3)">Process Name</th>
-                <th scope="col" onclick="sortBy(4)">Doing By</th>
+                <th scope="col">Request id</th>
+                <th scope="col">Request Date</th>
+                <th scope="col" >Request Enddate</th>
+                <th scope="col" >Process Name</th>
+                <th scope="col" >Doing By</th>
                 <th scope="col" colspan="10">process</th>
                 <th scope="col"></th>
                 <th scope="col"></th>

@@ -98,7 +98,23 @@ var getreqapproverall = function () {
                   }else{
                     var riskmanagementname = req.riskmanagementname;
                   }
-
+                  if (req.painpoint == null) {
+                    var painpoint = ""
+                  } else {
+                    var painpoint = req.painpoint
+                  }
+          
+                  if (req.results_benefit == null) {
+                    var results = ""
+                  } else {
+                    var results = req.results_benefit
+                  }
+          
+                  if (req.description == null) {
+                    var description = ""
+                  } else {
+                    var description = req.description
+                  }
 
                 var startdateparts = startdate.split('-');
                 var startdateyear = parseInt(startdateparts[0]);
@@ -140,7 +156,7 @@ var getreqapproverall = function () {
                       <td>`+ formattedendDate + `</td>
                       <td>`+ processname + `</td>
                       <td>`+ doingby + `</td>
-                      <td id="statuscolor" style="color: ` + (req.status == 'Approve' ? 'green' : (req.status == 'Reject' ? 'red' : 'orange')) + `;background: ` + (req.status == 'Approve' ? 'linear-gradient(45deg, #F1FEE7 5%, #F1FEE7 50%, #F1FEE7 50%)' : (req.status == 'Reject' ? 'linear-gradient(45deg, #FEE7E7 5%, #FEE7E7 50%, #FEE7E7 50%)' : 'linear-gradient(45deg, #FEF1E7 5%, #FEF1E7 50%, #FEF1E7 50%)')) + `;">`+ req.status + `</td>
+                      <td id="statuscolor" style="font-size: 12px;font-weight: bold;color: ` + (req.status == 'Approve' ? 'green' : (req.status == 'Reject' ? 'red' : 'orange')) + `;background: ` + (req.status == 'Approve' ? 'linear-gradient(45deg, #F1FEE7 5%, #F1FEE7 50%, #F1FEE7 50%)' : (req.status == 'Reject' ? 'linear-gradient(45deg, #FEE7E7 5%, #FEE7E7 50%, #FEE7E7 50%)' : 'linear-gradient(45deg, #FEF1E7 5%, #FEF1E7 50%, #FEF1E7 50%)')) + `;">`+ req.status + `</td>
                       <td>              
                         <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#approvaldeail`+ req.id + `"
                         aria-expanded="false" aria-controls="collapseExample">
@@ -193,18 +209,18 @@ var getreqapproverall = function () {
                   
                     <div class="col-12 mt-3">
                         <span>Pain Point</span><br>
-                        <textarea value="`+ req.painpoint + `" class="inputapprovals mt-3" type="text" style="width:100%;height:80px" disabled></textarea>
+                        <textarea  class="inputapprovals mt-3" type="text" style="width:100%;height:80px" disabled>`+painpoint+`</textarea>
                     </div>
                     <div class="row">
                     <div class="col-6 mt-3">
                         <span>Results & Benefit</span><br>
-                        <textarea value="`+ req.benefit + `" class="inputapprovals mt-3" type="text" style="width:100%;height:80px" disabled></textarea>
+                        <textarea  class="inputapprovals mt-3" type="text" style="width:100%;height:80px" disabled>`+results+`</textarea>
                     </div>
                   
                    
                     <div class="col-6 mt-3">
                         <span>Description</span><br>
-                        <textarea value="`+ req.description + `" class="inputapprovals mt-3" type="text" style="width:100%;height:80px" disabled></textarea>
+                        <textarea class="inputapprovals mt-3" type="text" style="width:100%;height:80px" disabled>`+description+`</textarea>
                     </div>
                     </div>
 
@@ -238,11 +254,13 @@ var getreqapproverall = function () {
                           </div>
                         </div>
                         <div class="row">
-                       
+                        
                         <div class="col-6 mt-3" >                     
                             <span>Extract File</span><br>
                             <input class="inputapprovals mt-3" type="file" style="width:100%"  disabled>               
-                        </div>
+                            <a style="display:`+(extractfilename=="" ? "none":"inline")+`" href = "../../backend/home/fileupload/extractfile/`+extractfilename+`" target="_blank"><i class="mt-2 fa-solid fa-file fa-2x"></i></a>
+
+                            </div>
                         </div>
                       
                         <div class="col-12 mt-5 mb-3" style="text-align: end;">

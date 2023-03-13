@@ -9,14 +9,23 @@ $data = json_decode(file_get_contents("php://input"));
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
-        $stmt = $db->prepare("INSERT INTO projectmanagement (datestart_pjmanagement,dateendt_pjmanagement,requirements_id) VALUES (?,?,?)");
-        $stmt->bindParam(1, $data->datestart);
-        $stmt->bindParam(2, $data->dateend);
-        $stmt->bindParam(3, $data->requirements_id);
-        if ($stmt->execute()) {
-            echo json_encode(array("status" => "OK"));
+
+        
+        $startDateStamp = strtotime($data->datestart);
+        $endDateStamp = strtotime($data->dateend);
+
+        if ($startDateStamp > $endDateStamp) {
+            echo json_encode(array("status" => "TIMEERROR"));
         } else {
-            echo json_encode(array("status" => "ERROR"));
+            $stmt = $db->prepare("INSERT INTO projectmanagement (datestart_pjmanagement,dateendt_pjmanagement,requirements_id) VALUES (?,?,?)");
+            $stmt->bindParam(1, $data->datestart);
+            $stmt->bindParam(2, $data->dateend);
+            $stmt->bindParam(3, $data->requirements_id);
+            if ($stmt->execute()) {
+                echo json_encode(array("status" => "OK"));
+            } else {
+                echo json_encode(array("status" => "ERROR"));
+            }
         }
     } catch (PDOException $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
@@ -31,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         JOIN status on requirements.status_id = status.id
         LEFT JOIN approvals on approvals.Requirements_id =  requirements.id
         LEFT JOIN approver on approvals.approver_id = approver.id
-        LEFT JOIN detail on approver.detail_id = detail.id
+        LEFT JOIN detail on approver.detail_approver_id = detail.id
         LEFT JOIN emailreqtoapprover on emailreqtoapprover.projectmanagetment_id = projectmanagement.id
         WHERE status_req >= 2 AND YEAR(datestart_pjmanagement)=?");
         $stmt->execute([$_GET['year']]);
@@ -52,6 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     'email' => $row["email_toapprover"],
                     'detail' => $row["detail_toapprover"],
                     'statusreq' => $row["status_req"],
+                    'relative' => $row['refer_req'],
+
                 )
             );
         }
@@ -67,6 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'PATCH') {
     switch ($_SERVER['REQUEST_URI']) {
         case '/projectbacklog/backend/projectmanagement/projectmanagement_db.php/statusupdate':
             try {
+
+
                 $stmt = $db->prepare("UPDATE requirements SET status_req=? WHERE id=?");
                 $stmt->bindParam(1, $data->status);
                 $stmt->bindParam(2, $data->id);
@@ -82,15 +95,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'PATCH') {
             break;
         case '/projectbacklog/backend/projectmanagement/projectmanagement_db.php/changedate':
             try {
-                $stmt = $db->prepare("UPDATE projectmanagement SET datestart_pjmanagement=?,dateendt_pjmanagement=? WHERE id=?");
-                $stmt->bindParam(1, $data->startdate);
-                $stmt->bindParam(2, $data->enddate);
-                $stmt->bindParam(3, $data->planid);
 
-                if ($stmt->execute()) {
-                    echo json_encode(array("status" => "OK"));
+
+                $startDateStamp = strtotime($data->startdate);
+                $endDateStamp = strtotime($data->enddate);
+
+                if ($startDateStamp > $endDateStamp) {
+                    echo json_encode(array("status" => "TIMEERROR"));
                 } else {
-                    echo json_encode(array("status" => "ERROR"));
+                    $stmt = $db->prepare("UPDATE projectmanagement SET datestart_pjmanagement=?,dateendt_pjmanagement=? WHERE id=?");
+                    $stmt->bindParam(1, $data->startdate);
+                    $stmt->bindParam(2, $data->enddate);
+                    $stmt->bindParam(3, $data->planid);
+
+                    if ($stmt->execute()) {
+                        echo json_encode(array("status" => "OK"));
+                    } else {
+                        echo json_encode(array("status" => "ERROR"));
+                    }
                 }
             } catch (PDOException $e) {
                 print "Error!: " . $e->getMessage() . "<br/>";
@@ -127,8 +149,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
 
 
 
-
-?>
-<?php
 
 ?>

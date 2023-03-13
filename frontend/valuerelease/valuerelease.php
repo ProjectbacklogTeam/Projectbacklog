@@ -30,7 +30,7 @@
 
   
   <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sriracha">
+  <link href='https://fonts.googleapis.com/css?family=Chakra Petch' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 
 </head>
@@ -48,7 +48,7 @@
 
           <div class="item">
             <div class="content">
-              <button class="buttonprocesssuccess" disabled>
+              <button class="buttonprocesssuccess mb-2" disabled>
                 <i class="fa-solid fa-book fa-2x"></i>
               </button>
               <span>
@@ -60,7 +60,7 @@
           <div class="item">
             <div class="content">
 
-              <button class="buttonprocesssuccess" disabled>
+              <button class="buttonprocesssuccess mb-2" disabled>
                 <i class="fa-solid fa-user-pen fa-2x"></i>
               </button>
               <span>
@@ -71,7 +71,7 @@
           <div class="item">
             <div class="content">
 
-              <button class="buttonprocesssuccess" disabled>
+              <button class="buttonprocesssuccess mb-2" disabled>
                 <i class="fa-solid fa-person-circle-check fa-2x"></i>
               </button>
               <span>
@@ -82,7 +82,7 @@
           <div class="item">
             <div class="content">
 
-              <button class="buttonprocesssuccess" disabled>
+              <button class="buttonprocesssuccess mb-2" disabled>
                 <i class="fa-solid fa-swatchbook fa-2x"></i>
               </button>
               <span>
@@ -94,7 +94,7 @@
           <div class="item">
             <div class="content">
 
-              <button class="buttonprocesssuccess" disabled>
+              <button class="buttonprocesssuccess mb-2" disabled>
                 <i class="fa-solid fa-circle-check fa-2x"></i>
               </button>
               <span>
@@ -106,7 +106,7 @@
           <div class="item">
             <div class="content">
 
-              <button class="buttonprocesssuccess" disabled>
+              <button class="buttonprocesssuccess mb-2" disabled>
                 <i class="fa-solid fa-diagram-project fa-2x"></i> </button>
               <span>
                 Prepare<br>Data
@@ -117,7 +117,7 @@
           <div class="item">
             <div class="content">
 
-              <button class="buttonprocesssuccess" disabled>
+              <button class="buttonprocesssuccess mb-2" disabled>
                 <i class="fa-solid fa-computer fa-2x"></i>
               </button>
               <span>
@@ -129,7 +129,7 @@
           <div class="item">
             <div class="content">
 
-              <button class="buttonprocesssuccess" disabled>
+              <button class="buttonprocesssuccess mb-2" disabled>
                 <i class="fa-solid fa-clipboard-check fa-2x"></i>
               </button>
               <span>
@@ -141,7 +141,7 @@
           <div class="item">
             <div class="content">
 
-              <button class="buttonprocesssuccess" disabled>
+              <button class="buttonprocesssuccess mb-2" disabled>
                 <i class="fa-solid fa-box-open fa-2x"></i>
               </button>
               <span>
@@ -152,7 +152,7 @@
 
           <div class="item">
             <div class="content">
-              <button class="buttonprocesssuccess" disabled>
+              <button class="buttonprocesssuccess mb-2" disabled>
                 <i class="fa-solid fa-heart fa-2x"></i>
               </button>
               <span>
@@ -164,8 +164,8 @@
         <div class="row">
             <div class="col-4" style="margin-left: 4%;">
               <div class="input-group">
-                <input id="searchinputvaluerelease" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                <button type="button" class="btn btn-primary" onclick="searchTablevaluerelease()"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
+                <input id="searchinputvaluerelease" type="search" class="form-control rounded " placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <button type="button" class="btn btn-search" onclick="searchTablevaluerelease()"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
               </div>
             </div>
             <div class="col-8">

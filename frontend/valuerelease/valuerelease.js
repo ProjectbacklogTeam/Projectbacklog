@@ -209,7 +209,7 @@ var getreqapproveallTovaluerelease = function () {
                           <td>`+ formattedendDate + `</td>
                           <td>`+ processname + `</td>
                           <td>`+ doingby_id + `</td>
-                          <td id="statuscolor" style="color: ` + (req.status == 'Approve' ? 'green' : (req.status == 'Reject' ? 'red' : 'orange')) + `;">` + req.status + `</td>
+                          <td id="statuscolor" style="background:linear-gradient(45deg, #F1FEE7 5%, #F1FEE7 50%, #F1FEE7 50%);font-size: 15px;font-weight: bold;color: ` + (req.status == 'Approve' ? 'green' : (req.status == 'Reject' ? 'red' : 'orange')) + `;">` + req.status + `</td>
                           <td>              
                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#valuerelease`+ req.idexcute + `">
                                 Value release

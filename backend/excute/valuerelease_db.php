@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         LEFT JOIN admin on requirements.admin_id = admin.id
         LEFT JOIN approver on requirements.approver_id = approver.id
         LEFT JOIN user on requirements.user_id = user.id
-        JOIN detail on admin.detail_id = detail.id OR approver.detail_id = detail.id OR user.detail_id = detail.id
+        JOIN detail on admin.detail_admin_id = detail.id OR approver.detail_approver_id = detail.id OR user.detail_user_id = detail.id
         LEFT JOIN valuerelease on valuerelease.excute_id = excute.id
         
             ') as $row) {
@@ -25,14 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 array(
                     'idexcute'=> $row[0],
                     'idreq' => $row[3],
-                    'processname' => $row[6],
-                    'startdate' => $row[7],
-                    'enddate' => $row[8],        
-                    'doing_by' => $row[29],
-                    'status' => $row[31],
-                    'codeuser' => $row[42],
-                    'firstname' => $row[43],
-                    'lastname' => $row[44],
+                    'processname' => $row['processname_req'],
+                    'startdate' => $row['startdate_req'],
+                    'enddate' => $row['enddate_req'],        
+                    'doing_by' => $row['name_doingby'],
+                    'status' => $row['name_status'],
+                    'codeuser' => $row['codeuser_detail'],
+                    'firstname' => $row['firstname_detail'],
+                    'lastname' => $row['lastname_detail'],
                     'mandays' => $row["mandays_value"],
                     'startdatevaluerelease' => $row["startdates_value"],
                     'enddatevaluerelease' => $row["enddates_value"],

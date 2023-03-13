@@ -7,32 +7,65 @@ $data = json_decode(file_get_contents("php://input"));
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     try {
+
+        $stmtapprover = $db->prepare("SELECT *
+        FROM `excute`
+        JOIN approvals ON excute.Approvals_id = approvals.id
+        LEFT JOIN approver ON approvals.approver_id = approver.id
+        JOIN detail ON approver.detail_approver_id = detail.id 
+        WHERE excute.id = ?");
+        $stmtapprover->execute([$_GET['idexcute']]);
+        foreach ($stmtapprover as $rowapprover) {
+           $approver_firstname = $rowapprover['firstname_detail'];
+           $approver_lastname = $rowapprover['lastname_detail'];
+        }
+
         $requirementsall = array();
-        $stmtoneexcute = $db->prepare("SELECT * from `excute`
-        JOIN approvals on excute.Approvals_id = approvals.id
-        JOIN requirements on approvals.Requirements_id = requirements.id
-        JOIN doingby on  requirements.doingby_id = doingby.id 
-        JOIN tobe on requirements.tobe_id = tobe.id 
-        JOIN asis on requirements.asis_id = asis.id 
-        JOIN budget on requirements.budget_id = budget.id 
-        JOIN status on requirements.status_id = status.id
-        LEFT JOIN admin on requirements.admin_id = admin.id
-        LEFT JOIN approver on requirements.approver_id = approver.id
-        LEFT JOIN user on requirements.user_id = user.id
-        JOIN detail on admin.detail_id = detail.id OR approver.detail_id = detail.id OR user.detail_id = detail.id
-        JOIN division on detail.division_id = division.id
-        JOIN section on detail.section_id = section.id
-        JOIN department on detail.department_id = department.id
-        LEFT JOIN prototype on prototype.excute_id = excute.id
-        LEFT JOIN coding on coding.excute_id = excute.id
-        LEFT JOIN testing on testing.excute_id = excute.id
-        LEFT JOIN preparedata on preparedata.excute_id = excute.id
-        LEFT JOIN plancoding on plancoding.excute_id = excute.id
-        LEFT JOIN confirmprototype on confirmprototype.prototype_id = prototype.id
-		LEFT JOIN implement on implement.id_excute = excute.id WHERE excute.id = ?");
+        $stmtoneexcute = $db->prepare("SELECT *
+        FROM `excute`
+        JOIN approvals ON excute.Approvals_id = approvals.id
+        JOIN requirements ON approvals.Requirements_id = requirements.id
+        JOIN doingby ON requirements.doingby_id = doingby.id
+        JOIN tobe ON requirements.tobe_id = tobe.id
+        JOIN asis ON requirements.asis_id = asis.id
+        JOIN budget ON requirements.budget_id = budget.id
+        JOIN status ON requirements.status_id = status.id
+        LEFT JOIN admin ON requirements.admin_id = admin.id
+        LEFT JOIN approver ON requirements.approver_id = approver.id
+        LEFT JOIN user ON requirements.user_id = user.id
+        JOIN detail ON admin.detail_admin_id = detail.id OR approver.detail_approver_id = detail.id OR user.detail_user_id = detail.id
+        JOIN division ON detail.division_id = division.id
+        JOIN section ON detail.section_id = section.id
+        JOIN department ON detail.department_id = department.id
+        LEFT JOIN prototype ON prototype.excute_id = excute.id
+        LEFT JOIN coding ON coding.excute_id = excute.id
+        LEFT JOIN testing ON testing.excute_id = excute.id
+        LEFT JOIN preparedata ON preparedata.excute_id = excute.id
+        LEFT JOIN plancoding ON plancoding.excute_id = excute.id
+        LEFT JOIN (
+            SELECT cp.*
+            FROM confirmprototype cp
+            JOIN (
+                SELECT MAX(id) AS id
+                FROM confirmprototype
+                GROUP BY prototype_id
+            ) latest ON cp.id = latest.id
+        ) latest_confirmprototype ON latest_confirmprototype.prototype_id = prototype.id
+        LEFT JOIN ( 
+            SELECT im.*
+            FROM implement im
+            JOIN (
+                SELECT MAX(id) AS id
+                FROM implement
+                GROUP BY id_excute
+            ) latest ON im.id = latest.id
+        ) latest_implement ON latest_implement.id_excute = excute.id
+        WHERE excute.id = ?
+        
+        ");
         $stmtoneexcute->execute([$_GET['idexcute']]);
 
-        foreach($stmtoneexcute as $row) {
+        foreach ($stmtoneexcute as $row) {
 
             $workflowname = $row['work_flow_req'];
             $bussinessflowname = $row['bussinessflow_req'];
@@ -91,19 +124,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     'topicimplement' => $row['topic_implement'],
                     'detailimplement' => $row['detail_implement'],
                     'empid' => $row['codeuser_detail'],
-                    'division'=> $row['name_division'],
-                    'department'=> $row['name_department'],
-                    'section'=> $row['name_section'],
-                    'prototypeid'=> $row[64],
-                    'workflowname'=> $workflowname,
-                    'bussinessflowname'=> $bussinessflowname,
-                    'extractfilename'=> $extractfilename,
-                    'scopeofworkname'=> $scopeofworkname,
-                    'riskmanagementname'=> $riskmanagementname,
-                    'status_id'=>$row['status_id'],
-                    'sitemap'=>$row['sitemap_preparedata'],
-                    'fileplancoding'=>$row['file_plancoding'],
-                    
+                    'division' => $row['name_division'],
+                    'department' => $row['name_department'],
+                    'section' => $row['name_section'],
+                    'prototypeid' => $row[67],
+                    'workflowname' => $workflowname,
+                    'bussinessflowname' => $bussinessflowname,
+                    'extractfilename' => $extractfilename,
+                    'scopeofworkname' => $scopeofworkname,
+                    'riskmanagementname' => $riskmanagementname,
+                    'status_id' => $row['status_id'],
+                    'sitemap' => $row['sitemap_preparedata'],
+                    'fileplancoding' => $row['file_plancoding'],
+                    'firstname_approver' => $approver_firstname,
+                    'lastname_approver' => $approver_lastname,
+
                 )
             );
         }

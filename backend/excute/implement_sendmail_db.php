@@ -15,6 +15,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
 
+        $topic = $data->topic;
+        $email = $data->email;
+        $detail = $data->detail;
+
+
+
+        if (strlen($topic) == 0 || strlen($email) == 0 || strlen($detail) == 0) {
+            echo json_encode(array("status" => "ERROREMAIL"));
+        } else {
+
         $stmt = $db->prepare("INSERT INTO implement (email_implement,topic_implement,detail_implement,id_excute ) VALUES (?,?,?,?)");
         $stmt->bindParam(1, $data->email);
         $stmt->bindParam(2, $data->topic);
@@ -52,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             echo json_encode(array("status" => "ERROR"));
         }
+    }
     } catch (exception $e) {
         echo 'error :' . $e->getMessage() . '<br/>';
     }

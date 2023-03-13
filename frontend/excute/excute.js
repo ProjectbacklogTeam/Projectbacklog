@@ -1,14 +1,63 @@
-document.addEventListener("keydown", function(event) {
+document.addEventListener("keydown", function (event) {
   if (event.key === "Escape") {
     window.location.reload();
   }
 });
+
+
+
+function showsendemailErrorAlert() {
+  Swal.fire({
+    title: 'error',
+    text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+    icon: 'error',
+    confirmButtonText: 'Ok',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    showCancelButton: false
+  })
+}
 
 function showsuccessAlert() {
   Swal.fire({
     title: 'Success',
     text: 'Your data was saved !',
     icon: 'success',
+    confirmButtonText: 'Ok',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    showCancelButton: false
+  })
+  // .then((result) => {
+  //   if (result.isConfirmed) {
+  //     window.location.reload();
+  //   }
+  // });
+}
+
+function showerrorAlert() {
+  Swal.fire({
+    title: 'error',
+    text: 'Your data not saved !',
+    icon: 'error',
+    confirmButtonText: 'Ok',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    showCancelButton: false
+  })
+  // .then((result) => {
+  //   if (result.isConfirmed) {
+  //     window.location.reload();
+  //   }
+  // });
+}
+
+
+function showerrorsendemailAlert() {
+  Swal.fire({
+    title: 'error',
+    html: 'Your data not saved ! <br> Please use pdf, doc, docx, jpg, png, jpeg',
+    icon: 'error',
     confirmButtonText: 'Ok',
     allowOutsideClick: false,
     allowEscapeKey: false,
@@ -31,7 +80,7 @@ function showLoadingSpinner() {
     customClass: {
       popup: 'loading-spinner'
     },
-    onOpen: function() {
+    onOpen: function () {
       swal.showLoading();
     }
   });
@@ -318,6 +367,7 @@ var getdataexcute_one = async function (idexcute) {
 
 
 
+
       if (req.linkprototype == null) {
         var linkprototype = ""
       } else {
@@ -454,24 +504,34 @@ var getdataexcute_one = async function (idexcute) {
 
 
       if (req.start_coding == null) {
-        var startcoding = "0000-00-00"
+        let todaystrat = new Date();
+        let daystrat = todaystrat.getDate();
+        let monthstrat = todaystrat.getMonth() + 1;
+        let yearstart = todaystrat.getFullYear();
+        var formattedstartDate_v3 = `${yearstart}-${monthstrat}-${daystrat}`
+        var startcoding = formattedstartDate_v3;
       } else {
         var startcoding = req.start_coding
       }
       if (req.end_coding == null) {
-        var endcoding = "0000-00-00"
+        let todayend = new Date();
+        let dayend = todayend.getDate();
+        let monthend = todayend.getMonth() + 1;
+        let yearend = todayend.getFullYear();
+        var formatteddateend_v3 = `${yearend}-${monthend}-${dayend}`
+        var endcoding = formatteddateend_v3
       } else {
         var endcoding = req.end_coding
       }
 
       $(document).ready(function () {
         $("#startcoding" + req.idexcute).datepicker({
-          format: "dd/mm/yy",
+          format: "dd/mm/yyyy",
           autoclose: true,
           todayHighlight: true,
         });
         $("#endcoding" + req.idexcute).datepicker({
-          format: "dd/mm/yy",
+          format: "dd/mm/yyyy",
           autoclose: true,
           todayHighlight: true,
         });
@@ -489,8 +549,6 @@ var getdataexcute_one = async function (idexcute) {
       };
       var formattedstartcodingDate = startcodingdateObject.toLocaleDateString('en-GB', options);
       formattedstartcodingDate = formattedstartcodingDate.replace('.', '');
-
-
 
       var enddatecodingparts = endcoding.split('-');
       var enddatecodingyear = parseInt(enddatecodingparts[0]);
@@ -518,9 +576,6 @@ var getdataexcute_one = async function (idexcute) {
       };
       var formattedstartDate = startdateObject.toLocaleDateString('en-GB', options);
       formattedstartDate = formattedstartDate.replace('.', '');
-
-
-
       var enddateparts = enddate.split('-');
       var enddateyear = parseInt(enddateparts[0]);
       var enddatemonth = parseInt(enddateparts[1]);
@@ -535,9 +590,52 @@ var getdataexcute_one = async function (idexcute) {
       formattedendDate = formattedendDate.replace('.', '');
 
 
+
+
+
+
+
+
+
+
+      var plancoding_startdateparts = startcoding.split('-');
+      var plancoding_startdateyear = parseInt(plancoding_startdateparts[0]);
+      var plancoding_startdatemonth = parseInt(plancoding_startdateparts[1]);
+      var plancoding_startdateday = parseInt(plancoding_startdateparts[2]);
+      var plancoding_startdateObject = new Date(plancoding_startdateyear, plancoding_startdatemonth - 1, plancoding_startdateday);
+      var options = {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      };
+      var plancoding_formattedstartDate = plancoding_startdateObject.toLocaleDateString('en-GB', options);
+      plancoding_formattedstartDate = plancoding_formattedstartDate.replace('.', '');
+
+      var plancoding_enddateparts = endcoding.split('-');
+      var plancoding_enddateyear = parseInt(plancoding_enddateparts[0]);
+      var plancoding_enddatemonth = parseInt(plancoding_enddateparts[1]);
+      var plancoding_enddateday = parseInt(plancoding_enddateparts[2]);
+      var plancoding_enddateObject = new Date(plancoding_enddateyear, plancoding_enddatemonth - 1, plancoding_enddateday);
+      var options = {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      };
+      var plancoding_formattedendDate = plancoding_enddateObject.toLocaleDateString('en-GB', options);
+      plancoding_formattedendDate = plancoding_formattedendDate.replace('.', '');
+
+
+      var formattedstartDate_v2 = `${plancoding_startdateday}/${plancoding_startdatemonth}/${plancoding_startdateyear}`
+      var formatteddateend_v2 = `${plancoding_enddateday}/${plancoding_enddatemonth}/${plancoding_enddateyear}`
+
+
+
+
+
+
       var row = `
                  <div class="modal fade" id="datadetail`+ idexcute + `" tabindex="-1" aria-labelledby="datadetail` + idexcute + `"
-                 aria-hidden="true">
+                 aria-hidden="true" data-bs-backdrop="static">
                  <div class="modal-dialog modal-fullscreen" style="font-weight: normal;overflow-y: scroll;">
                    <div class="modal-content" style="background:white;widht:100%">
                      <div class="modal-header">
@@ -550,7 +648,7 @@ var getdataexcute_one = async function (idexcute) {
                          <div class="flexbox" style="line-height: 20px;">
                            <div class="item">
                              <div class="content">
-                               <button class="buttonprocesssuccess"  disabled>
+                               <button class="buttonprocesssuccess mb-2"  disabled>
                                  <i class="fa-solid fa-book fa-2x"></i>
                                </button>
                                <span>
@@ -560,7 +658,7 @@ var getdataexcute_one = async function (idexcute) {
                            </div>
                            <div class="item">
                              <div class="content">
-                               <button class="buttonprocesssuccess" disabled>
+                               <button class="buttonprocesssuccess mb-2" disabled>
                                  <i class="fa-solid fa-user-pen fa-2x"></i>
                                </button>
                                <span>
@@ -570,7 +668,7 @@ var getdataexcute_one = async function (idexcute) {
                            </div>
                            <div class="item">
                              <div class="content">
-                               <button class="buttonprocesssuccess" disabled>
+                               <button class="buttonprocesssuccess mb-2" disabled>
                                  <i class="fa-solid fa-person-circle-check fa-2x"></i>
                                </button>
                                <span>
@@ -581,8 +679,8 @@ var getdataexcute_one = async function (idexcute) {
                            <div class="item">
                              <div class="content">
 
-                               <button class="buttonprocess" data-bs-toggle="collapse" data-bs-target="#Prototype`+ req.idexcute + `"
-                                 aria-expanded="false" aria-controls="confirmprototype prototype" id="btnprototype`+ req.idexcute + `" onclick="toggleCollapse('prototype',` + req.idexcute + `)" style="background:` + (((req.statusforprocess >= 4) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;">
+                               <button class="buttonprocess mb-2" data-bs-toggle="collapse" data-bs-target="#Prototype`+ req.idexcute + `"
+                                 aria-expanded="false" aria-controls="confirmprototype prototype" id="btnprototype`+ req.idexcute + `" onclick="toggleCollapse('prototype',` + req.idexcute + `)" style="box-shadow:` + (((req.statusforprocess >= 4) && (req.statusforprocess <= 10)) ? '3px 3px 3px 2px #9fc131' : '3px 3px 3px 2px #9D202F;') + `;background:` + (((req.statusforprocess >= 4) && (req.statusforprocess <= 10)) ? '#48773C' : '#c80000') + `;">
                                  <i class="fa-solid fa-swatchbook fa-2x"></i>
                                </button>
                                <span>
@@ -642,18 +740,18 @@ var getdataexcute_one = async function (idexcute) {
                              </div>
                            </div>
 
-                           <div class="item">
+                           <div class="item">   
                              <div class="content">
-                               <button class="buttonprocess" data-bs-toggle="collapse" data-bs-target="#Confirmprototype`+ req.idexcute + `"
-                                 aria-expanded="false" aria-controls="confirmprototype" id="btnconfirmprototype`+ req.idexcute + `" onclick="toggleCollapse('confirmprototype',` + req.idexcute + `)" style="background:` + (((req.statusforprocess >= 5) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;">
+                               <button class="buttonprocess mb-2" data-bs-toggle="collapse" data-bs-target="#Confirmprototype`+ req.idexcute + `"
+                                 aria-expanded="false" aria-controls="confirmprototype" id="btnconfirmprototype`+ req.idexcute + `" onclick="toggleCollapse('confirmprototype',` + req.idexcute + `)" style="box-shadow:` + (((req.statusforprocess >= 5) && (req.statusforprocess <= 10)) ? '3px 3px 3px 2px #9fc131' : '3px 3px 3px 2px #9D202F;') + `;background:` + (((req.statusforprocess >= 5) && (req.statusforprocess <= 10)) ? '#48773C' : '#c80000') + `;">
                                  <i class="fa-solid fa-circle-check fa-2x"></i>
                                </button>
                                <span>
                                  Confirm <br>Prototype
                                </span>
-                               <div class="collapse collapse-horizontal " id="confirmprototype`+ req.idexcute + `">
+                               <div class="collapse collapse-horizontal " id="confirmprototype`+ req.idexcute + `" >
                                <div class="card card-body"
-                                 style="margin-top: 30%;width: 700px;height: 550px;margin-left: -190px;">
+                                 style="margin-top: 30%;width: 700px;height: 550px;margin-left: -190px; " >
                                  <span
                                    style="font-size: xx-large;font-weight: bold;padding-left: 2rem;margin-bottom: 3%;margin-top:  2%;">
                                    Confirm Prototype
@@ -676,8 +774,12 @@ var getdataexcute_one = async function (idexcute) {
                                     </div>
                                   </div>
                                   <div class="col-12 mb-1 mt-2">
-                                    <textarea  id="detail_confirmprototype`+ req.idexcute + `" type="text" style="width:100%;height:100px"  ` + (((req.statusforprocess >= 5) && (req.statusforprocess <= 10)) ? 'disabled' : 'none') + `>` + detailconfirmprototype + `</textarea>
+                                    <textarea  id="detail_confirmprototype`+ req.idexcute + `" type="text" style="width:100%;height:100px"  ` + (((req.statusforprocess >= 5) && (req.statusforprocess <= 10)) ? 'disabled' : 'none') + `>` +"link: "+linkprototype+"    "+ detailconfirmprototype + `</textarea>
                                   </div>
+                                  <div class="col-6" style="text-align:left">
+                                      <a style="display:`+ (fileprototype == "" ? "none" : "inline") + `" href = "../../backend/excute/prototype_file/` + fileprototype + `" target="_blank"><i class="mt-2 fa-solid fa-file fa-2x"></i></a>                                    
+                                  </div>
+
                                  </div>                                                                                    
                                    <div class="d-flex justify-content-sm-end mt-3" style="width: 100%;">
                                    <button class="buttonedit" style="display:`+ (((req.statusforprocess >= 5) && (req.statusforprocess <= 10)) ? 'inline' : 'none') + `" id="toggleeconfirmprototype` + req.idexcute + `" onclick="togglesendemailconfirmprototype(` + req.idexcute + `)">Edit</button>                               
@@ -690,15 +792,15 @@ var getdataexcute_one = async function (idexcute) {
 
                            <div class="item">
                              <div class="content">
-                               <button class="buttonprocess" data-bs-toggle="collapse" data-bs-target="#Preparedata`+ req.idexcute + `"
-                                 aria-expanded="false" aria-controls="preparedata" onclick="toggleCollapse('preparedata',`+ req.idexcute + `)" style="background:` + (((req.statusforprocess >= 6) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;">
+                               <button class="buttonprocess mb-2" data-bs-toggle="collapse"  data-bs-target="#Preparedata`+ req.idexcute + `"
+                                 aria-expanded="false" aria-controls="preparedata" onclick="toggleCollapse('preparedata',`+ req.idexcute + `)" style="box-shadow:` + (((req.statusforprocess >= 6) && (req.statusforprocess <= 10)) ? '3px 3px 3px 2px #9fc131' : '3px 3px 3px 2px #9D202F;') + `;background:` + (((req.statusforprocess >= 6) && (req.statusforprocess <= 10)) ? '#48773C' : '#c80000') + `;">
                                  <i class="fa-solid fa-diagram-project fa-2x" id="preparedata" id="btnpreparedata`+ req.idexcute + `"></i>
                                </button>
                                <span>
                                  Prepare<br>Data
                                </span>
                                <div class="collapse" id="preparedata`+ req.idexcute + `">
-                                 <div class="card card-body paperpreparedata" style="margin-top: 30%;margin-left: -500px;">
+                                 <div class="card card-body paperpreparedata" style="margin-top: 30%;margin-left: -500px;" >
                                    <span
                                      style="font-size: xx-large;font-weight: bold;padding-left: 2rem;margin-bottom: 3%;margin-top:  2%;">
                                      Prepare Data
@@ -756,8 +858,9 @@ var getdataexcute_one = async function (idexcute) {
                                        <div class="mt-3">
                                        </div>
                                      </div>
-                                     <div class="col-6" style="text-align: start;border:1px solid red;">
-                                        <button  style="background-color:`+ (req.system_status == 1 ? 'green' : 'red') + `" class="btncheckbox"  id="systemflowchart` + req.idexcute + `" onclick="checkboxsystemflowchart(` + req.idexcute + `)" ` + (((req.statusforprocess >= 6) && (req.statusforprocess <= 10)) ? 'disabled' : 'none') + `></button>           
+                                     <div class="col-6 " style="text-align: start;border:1px solid red;">
+                                     <label class="containercheckbox">
+                                       <button  style="background-color:`+ (req.system_status == 1 ? 'green' : 'red') + `" class="btncheckbox"  id="systemflowchart` + req.idexcute + `" onclick="checkboxsystemflowchart(` + req.idexcute + `)" ` + (((req.statusforprocess >= 6) && (req.statusforprocess <= 10)) ? 'disabled' : 'none') + `></button>           
                                         <span>System FlowChart</span>
                                     </label><br>
                                    <label class="containercheckbox">
@@ -801,8 +904,8 @@ var getdataexcute_one = async function (idexcute) {
                            </div>
                            <div class="item">
                              <div class="content">
-                               <button class="buttonprocess" data-bs-toggle="collapse" data-bs-target="#Coding`+ req.idexcute + `"
-                                 aria-expanded="false" aria-controls="coding" id="btncoding`+ req.idexcute + `" onclick="toggleCollapse('coding',` + req.idexcute + `)" style="background:` + (((req.statusforprocess >= 7) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;">
+                               <button class="buttonprocess mb-2" data-bs-toggle="collapse" data-bs-target="#Coding`+ req.idexcute + `"
+                                 aria-expanded="false" aria-controls="coding" id="btncoding`+ req.idexcute + `" onclick="toggleCollapse('coding',` + req.idexcute + `)" style="box-shadow:` + (((req.statusforprocess >= 7) && (req.statusforprocess <= 10)) ? '3px 3px 3px 2px #9fc131' : '3px 3px 3px 2px #9D202F;') + `;background:` + (((req.statusforprocess >= 7) && (req.statusforprocess <= 10)) ? '#48773C' : '#c80000') + `;">
                                  <i class="fa-solid fa-computer fa-2x"></i>
                                </button>
                                <span>
@@ -827,7 +930,7 @@ var getdataexcute_one = async function (idexcute) {
                                               <div class="col-6 mb-5">
                                               <div class="input-group date">
                                                 <span class="input-group-text" id="inputGroup-sizing-default">วันที่เริ่ม</span>
-                                                <input value="`+ formattedstartcodingDate + `"  id="startcoding` + req.idexcute + `"  type="text" class="form-control" id="enddate" placeholder="dd/mm/yyyy" ` + (req.statusplan == 1 ? 'disabled' : 'none') + `>
+                                                <input value="`+ formattedstartDate_v2 + `"  id="startcoding` + req.idexcute + `"  type="text" class="form-control" id="enddate" placeholder="dd/mm/yyyy" ` + (req.statusplan == 1 ? 'disabled' : 'none') + `>
                                                 <i class="bi bi-calendar"></i>
                                               </div>
                               
@@ -835,7 +938,7 @@ var getdataexcute_one = async function (idexcute) {
                                             <div class="col-6 mb-5">
                                             <div class="input-group date">
                                               <span class="input-group-text" id="inputGroup-sizing-default">วันที่สิ้นสุด</span>
-                                              <input value="`+ formattedendcodingDate + `"  id="endcoding` + req.idexcute + `"  type="text" class="form-control" id="enddate" placeholder="dd/mm/yyyy" ` + (req.statusplan == 1 ? 'disabled' : 'none') + `>
+                                              <input value="`+ formatteddateend_v2 + `"  id="endcoding` + req.idexcute + `"  type="text" class="form-control" id="enddate" placeholder="dd/mm/yyyy" ` + (req.statusplan == 1 ? 'disabled' : 'none') + `>
                                               <i class="bi bi-calendar"></i>
                                             </div>
                             
@@ -848,7 +951,7 @@ var getdataexcute_one = async function (idexcute) {
                                                   <textarea  class="pjdetailinput mt-3" type="text" style="width:100%;height: 100px;" id="formatcoding` + req.idexcute + `" ` + (req.statusplan == 1 ? 'disabled' : 'none') + `>` + format_coding + `</textarea>
                                                 </div>
                                                 <div class="col-6">
-                                                  <span>Name/University</span><br>
+                                                  <span>Name/Contact</span><br>
                                                   <textarea  class="pjdetailinput mt-3" type="text" style="width:100%;height: 100px;" id="nameuniversitycoding` + req.idexcute + `" ` + (req.statusplan == 1 ? 'disabled' : 'none') + `>` + name_university_coding + `</textarea>
                                                 </div>
                                               </div>
@@ -900,7 +1003,7 @@ var getdataexcute_one = async function (idexcute) {
                                                 </div>
                                                 <div class="row mt-3">
                                                     <div class="mt-6 mb-3">
-                                                        <span>Testing</span><br>
+                                                        <span>Testing / Security</span><br>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="input-group " style="width: 100%;height:20px;">
@@ -932,8 +1035,8 @@ var getdataexcute_one = async function (idexcute) {
                            </div>
                            <div class="item">
                              <div class="content">
-                               <button class="buttonprocess"
-                                 aria-expanded="false" disabled aria-controls="coding" id="btntesting`+ req.idexcute + `" style="background:` + (((req.statusforprocess >= 8) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;"> 
+                               <button class="buttonprocess mb-2"
+                                 aria-expanded="false" disabled aria-controls="coding" id="btntesting`+ req.idexcute + `" style="box-shadow:` + (((req.statusforprocess >= 8) && (req.statusforprocess <= 10)) ? '3px 3px 3px 2px #9fc131' : '3px 3px 3px 2px #9D202F;') + `;background:` + (((req.statusforprocess >= 8) && (req.statusforprocess <= 10)) ? '#48773C' : '#c80000') + `;"> 
                                  <i class="fa-solid fa-clipboard-check fa-2x"></i>
                                </button>
                                <span>
@@ -947,8 +1050,8 @@ var getdataexcute_one = async function (idexcute) {
                            <div class="item">
                              <div class="content">
 
-                               <button class="buttonprocess" data-bs-toggle="collapse" data-bs-target="#Deliver`+ req.idexcute + `"
-                                 aria-expanded="false" aria-controls="deliver" id="btndeliver`+ req.idexcute + `"  onclick="toggleCollapse('deliver',` + req.idexcute + `)" style="background:` + (((req.statusforprocess >= 9) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;">
+                               <button class="buttonprocess mb-2" data-bs-toggle="collapse" data-bs-target="#Deliver`+ req.idexcute + `"
+                                 aria-expanded="false" aria-controls="deliver" id="btndeliver`+ req.idexcute + `"  onclick="toggleCollapse('deliver',` + req.idexcute + `)" style="box-shadow:` + (((req.statusforprocess >= 9) && (req.statusforprocess <= 10)) ? '3px 3px 3px 2px #9fc131' : '3px 3px 3px 2px #9D202F;') + `;background:` + (((req.statusforprocess >= 9) && (req.statusforprocess <= 10)) ? '#48773C' : '#c80000') + `;">
                                  <i class="fa-solid fa-box-open fa-2x"></i>
                                </button>
                                <span>
@@ -972,7 +1075,7 @@ var getdataexcute_one = async function (idexcute) {
                                     <button  style="background-color:`+ (sitemap_preparedata.length > 0 ? 'green' : 'red') + `" class="btncheckbox"  id="systemflowchart` + req.idexcute + `" onclick="checkboxsystemflowchart(` + req.idexcute + `)" ` + (((req.statusforprocess >= 6) && (req.statusforprocess <= 10)) ? 'disabled' : 'none') + `></button>           
                                     <span>Site Map</span>
                                     </label><br>
-                                    <button  style="background-color:`+ (bussinessflowname.length > 0  ? 'green' : 'red') + `" class="btncheckbox"  id="systemflowchart` + req.idexcute + `" onclick="checkboxsystemflowchart(` + req.idexcute + `)" ` + (((req.statusforprocess >= 6) && (req.statusforprocess <= 10)) ? 'disabled' : 'none') + `></button>           
+                                    <button  style="background-color:`+ (bussinessflowname.length > 0 ? 'green' : 'red') + `" class="btncheckbox"  id="systemflowchart` + req.idexcute + `" onclick="checkboxsystemflowchart(` + req.idexcute + `)" ` + (((req.statusforprocess >= 6) && (req.statusforprocess <= 10)) ? 'disabled' : 'none') + `></button>           
                                     <span>Business Diargram</span>
                                     </label><br>
                                     <button  style="background-color:`+ (workflowname.length > 0 ? 'green' : 'red') + `" class="btncheckbox"  id="systemflowchart` + req.idexcute + `" onclick="checkboxsystemflowchart(` + req.idexcute + `)" ` + (((req.statusforprocess >= 6) && (req.statusforprocess <= 10)) ? 'disabled' : 'none') + `></button>           
@@ -1060,8 +1163,8 @@ var getdataexcute_one = async function (idexcute) {
 
                            <div class="item">
                              <div class="content">
-                               <button class="buttonprocess" data-bs-toggle="collapse" data-bs-target="#Implement`+ req.idexcute + `"
-                                 aria-expanded="false" aria-controls="value" id="updatetocoding`+ req.idexcute + `" onclick="toggleCollapse('implement',` + req.idexcute + `)" style="background:` + (((req.statusforprocess >= 10) && (req.statusforprocess <= 10)) ? 'linear-gradient(45deg, #22ca16 5%, #5fbf1f 50%, #5fbf1f 50%)' : 'linear-gradient(45deg, #fb466a 5%, #DF1B3F 50%, #DF1B3F 50%);') + `;">
+                               <button class="buttonprocess mb-2" data-bs-toggle="collapse" data-bs-target="#Implement`+ req.idexcute + `"
+                                 aria-expanded="false" aria-controls="value" id="updatetocoding`+ req.idexcute + `" onclick="toggleCollapse('implement',` + req.idexcute + `)" style="box-shadow:` + (((req.statusforprocess >= 10) && (req.statusforprocess <= 10)) ? '3px 3px 3px 2px #9fc131' : '3px 3px 3px 2px #9D202F;') + `;background:` + (((req.statusforprocess >= 10) && (req.statusforprocess <= 10)) ? '#48773C' : '#c80000') + `;">
                                  <i class="fa-solid fa-heart fa-2x"></i>
                                </button>
                                <span>
@@ -1121,7 +1224,12 @@ var getdataexcute_one = async function (idexcute) {
                              <div class="col-3">
                                <span>Request Emp id</span><br>
                                <input class="pjdetailinput mt-3" value="`+ req.empid + `"  type="text"  style="width: 100%;" disabled>
-                             </div>
+                               <datalist id="user_all`+ req.id + `">
+                                          
+                                          
+                               </datalist>
+                            
+                               </div>
                              <div class="col-3">
                                <span>Request Name</span><br>
                                <input class="pjdetailinput mt-3" value="`+ req.firstname + " " + req.lastname + `" type="text"  style="width: 100%;" disabled>
@@ -1167,7 +1275,7 @@ var getdataexcute_one = async function (idexcute) {
                             </div>
 
                             <div class="row mt-3">
-                             <div class="col-2">
+                             <div class="col-3">
                                <span>BUDGET</span><br>
                                <input class="pjdetailinput mt-3" value="`+ req.budget + `" type="text"  style="width: 100%;" disabled>
                              </div>                        
@@ -1190,7 +1298,7 @@ var getdataexcute_one = async function (idexcute) {
                              </div>
                              <div class="col-6">
                                <span>Approvals</span><br>
-                               <input class="pjdetailinput mt-3" type="text"  style="width: 100%" disabled>
+                               <input value='`+req.firstname_approver+" "+req.lastname_approver+`' class="pjdetailinput mt-3" type="text"  style="width: 100%" disabled>
                              </div>
                            </div>
 
@@ -1425,7 +1533,7 @@ var getreqapproveallToExcute = async function () {
                         <td>`+ formattedendDate + `</td>
                         <td>`+ processname + `</td>
                         <td>`+ doingbyname + `</td>
-                        <td id="statuscolor" style="color: ` + (req.status == 'Approve' ? 'green' : (req.status == 'Reject' ? 'red' : 'orange')) + `;">` + req.status + `</td>
+                        <td id="statuscolor" style="background:linear-gradient(45deg, #F1FEE7 5%, #F1FEE7 50%, #F1FEE7 50%);font-size: 15px;font-weight: bold;color: ` + (req.status == 'Approve' ? 'green' : (req.status == 'Reject' ? 'red' : 'orange')) + `;">` + req.status + `</td>
                         <td>              
                           <button  type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#datadetail`+ req.idexcute + `" onclick="getdataexcute_one(` + req.idexcute + `)">
                               ดูรายละเอียดเพิ่มเติม
@@ -1476,7 +1584,7 @@ function saveprototype(idexcute, idreq) {
       if (jsonObj.status == 'OK') {
         showsuccessAlert()
       } else {
-        alert('not ok');
+        showerrorsendemailAlert()
       }
 
     })
@@ -1516,7 +1624,7 @@ function patchprototype(idexcute) {
         inputtext.disabled = !inputtext.disabled
         file.disabled = !file.disabled
       } else {
-        alert('not ok');
+        showerrorsendemailAlert()
       }
 
     })
@@ -1863,6 +1971,7 @@ function sendemailconfirmprototype(idexcute, idreq, idprototype) {
     "prototypeid": idprototype,
     "idreq": idreq,
     "idstatusforprocess": 5,
+    "idexcute": idexcute,
   })
   console.log(raw)
   var requestOptions = {
@@ -1879,8 +1988,12 @@ function sendemailconfirmprototype(idexcute, idreq, idprototype) {
       if (jsonObj.status == 'OK') {
         hideLoadingSpinner()
         showsuccessAlert()
-      } else {
-        alert('not ok');
+      }else if(jsonObj.status == 'ERROREMAIL') {
+        showsendemailErrorAlert()
+      }
+      else {
+        hideLoadingSpinner()
+        showerrorAlert()
       }
 
     })
@@ -1934,7 +2047,10 @@ function sendemailimplement(idexcute, idreq) {
       if (jsonObj.status == 'OK') {
         hideLoadingSpinner()
         showsuccessAlert()
-      } else {
+      } else if(jsonObj.status == 'ERROREMAIL') {
+        showsendemailErrorAlert()
+      }
+      else {
         alert('not ok');
       }
 
@@ -1964,6 +2080,8 @@ var uploadfileprototype = function (idexcute, idreq) {
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         showsuccessAlert()
+      } else {
+        showerrorsendemailAlert()
       }
     };
 
@@ -1980,9 +2098,9 @@ var uploadfileprototype = function (idexcute, idreq) {
 var patchfileprototype = function (idexcute) {
   var file1 = document.getElementById('prototypefile' + idexcute).files;
   var link = document.getElementById('prototypelink' + idexcute).value
-
+console.log(link);
   console.log(file1)
-  if (file1.length > 0) {
+  if (file1.length > 0 || link.length > 0) {
     var formData = new FormData();
     formData.append("prototypefile", file1[0]);
     formData.append("excuteid", idexcute);
@@ -1993,6 +2111,8 @@ var patchfileprototype = function (idexcute) {
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         showsuccessAlert()
+      } else {
+        showerrorsendemailAlert()
       }
     };
 
@@ -2007,22 +2127,39 @@ var patchfileprototype = function (idexcute) {
 var saveplancodeing = function (idexcute) {
 
 
-
   var file1 = document.getElementById('fileplancoding' + idexcute).files;
-  var startcoding = document.getElementById("startcoding" + idexcute).value
-  var endcoding = document.getElementById("endcoding" + idexcute).value
+  // var startcoding = document.getElementById("startcoding" + idexcute).value
+  // var endcoding = document.getElementById("endcoding" + idexcute).value
   var formatcoding = document.getElementById("formatcoding" + idexcute).value
   var nameuniversitycoding = document.getElementById("nameuniversitycoding" + idexcute).value
   var databasecoding = document.getElementById("databasecoding" + idexcute).value
   var languagescoding = document.getElementById("languagescoding" + idexcute).value
 
 
+  
+  
+  var startdateString = document.getElementById("startcoding" + idexcute).value
+  var startdateparts = startdateString.split('/');
+  var startdateObject = new Date(startdateparts[2], startdateparts[1] - 1, startdateparts[0], 0, 0, 0, 0);
+  var startdatetimezoneOffset = startdateObject.getTimezoneOffset() / 60;
+  startdateObject.setUTCHours(17 - startdatetimezoneOffset, 0, 0, 0); // set time to 17:00:00.000 in TST
+  var startdateformattedDate = startdateObject.toISOString().substr(0, 10);
+
+
+  var enddateString = document.getElementById("endcoding" + idexcute).value
+  var enddateparts = enddateString.split('/');
+  var enddateObject = new Date(enddateparts[2], enddateparts[1] - 1, enddateparts[0], 0, 0, 0, 0);
+  var enddatetimezoneOffset = enddateObject.getTimezoneOffset() / 60;
+  enddateObject.setUTCHours(17 - enddatetimezoneOffset, 0, 0, 0); // set time to 17:00:00.000 in TST
+  var enddateformattedDate = enddateObject.toISOString().substr(0, 10);
+
+
   var formData = new FormData();
   formData.append("fileplancoding", file1[0]);
   formData.append("statusplan", 1);
   formData.append("idexcute", idexcute);
-  formData.append("startcoding", startcoding);
-  formData.append("endcoding", endcoding);
+  formData.append("startcoding", startdateformattedDate);
+  formData.append("endcoding", enddateformattedDate);
   formData.append("formatcoding", formatcoding);
   formData.append("nameuniversitycoding", nameuniversitycoding);
   formData.append("databasecoding", databasecoding);
@@ -2037,6 +2174,9 @@ var saveplancodeing = function (idexcute) {
   var databasecoding_t = document.getElementById("databasecoding" + idexcute)
   var languagescoding_t = document.getElementById("languagescoding" + idexcute)
   var btnsaveplancoding = document.getElementById("updateplancodeing" + idexcute)
+
+
+
 
   var xhttp = new XMLHttpRequest();
   xhttp.open("POST", "http://localhost/projectbacklog/backend/excute/plancoding_db.php/saveplancoding", true);
@@ -2077,6 +2217,8 @@ var updateplancodeing = function (idexcute) {
   var enddateformattedDate = enddateObject.toISOString().substr(0, 10);
 
 
+  console.log(startdateformattedDate);
+  console.log(enddateformattedDate);
 
 
   var file1 = document.getElementById('fileplancoding' + idexcute).files;
@@ -2133,38 +2275,38 @@ cPrev = -1;
 function sortBy(c) {
   rows = document.getElementById("tableexcute").rows.length; // num of rows
   columns = document.getElementById("tableexcute").rows[0].cells.length; // num of columns
- 
+
   console.log(rows);
   arrTable = [...Array(rows)].map(e => Array(columns)); // create an empty 2d array
 
 
-  for (ro=0; ro<rows; ro++) { // cycle through rows
-      for (co=0; co<columns; co++) { // cycle through columns
-          arrTable[ro][co] = document.getElementById("tableexcute").rows[ro].cells[co].innerHTML;
-      }
+  for (ro = 0; ro < rows; ro++) { // cycle through rows
+    for (co = 0; co < columns; co++) { // cycle through columns
+      arrTable[ro][co] = document.getElementById("tableexcute").rows[ro].cells[co].innerHTML;
+    }
   }
   th = arrTable.shift(); // remove the header row from the array, and save it
-  
-  
+
+
   if (c !== cPrev) { // different column is clicked, so sort by the new column
-      arrTable.sort(
-          function (a, b) {
-              if (a[c] === b[c]) {
-                  return 0;
-              } else {
-                  return (a[c] < b[c]) ? -1 : 1;
-              }
-          }
-      );
+    arrTable.sort(
+      function (a, b) {
+        if (a[c] === b[c]) {
+          return 0;
+        } else {
+          return (a[c] < b[c]) ? -1 : 1;
+        }
+      }
+    );
   } else { // if the same column is clicked then reverse the array
-      arrTable.reverse();
+    arrTable.reverse();
   }
   cPrev = c;
   arrTable.unshift(th);
-  for (ro=0; ro<rows; ro++) {
-      for (co=0; co<columns; co++) {
-          document.getElementById("tableexcute").rows[ro].cells[co].innerHTML = arrTable[ro][co];
-      }
+  for (ro = 0; ro < rows; ro++) {
+    for (co = 0; co < columns; co++) {
+      document.getElementById("tableexcute").rows[ro].cells[co].innerHTML = arrTable[ro][co];
+    }
   }
 }
 
@@ -2195,4 +2337,30 @@ function searchTableexcute() {
     });
     row.style.display = match ? '' : 'none';
   });
+}
+
+
+var getoptionapprover = function (idreq) {
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+  var approver_option = document.getElementById('user_all' + idreq);
+  console.log(approver_option)
+  fetch("http://localhost/projectbacklog/backend/home/homeoptionuser_db.php", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      var jsonObj = JSON.parse(result);
+      console.log(jsonObj);
+      for (let user_all of jsonObj) {
+        user_all_option =
+          `
+              <option data-value ="`+ user_all.id + `"  value="` + user_all.firstname + " " + user_all.lastname + `"> </opion>                 
+         
+          `
+        approver_option.insertAdjacentHTML('beforeend', user_all_option);
+      }
+
+    }
+    )
 }

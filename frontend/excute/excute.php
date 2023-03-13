@@ -27,7 +27,7 @@ session_start();
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
   <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sriracha">
+  <link href='https://fonts.googleapis.com/css?family=Chakra Petch' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 
 </head>
@@ -39,13 +39,13 @@ session_start();
         <?php include('../navbar.php'); ?>
         <div class="row" style="height: 20%;width: 1500px;">
           <span style="font-size: xx-large;font-weight: bold;padding-left: 2rem;margin-bottom: 3%;margin-top:  2%;">
-            EXCUTE
+            EXECUTE
           </span><br>
           <div class="flexbox center" style="margin-left: 1rem;">
 
             <div class="item">
               <div class="content">
-                <button class="buttonprocesssuccess" disabled>
+                <button class="buttonprocesssuccess mb-2" disabled>
                   <i class="fa-solid fa-book fa-2x"></i>
                 </button>
                 <span>
@@ -57,7 +57,7 @@ session_start();
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocesssuccess" disabled>
+                <button class="buttonprocesssuccess mb-2" disabled>
                   <i class="fa-solid fa-user-pen fa-2x"></i>
                 </button>
                 <span>
@@ -68,7 +68,7 @@ session_start();
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocesssuccess" disabled>
+                <button class="buttonprocesssuccess mb-2" disabled>
                   <i class="fa-solid fa-person-circle-check fa-2x"></i>
                 </button>
                 <span>
@@ -79,7 +79,7 @@ session_start();
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-swatchbook fa-2x"></i>
                 </button>
                 <span>
@@ -91,7 +91,7 @@ session_start();
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-circle-check fa-2x"></i>
                 </button>
                 <span>
@@ -103,7 +103,7 @@ session_start();
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-diagram-project fa-2x"></i> </button>
                 <span>
                   Prepare<br>Data
@@ -114,7 +114,7 @@ session_start();
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-computer fa-2x"></i>
                 </button>
                 <span>
@@ -126,7 +126,7 @@ session_start();
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-clipboard-check fa-2x"></i>
                 </button>
                 <span>
@@ -138,7 +138,7 @@ session_start();
             <div class="item">
               <div class="content">
 
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-box-open fa-2x"></i>
                 </button>
                 <span>
@@ -149,7 +149,7 @@ session_start();
 
             <div class="item">
               <div class="content">
-                <button class="buttonprocess" disabled>
+                <button class="buttonprocess mb-2" disabled>
                   <i class="fa-solid fa-heart fa-2x"></i>
                 </button>
                 <span>
@@ -163,7 +163,7 @@ session_start();
             <div class="col-4" style="margin-left: 4%;">
               <div class="input-group">
                 <input id="searchinputexcute" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                <button type="button" class="btn btn-primary" onclick="searchTableexcute()"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
+                <button type="button" class="btn btn-search" onclick="searchTableexcute()"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
               </div>
             </div>
             <div class="col-8">

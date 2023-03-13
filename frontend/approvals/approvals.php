@@ -17,7 +17,7 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sriracha">
+  <link href='https://fonts.googleapis.com/css?family=Chakra Petch' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 
 </head>

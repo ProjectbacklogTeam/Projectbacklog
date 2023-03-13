@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
        	LEFT JOIN approver on requirements.approver_id = approver.id
         LEFT JOIN admin on requirements.admin_id = admin.id 
         LEFT JOIN user on requirements.user_id = user.id
-        JOIN  detail on admin.detail_id = detail.id OR approver.detail_id = detail.id OR user.detail_id = detail.id
+        JOIN  detail on admin.detail_admin_id = detail.id OR approver.detail_approver_id = detail.id OR user.detail_user_id = detail.id
         JOIN division on detail.division_id = division.id
         JOIN section on detail.section_id = section.id
         JOIN department on detail.department_id = department.id') as $row) {
